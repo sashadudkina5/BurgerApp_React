@@ -1,12 +1,9 @@
 import burgerIngredientsStyles from "./burgerIngredients.module.css";
-import MockData from "../../utils/utils";
 import Tabs from "../Tabs/tabs";
 import ProductCard from "../ProductCard/productCard";
 import { useMemo } from "react";
 
-function BurgerIngredients() {
-  const mockDataInstance = new MockData();
-  const ingredients = mockDataInstance.state.ingredients;
+function BurgerIngredients({ ingredients }) {
   const bunIngredients = useMemo(
     () => ingredients.filter((ingredient) => ingredient.type === "bun"),
     [ingredients]
