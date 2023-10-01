@@ -3,7 +3,7 @@ import Tabs from "../Tabs/tabs";
 import ProductCard from "../ProductCard/productCard";
 import { useMemo } from "react";
 
-function BurgerIngredients({ ingredients }) {
+function BurgerIngredients({ ingredients, onClick}) {
   const bunIngredients = useMemo(
     () => ingredients.filter((ingredient) => ingredient.type === "bun"),
     [ingredients]
@@ -31,21 +31,21 @@ function BurgerIngredients({ ingredients }) {
         >
           Булки
         </h2>
-        <ProductCard typeOfIngredient={bunIngredients} />
+        <ProductCard typeOfIngredient={bunIngredients} onClick={onClick}/>
 
         <h2
           className={`${burgerIngredientsStyles.title} text text_type_main-medium`}
         >
           Соусы
         </h2>
-        <ProductCard typeOfIngredient={sauceIngredients} />
+        <ProductCard typeOfIngredient={sauceIngredients} onClick={onClick}/>
 
         <h2
           className={`${burgerIngredientsStyles.title} text text_type_main-medium`}
         >
           Начинка
         </h2>
-        <ProductCard typeOfIngredient={mainIngredients} />
+        <ProductCard typeOfIngredient={mainIngredients} onClick={onClick}/>
       </section>
     </div>
   );

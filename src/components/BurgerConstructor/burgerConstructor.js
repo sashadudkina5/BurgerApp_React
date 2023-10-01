@@ -4,7 +4,7 @@ import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import BunAddedInConstructor from "../BunAddedInConstructor/bunAddedInConstructor";
 
-function BurgerConstructor({ ingredients }) {
+function BurgerConstructor({ ingredients, onClick }) {
   return (
     <div className={burgerConstructorStyles.wrapper}>
       <ul className={burgerConstructorStyles.list}>
@@ -26,7 +26,12 @@ function BurgerConstructor({ ingredients }) {
         <div className={burgerConstructorStyles.finalPriceWrapper}>
           <p className="text text_type_main-large">610</p>
           <CurrencyIcon width={"33px"} style={{ display: "block" }} />
-          <Button htmlType="button" type="primary" size="large">
+          <Button
+            htmlType="button"
+            type="primary"
+            size="large"
+            onClick={onClick}
+          >
             Оформить заказ
           </Button>
         </div>

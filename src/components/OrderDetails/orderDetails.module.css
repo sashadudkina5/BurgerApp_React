@@ -1,5 +1,22 @@
 .wrapper {
-    width: 720px;
-    height: 718px;
+    height: auto;
     padding-top: 120px;
+    padding-bottom: 120px;
+    text-align: center;
+}
+
+.orderNumber {
+    margin-bottom: 32px;
+}
+
+.description {
+    margin-bottom: 60px;
+}
+
+.image {
+    margin-bottom: 60px;
+}
+
+.status {
+    margin-bottom: 8px;
 }

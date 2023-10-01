@@ -7,7 +7,11 @@ function ProductCard(props) {
   return (
     <div className={productCardStyles.product}>
       {props.typeOfIngredient.map((ingredient) => (
-        <div key={ingredient._id} className={productCardStyles.productItem}>
+        <div
+          key={ingredient._id}
+          className={productCardStyles.productItem}
+          onClick={() => props.onClick(ingredient)}
+        >
           <Counter count={1} size="default" extraClass="m-1" />
           <img
             src={ingredient.image}

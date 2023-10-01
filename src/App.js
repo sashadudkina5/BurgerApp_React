@@ -4,12 +4,15 @@ import AppHeader from "./components/AppHeader/appHeader";
 import BurgerIngredients from "./components/BurgerIngredients/burgerIngredients";
 import BurgerConstructor from "./components/BurgerConstructor/burgerConstructor";
 import Modal from "./components/Modal/modal";
+import OrderDetails from "./components/OrderDetails/orderDetails"
+import IngredientDetail from "./components/IngredientDetail/ingredientDetail"
 
 const API_URL = "https://norma.nomoreparties.space/api/ingredients";
 
 function App() {
   const [ingredients, setIngredients] = useState([]);
   const [error, setError] = useState(null);
+  const [selectedIngredient, setSelectedIngredient] = useState(null);
 
   useEffect(() => {
     fetch(API_URL)
@@ -27,6 +30,27 @@ function App() {
       });
   }, []);
 
+  const [isOrderDetailsModalOpen, setIsOrderDetailsModalOpen] = useState(false);
+  const [isIngredientDetailModalOpen, setIsIngredientDetailModalOpen] = useState(false);
+
+  const openOrderDetailsModal = () => {
+    setIsOrderDetailsModalOpen(true);
+  };
+
+  const closeOrderDetailsModal = () => {
+    setIsOrderDetailsModalOpen(false);
+  };
+
+  const openIngredientDetailModal = (ingredient) => {
+    setSelectedIngredient(ingredient);
+    setIsIngredientDetailModalOpen(true);
+  };
+
+  const closeIngredientDetailModal = () => {
+    setSelectedIngredient(null);
+    setIsIngredientDetailModalOpen(false);
+  };
+
   return (
     <div className="App">
       <AppHeader />
@@ -35,9 +59,17 @@ function App() {
           <p>Произошла ошибка: {error}</p>
         ) : (
           <>
-            <BurgerIngredients ingredients={ingredients} />
-            <BurgerConstructor ingredients={ingredients} />
-            <Modal />
+            <BurgerIngredients ingredients={ingredients} onClick={openIngredientDetailModal}/>
+            <BurgerConstructor
+              ingredients={ingredients}
+              onClick={openOrderDetailsModal}
+            />
+            <Modal title={""} isOpen={isOrderDetailsModalOpen} onClose={closeOrderDetailsModal}>
+              <OrderDetails />
+            </Modal>
+            <Modal title={"Детали ингредиента"} isOpen={isIngredientDetailModalOpen} onClose={closeIngredientDetailModal}>
+              <IngredientDetail ingredient={selectedIngredient}/>
+            </Modal>
           </>
         )}
       </main>
