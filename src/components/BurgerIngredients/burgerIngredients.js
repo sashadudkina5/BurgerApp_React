@@ -2,8 +2,9 @@ import burgerIngredientsStyles from "./burgerIngredients.module.css";
 import Tabs from "../Tabs/tabs";
 import ProductCard from "../ProductCard/productCard";
 import { useMemo } from "react";
+import { applyPropTypesToArray } from "../../utils/prop-types";
 
-function BurgerIngredients({ ingredients, onClick}) {
+function BurgerIngredients({ ingredients, onClick }) {
   const bunIngredients = useMemo(
     () => ingredients.filter((ingredient) => ingredient.type === "bun"),
     [ingredients]
@@ -31,24 +32,26 @@ function BurgerIngredients({ ingredients, onClick}) {
         >
           Булки
         </h2>
-        <ProductCard typeOfIngredient={bunIngredients} onClick={onClick}/>
+        <ProductCard typeOfIngredient={bunIngredients} onClick={onClick} />
 
         <h2
           className={`${burgerIngredientsStyles.title} text text_type_main-medium`}
         >
           Соусы
         </h2>
-        <ProductCard typeOfIngredient={sauceIngredients} onClick={onClick}/>
+        <ProductCard typeOfIngredient={sauceIngredients} onClick={onClick} />
 
         <h2
           className={`${burgerIngredientsStyles.title} text text_type_main-medium`}
         >
           Начинка
         </h2>
-        <ProductCard typeOfIngredient={mainIngredients} onClick={onClick}/>
+        <ProductCard typeOfIngredient={mainIngredients} onClick={onClick} />
       </section>
     </div>
   );
 }
+
+applyPropTypesToArray(BurgerIngredients, "ingredients");
 
 export default BurgerIngredients;

@@ -3,6 +3,7 @@ import ProductAdded from "../ProductAdded/productAdded";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import BunAddedInConstructor from "../BunAddedInConstructor/bunAddedInConstructor";
+import { applyPropTypesToArray } from "../../utils/prop-types";
 
 function BurgerConstructor({ ingredients, onClick }) {
   return (
@@ -11,7 +12,7 @@ function BurgerConstructor({ ingredients, onClick }) {
         <BunAddedInConstructor
           image={"https://code.s3.yandex.net/react/code/bun-02.png"}
           name={"Краторная булка N-200i (верх)"}
-          price={"20"}
+          price={20}
         />
         <div className={burgerConstructorStyles.innerIngredients}>
           <ProductAdded ingredients={ingredients} />
@@ -19,7 +20,7 @@ function BurgerConstructor({ ingredients, onClick }) {
         <BunAddedInConstructor
           image={"https://code.s3.yandex.net/react/code/bun-02.png"}
           name={"Краторная булка N-200i (низ)"}
-          price={"20"}
+          price={20}
         />
       </ul>
       <section className={burgerConstructorStyles.finalPrice}>
@@ -39,5 +40,7 @@ function BurgerConstructor({ ingredients, onClick }) {
     </div>
   );
 }
+
+applyPropTypesToArray(BurgerConstructor, "ingredients");
 
 export default BurgerConstructor;

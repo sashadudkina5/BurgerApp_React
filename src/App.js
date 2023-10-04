@@ -4,34 +4,26 @@ import AppHeader from "./components/AppHeader/appHeader";
 import BurgerIngredients from "./components/BurgerIngredients/burgerIngredients";
 import BurgerConstructor from "./components/BurgerConstructor/burgerConstructor";
 import Modal from "./components/Modal/modal";
-import OrderDetails from "./components/OrderDetails/orderDetails"
-import IngredientDetail from "./components/IngredientDetail/ingredientDetail"
-
-const API_URL = "https://norma.nomoreparties.space/api/ingredients";
+import OrderDetails from "./components/OrderDetails/orderDetails";
+import IngredientDetail from "./components/IngredientDetail/ingredientDetail";
+import { getIngredients } from "./utils/burger-api";
 
 function App() {
   const [ingredients, setIngredients] = useState([]);
   const [error, setError] = useState(null);
   const [selectedIngredient, setSelectedIngredient] = useState(null);
-
-  useEffect(() => {
-    fetch(API_URL)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Ошибка при загрузке данных");
-        }
-        return response.json();
-      })
-      .then((ingredientsData) => {
-        setIngredients(ingredientsData.data);
-      })
-      .catch((err) => {
-        setError("Не удалось загрузить страницу, попробуйте позже");
-      });
-  }, []);
-
   const [isOrderDetailsModalOpen, setIsOrderDetailsModalOpen] = useState(false);
   const [isIngredientDetailModalOpen, setIsIngredientDetailModalOpen] = useState(false);
+
+  useEffect(() => {
+    getIngredients()
+      .then(ingredientsData => {
+        setIngredients(ingredientsData);
+      })
+      .catch(err => {
+        setError(err.message);
+      });
+  }, []);
 
   const openOrderDetailsModal = () => {
     setIsOrderDetailsModalOpen(true);
@@ -59,17 +51,18 @@ function App() {
           <p>Произошла ошибка: {error}</p>
         ) : (
           <>
-            <BurgerIngredients ingredients={ingredients} onClick={openIngredientDetailModal}/>
-            <BurgerConstructor
-              ingredients={ingredients}
-              onClick={openOrderDetailsModal}
-            />
-            <Modal title={""} isOpen={isOrderDetailsModalOpen} onClose={closeOrderDetailsModal}>
-              <OrderDetails />
-            </Modal>
-            <Modal title={"Детали ингредиента"} isOpen={isIngredientDetailModalOpen} onClose={closeIngredientDetailModal}>
-              <IngredientDetail ingredient={selectedIngredient}/>
-            </Modal>
+            <BurgerIngredients ingredients={ingredients} onClick={openIngredientDetailModal} />
+            <BurgerConstructor ingredients={ingredients} onClick={openOrderDetailsModal} />
+            {isOrderDetailsModalOpen && (
+              <Modal title={""} onClose={closeOrderDetailsModal}>
+                <OrderDetails />
+              </Modal>
+            )}
+            {isIngredientDetailModalOpen && (
+              <Modal title={"Детали ингредиента"} onClose={closeIngredientDetailModal}>
+                <IngredientDetail ingredient={selectedIngredient} />
+              </Modal>
+            )}
           </>
         )}
       </main>

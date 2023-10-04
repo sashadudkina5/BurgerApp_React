@@ -4,7 +4,7 @@ import ModalOverlay from "../ModalOverlay/modalOverlay";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useEffect } from "react";
 
-function Modal({ title, children, isOpen, onClose }) {
+function Modal({ title, children, onClose }) {
   const modalRoot = document.getElementById("modal-root");
 
   useEffect(() => {
@@ -14,16 +14,12 @@ function Modal({ title, children, isOpen, onClose }) {
       }
     };
 
-    if (isOpen) {
-      document.addEventListener("keydown", handleEscapeKey);
-    }
+    document.addEventListener("keydown", handleEscapeKey);
 
-    if (!isOpen) {
+    return () => {
       document.removeEventListener("keydown", handleEscapeKey);
-    }
-  }, [isOpen, onClose]);
-
-  if (!isOpen) return null;
+    };
+  }, [onClose]);
 
   return ReactDOM.createPortal(
     <>
