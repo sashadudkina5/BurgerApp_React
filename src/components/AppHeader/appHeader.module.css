@@ -1,0 +1,33 @@
+.header {
+    margin: 0 auto;
+    margin-top: 40px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+}
+
+.link {
+    text-decoration: none;
+    color: #8585ad;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+}
+
+.navBar {
+    column-gap: 8px;
+    display: flex;
+}
+
+.icon {
+    display: block;
+}

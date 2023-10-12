@@ -1,0 +1,16 @@
+.title {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.wrapper {
+    width: 600px;
+    padding-bottom: 60px;
+}
+
+.section {
+    max-height: 912px;
+    overflow-y: auto; 
+    padding-right: 15px;
+}
