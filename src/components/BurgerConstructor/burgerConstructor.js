@@ -4,8 +4,12 @@ import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import BunAddedInConstructor from "../BunAddedInConstructor/bunAddedInConstructor";
 import { applyPropTypesToArray } from "../../utils/prop-types";
+import { useSelector } from "react-redux";
+import {getConstructorIngredients} from '../../redux_services/selectors'
+
 
 function BurgerConstructor({ ingredients, onClick }) {
+
   return (
     <div className={burgerConstructorStyles.wrapper}>
       <ul className={burgerConstructorStyles.list}>

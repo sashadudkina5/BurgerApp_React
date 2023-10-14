@@ -2,15 +2,25 @@ import productCardStyles from "./productCard.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { applyPropTypesToArray } from "../../utils/prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import {showIngredientDetails} from "../../redux_services/ingredients/actions"
 
 function ProductCard(props) {
+
+  const dispatch = useDispatch();
+
+  const openIngredientDetailModal = (ingredient) => {
+    dispatch(showIngredientDetails(ingredient));
+  };
+
+
   return (
     <div className={productCardStyles.product}>
       {props.typeOfIngredient.map((ingredient) => (
         <div
           key={ingredient._id}
           className={productCardStyles.productItem}
-          onClick={() => props.onClick(ingredient)}
+          onClick={() => openIngredientDetailModal(ingredient)}
         >
           <Counter count={1} size="default" extraClass="m-1" />
           <img

@@ -7,25 +7,43 @@ import Modal from "./components/Modal/modal";
 import OrderDetails from "./components/OrderDetails/orderDetails";
 import IngredientDetail from "./components/IngredientDetail/ingredientDetail";
 import { getIngredients } from "./utils/burger-api";
+import {
+  getIngredientsRequest,
+  getIngredientsSuccess,
+  getIngredientsFailed,
+  showIngredientDetails,
+  hideIngredientDetails
+} from "./redux_services/ingredients/actions";
+import { useDispatch, useSelector } from "react-redux";
+import {getListOfIngredients} from "./redux_services/selectors"
 
 function App() {
-  const [ingredients, setIngredients] = useState([]);
-  const [error, setError] = useState(null);
-  const [selectedIngredient, setSelectedIngredient] = useState(null);
+
+  const dispatch = useDispatch();
+
+  //const [selectedIngredient, setSelectedIngredient] = useState(null);
   const [isOrderDetailsModalOpen, setIsOrderDetailsModalOpen] = useState(false);
-  const [isIngredientDetailModalOpen, setIsIngredientDetailModalOpen] = useState(false);
+  // const [isIngredientDetailModalOpen, setIsIngredientDetailModalOpen] =
+    //useState(false); 
+
+  const ingredientsState = useSelector(getListOfIngredients);
+  const { ingredientsData, isLoading, error, isIngredientDetailModalOpen} = ingredientsState;
 
   useEffect(() => {
+
+    dispatch(getIngredientsRequest());
+  
     getIngredients()
       .then(ingredientsData => {
-        setIngredients(ingredientsData);
+        dispatch(getIngredientsSuccess(ingredientsData));
       })
-      .catch(err => {
-        setError(err.message);
+      .catch(error => {
+        console.log(error);
+        dispatch(getIngredientsFailed(error.message));
       });
-  }, []);
+  }, [dispatch]);
 
-  const openOrderDetailsModal = () => {
+const openOrderDetailsModal = () => {
     setIsOrderDetailsModalOpen(true);
   };
 
@@ -33,38 +51,58 @@ function App() {
     setIsOrderDetailsModalOpen(false);
   };
 
-  const openIngredientDetailModal = (ingredient) => {
+  {/* const openIngredientDetailModal = (ingredient) => {
     setSelectedIngredient(ingredient);
     setIsIngredientDetailModalOpen(true);
-  };
+  }; */}
 
-  const closeIngredientDetailModal = () => {
+
+const openIngredientDetailModal = (ingredient) => {
+ dispatch(showIngredientDetails(ingredient))
+}
+
+    {/*const closeIngredientDetailModal = () => {
     setSelectedIngredient(null);
     setIsIngredientDetailModalOpen(false);
-  };
+  };*/}
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+if (error) {
+    return <p>Произошла ошибка: {error}</p>;
+  } 
+
 
   return (
     <div className="App">
       <AppHeader />
       <main className="mainWrapper">
-        {error ? (
-          <p>Произошла ошибка: {error}</p>
-        ) : (
           <>
-            <BurgerIngredients ingredients={ingredients} onClick={openIngredientDetailModal} />
-            <BurgerConstructor ingredients={ingredients} onClick={openOrderDetailsModal} />
+            <BurgerIngredients
+              ingredients={ingredientsData.data}
+              onClick={openIngredientDetailModal}
+            />
+            <BurgerConstructor
+              ingredients={ingredientsData.data}
+              onClick={openOrderDetailsModal}
+            /> 
+            
             {isOrderDetailsModalOpen && (
               <Modal title={""} onClose={closeOrderDetailsModal}>
                 <OrderDetails />
               </Modal>
             )}
             {isIngredientDetailModalOpen && (
-              <Modal title={"Детали ингредиента"} onClose={closeIngredientDetailModal}>
-                <IngredientDetail ingredient={selectedIngredient} />
-              </Modal>
+              <Modal
+                title={"Детали ингредиента"}
+                onClose={() => dispatch(hideIngredientDetails())}
+              >
+                <IngredientDetail />
+              </Modal> 
             )}
           </>
-        )}
       </main>
     </div>
   );
