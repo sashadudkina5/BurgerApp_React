@@ -83,21 +83,21 @@ function BurgerIngredients({ ingredients }) {
         >
           Булки
         </h2>
-        <ProductCard typeOfIngredient={bunIngredients} onClick={openIngredientDetailModal} data-testid={`box`}/>
+        <ProductCard typeOfIngredient={bunIngredients} onClick={openIngredientDetailModal} data-testid={`box`} ref={drag} />
 
         <h2
           className={`${burgerIngredientsStyles.title} text text_type_main-medium`} ref={saucesRef}
         >
           Соусы
         </h2>
-        <ProductCard typeOfIngredient={sauceIngredients} onClick={openIngredientDetailModal} data-testid={`box`} />
+        <ProductCard typeOfIngredient={sauceIngredients} onClick={openIngredientDetailModal} data-testid={`box`} ref={drag} />
 
         <h2
           className={`${burgerIngredientsStyles.title} text text_type_main-medium`} ref={mainRef}
         >
           Начинка
         </h2>
-        <ProductCard typeOfIngredient={mainIngredients} onClick={openIngredientDetailModal} data-testid={`box`}/>
+        <ProductCard typeOfIngredient={mainIngredients} onClick={openIngredientDetailModal} data-testid={`box`} ref={drag} />
       </section>
     </div>
   );
