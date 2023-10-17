@@ -16,6 +16,11 @@ export const addIngredient = (ingredientObj) => ({
     uniqId: nanoid()
 });
 
+export const deleteIngredient = (ingredientObj) => ({
+    type: DELETE_INGREDIENT,
+    payload: ingredientObj.uniqId,
+});
+
 export const getIngredientsRequest = () => ({
     type: GET_INGREDIENTS_REQUEST,
 });

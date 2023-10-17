@@ -7,8 +7,6 @@ function IngredientDetail({ingredient}) {
 
   const selectedIngredient = useSelector(getIngredientDetails);
 
-
-
   if (!selectedIngredient) {
     return null; // Return null if no ingredient is selected
   }
@@ -20,7 +18,7 @@ function IngredientDetail({ingredient}) {
         src={selectedIngredient.image}
         alt={selectedIngredient.name}
       />
-      <p className={ingredientDetailStyles.name}>{ingredient.name}</p>
+      <p className={ingredientDetailStyles.name}>{selectedIngredient.name}</p>
       <div className={ingredientDetailStyles.details}>
         <ul className={ingredientDetailStyles.detailsList}>
           <li className={ingredientDetailStyles.detailsItem}>

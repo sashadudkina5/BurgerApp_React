@@ -3,7 +3,7 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { applyPropTypesToArray } from "../../utils/prop-types";
 import { useDispatch, useSelector } from "react-redux";
-import {showIngredientDetails} from "../../redux_services/ingredients/actions"
+import {showIngredientDetails} from "../../redux_services/ingredients/actions";
 
 function ProductCard(props) {
 
@@ -13,7 +13,6 @@ function ProductCard(props) {
     dispatch(showIngredientDetails(ingredient));
   };
 
-
   return (
     <div className={productCardStyles.product}>
       {props.typeOfIngredient.map((ingredient) => (
@@ -22,7 +21,7 @@ function ProductCard(props) {
           className={productCardStyles.productItem}
           onClick={() => openIngredientDetailModal(ingredient)}
         >
-          <Counter count={1} size="default" extraClass="m-1" />
+          <Counter count={1} size="default" extraClass="m-1" name={ingredient.name}/>
           <img
             src={ingredient.image}
             alt={ingredient.name}

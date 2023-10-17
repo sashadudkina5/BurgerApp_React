@@ -15,16 +15,16 @@ import {
   hideIngredientDetails
 } from "./redux_services/ingredients/actions";
 import { useDispatch, useSelector } from "react-redux";
-import {getListOfIngredients} from "./redux_services/selectors"
+import {getListOfIngredients} from "./redux_services/selectors";
+import { HTML5Backend } from 'react-dnd-html5-backend'
+import { DndProvider } from 'react-dnd'
 
 function App() {
 
   const dispatch = useDispatch();
 
-  //const [selectedIngredient, setSelectedIngredient] = useState(null);
   const [isOrderDetailsModalOpen, setIsOrderDetailsModalOpen] = useState(false);
-  // const [isIngredientDetailModalOpen, setIsIngredientDetailModalOpen] =
-    //useState(false); 
+
 
   const ingredientsState = useSelector(getListOfIngredients);
   const { ingredientsData, isLoading, error, isIngredientDetailModalOpen} = ingredientsState;
@@ -51,20 +51,10 @@ const openOrderDetailsModal = () => {
     setIsOrderDetailsModalOpen(false);
   };
 
-  {/* const openIngredientDetailModal = (ingredient) => {
-    setSelectedIngredient(ingredient);
-    setIsIngredientDetailModalOpen(true);
-  }; */}
-
 
 const openIngredientDetailModal = (ingredient) => {
  dispatch(showIngredientDetails(ingredient))
 }
-
-    {/*const closeIngredientDetailModal = () => {
-    setSelectedIngredient(null);
-    setIsIngredientDetailModalOpen(false);
-  };*/}
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -77,6 +67,7 @@ if (error) {
 
   return (
     <div className="App">
+      <DndProvider backend={HTML5Backend}>
       <AppHeader />
       <main className="mainWrapper">
           <>
@@ -104,6 +95,7 @@ if (error) {
             )}
           </>
       </main>
+      </DndProvider>
     </div>
   );
 }
