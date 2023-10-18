@@ -16,6 +16,7 @@ const initialState = {
   isLoading: false,
   error: null,
   constructorIngredients: [],
+  bun: null,
   ingredientDetails: null,
   isIngredientDetailModalOpen: false
 };
@@ -44,6 +45,10 @@ export const ingredientsReducer = (state = initialState, action) => {
     }
 
     case ADD_INGREDIENT: {
+        if (action.payload.ingredient.type === "bun") {
+            return {...state, bun: action.payload }
+        }
+
       return {
         ...state,
         constructorIngredients: [

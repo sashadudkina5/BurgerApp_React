@@ -6,12 +6,8 @@
 }
 
 .list {
-    display: flex;
-    flex-direction: column;
     margin: 0;
     padding: 0;
-    max-height: 910px;
-    margin-bottom: 40px;
 }
 
 .listItem {

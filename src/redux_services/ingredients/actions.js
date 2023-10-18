@@ -12,13 +12,12 @@ export const HIDE_INGREDIENT_DETAILS = 'HIDE_INGREDIENT_DETAILS';
 
 export const addIngredient = (ingredientObj) => ({
     type: ADD_INGREDIENT,
-    payload: {...ingredientObj},
-    uniqId: nanoid()
+    payload: {...ingredientObj, uniqID: nanoid()},
 });
 
 export const deleteIngredient = (ingredientObj) => ({
     type: DELETE_INGREDIENT,
-    payload: ingredientObj.uniqId,
+    payload: ingredientObj,
 });
 
 export const getIngredientsRequest = () => ({

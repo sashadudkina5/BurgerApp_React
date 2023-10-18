@@ -8,10 +8,10 @@ useEffect(() => {
     if (inViewBuns) {
       setCurrent('bun')
     }
-    if (inViewSauces) {
+    else if (inViewSauces) {
       setCurrent('sauce')
     }
-    if (inViewMain) {
+    else if (inViewMain) {
       setCurrent('main')
     }
   }, [inViewBuns, inViewSauces, inViewMain]);
@@ -19,13 +19,13 @@ useEffect(() => {
   return (
     <div style={{ display: 'flex' }}>
       <Tab value="bun" active={current === 'bun'}>
-        One
+        Булки
       </Tab>
       <Tab value="sauce" active={current === 'sauce'}>
-        Two
+        Соусы
       </Tab>
       <Tab value="main" active={current === 'main'}>
-        Three
+        Начинки
       </Tab>
     </div>
   )

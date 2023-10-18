@@ -5,18 +5,12 @@ import ProductCard from "../ProductCard/productCard";
 import { useMemo } from "react";
 import { applyPropTypesToArray } from "../../utils/prop-types";
 import { useDispatch, useSelector } from "react-redux";
-import {showIngredientDetails, addIngredient} from "../../redux_services/ingredients/actions"
+import {showIngredientDetails} from "../../redux_services/ingredients/actions"
 import {getBurgerIngredients} from "../../redux_services/selectors";
-import { useDrag } from 'react-dnd';
-import { ItemTypes } from "../../utils/item-types-dnd"
 
 function BurgerIngredients({ ingredients }) {
   const dispatch = useDispatch();
   const data = useSelector(getBurgerIngredients)
-
-  const onAdd = (ingredientObj) => {
-    dispatch(addIngredient(ingredientObj))
-  }
 
   const openIngredientDetailModal = (ingredient) => {
     dispatch(showIngredientDetails(ingredient));
@@ -52,21 +46,6 @@ function BurgerIngredients({ ingredients }) {
     [ingredients]
   );
 
-  const [{ isDragging }, drag] = useDrag(() => ({
-    type: ItemTypes.BOX,
-    item: {ProductCard},
-    end: (item, monitor) => {
-      const dropResult = monitor.getDropResult()
-      if (item && dropResult) {
-        onAdd(item)
-      }
-    },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-      handlerId: monitor.getHandlerId(),
-    }),
-  }))
-
   
 
   return (
@@ -79,25 +58,25 @@ function BurgerIngredients({ ingredients }) {
       <Tabs inViewBuns={inViewBuns} inViewSauces={inViewSauces} inViewMain={inViewMain}/>
       <section className={burgerIngredientsStyles.section}>
         <h2
-          className={`${burgerIngredientsStyles.title} text text_type_main-medium`} ref={bunsRef}
+          className={`${burgerIngredientsStyles.title} text text_type_main-medium`}
         >
           Булки
         </h2>
-        <ProductCard typeOfIngredient={bunIngredients} onClick={openIngredientDetailModal} data-testid={`box`} ref={drag} />
+        <ProductCard typeOfIngredient={bunIngredients} onClick={openIngredientDetailModal} data-testid={`box`} ref={bunsRef}/>
 
         <h2
-          className={`${burgerIngredientsStyles.title} text text_type_main-medium`} ref={saucesRef}
+          className={`${burgerIngredientsStyles.title} text text_type_main-medium`}
         >
           Соусы
         </h2>
-        <ProductCard typeOfIngredient={sauceIngredients} onClick={openIngredientDetailModal} data-testid={`box`} ref={drag} />
+        <ProductCard typeOfIngredient={sauceIngredients} onClick={openIngredientDetailModal} data-testid={`box`} ref={saucesRef} />
 
         <h2
-          className={`${burgerIngredientsStyles.title} text text_type_main-medium`} ref={mainRef}
+          className={`${burgerIngredientsStyles.title} text text_type_main-medium`}
         >
           Начинка
         </h2>
-        <ProductCard typeOfIngredient={mainIngredients} onClick={openIngredientDetailModal} data-testid={`box`} ref={drag} />
+        <ProductCard typeOfIngredient={mainIngredients} onClick={openIngredientDetailModal} data-testid={`box`} ref={mainRef} />
       </section>
     </div>
   );
