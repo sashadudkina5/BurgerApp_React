@@ -1,28 +1,27 @@
 import burgerConstructorStyles from "./burgerConstructor.module.css";
-import ProductAdded from "../ProductAdded/productAdded";
 import {
   Button,
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import BunAddedInConstructor from "../BunAddedInConstructor/bunAddedInConstructor";
 import { applyPropTypesToArray } from "../../utils/prop-types";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector} from "react-redux";
 import { getConstructorIngredients, getBunData } from "../../redux_services/selectors";
-import { deleteIngredient } from "../../redux_services/ingredients/actions";
 import { useDrop } from "react-dnd";
 import { ItemTypes } from "../../utils/item-types-dnd";
-import { useMemo } from "react";
-import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useMemo, useCallback, useState, useEffect } from "react";
+import update from 'immutability-helper';
+import SortingIngredients from "../SortingIngredients/sortingIngredients"
 
 function BurgerConstructor({ onClick }) {
-  const dispatch = useDispatch();
   const data = useSelector(getConstructorIngredients);
   const bunData = useSelector(getBunData);
 
-  const onDelete = (ingredientObj) => {
-    dispatch(deleteIngredient(ingredientObj));
-  };
+  const [items, setCards] = useState(data);
+  useEffect(() => {
+    setCards(data);
+  }, [data]);
+
 
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: ItemTypes.BOX,
@@ -40,24 +39,6 @@ function BurgerConstructor({ onClick }) {
     backgroundColor = "darkkhaki";
   }
 
-  const mappedElements = useMemo(
-    () =>
-      data.map((item) => {
-          return (
-            <>
-            <DragIcon />
-            <ConstructorElement
-              data-testid="dustbin"
-              text={item.ingredient.name}
-              price={item.ingredient.price}
-              thumbnail={item.ingredient.image}
-              handleClose={() => onDelete(item.uniqID)}
-              key={item.uniqID}
-            />
-            </>
-          )},
-    [data]
-  ));
 
   const price = useMemo(() => {
     const bunPrice = bunData?.ingredient?.price || 0;
@@ -66,12 +47,34 @@ function BurgerConstructor({ onClick }) {
   }, [data, bunData]);
 
 
+  const moveCard = useCallback((dragIndex, hoverIndex) => {
+    setCards((prevCards) =>
+      update(prevCards, {
+        $splice: [
+          [dragIndex, 1],
+          [hoverIndex, 0, prevCards[dragIndex]],
+        ],
+      }),
+    )
+  }, [])
+  
+  const renderCard = useCallback((card, index) => {
+    return (
+      <SortingIngredients
+        index={index}
+        moveCard={moveCard}
+        key={card.uniqID} 
+      />
+    )
+  }, [])
+
 
   return (
     <div className={burgerConstructorStyles.wrapper} ref={drop}>
 
       {(bunData && bunData.ingredient) ? (
-         <>
+        <>
+      <div className={burgerConstructorStyles.item}>
       <ConstructorElement
         type="top"
         isLocked={true}
@@ -79,9 +82,13 @@ function BurgerConstructor({ onClick }) {
         price={bunData.ingredient.price}
         thumbnail={bunData.ingredient.image}
       />
+      </div>
 
-      <ul className={burgerConstructorStyles.list}>{mappedElements}</ul>
+      <ul className={burgerConstructorStyles.list}>
+      <div >{items.map((card, i) => renderCard(card, i))}</div>
+      </ul>
 
+      <div className={burgerConstructorStyles.item}>
       <ConstructorElement
         type="bottom"
         isLocked={true}
@@ -89,29 +96,16 @@ function BurgerConstructor({ onClick }) {
         price={bunData.ingredient.price}
         thumbnail={bunData.ingredient.image}
       />
+      </div>
       </>) : (
          <>
         <p>Выберите булку и начинку</p>
 
-      <ul className={burgerConstructorStyles.list}>{mappedElements}</ul>
+        <ul className={burgerConstructorStyles.list}>
+        <div >{items.map((card, i) => renderCard(card, i))}</div>
+       </ul>
       </>
       )}
-      {/* <ul className={burgerConstructorStyles.list}>
-        <BunAddedInConstructor
-          image={"https://code.s3.yandex.net/react/code/bun-02.png"}
-          name={"Краторная булка N-200i (верх)"}
-          price={20}
-        />
-        <div className={burgerConstructorStyles.innerIngredients}>
-          <ProductAdded ingredients={ingredients} />
-        </div>
-        <BunAddedInConstructor
-          image={"https://code.s3.yandex.net/react/code/bun-02.png"}
-          name={"Краторная булка N-200i (низ)"}
-          price={20}
-        />
-      </ul>
-  */}
       <section className={burgerConstructorStyles.finalPrice}>
         <div className={burgerConstructorStyles.finalPriceWrapper}>
           <p className="text text_type_main-large">{price}</p>
