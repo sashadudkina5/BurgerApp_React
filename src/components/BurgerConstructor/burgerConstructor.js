@@ -9,18 +9,12 @@ import { useSelector} from "react-redux";
 import { getConstructorIngredients, getBunData } from "../../redux_services/selectors";
 import { useDrop } from "react-dnd";
 import { ItemTypes } from "../../utils/item-types-dnd";
-import { useMemo, useCallback, useState, useEffect } from "react";
-import update from 'immutability-helper';
+import { useMemo, useCallback } from "react";
 import SortingIngredients from "../SortingIngredients/sortingIngredients"
 
 function BurgerConstructor({ onClick }) {
   const data = useSelector(getConstructorIngredients);
   const bunData = useSelector(getBunData);
-
-  const [items, setCards] = useState(data);
-  useEffect(() => {
-    setCards(data);
-  }, [data]);
 
 
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
@@ -46,27 +40,17 @@ function BurgerConstructor({ onClick }) {
     return bunPrice * 2 + ingredientsPrice;
   }, [data, bunData]);
 
-
-  const moveCard = useCallback((dragIndex, hoverIndex) => {
-    setCards((prevCards) =>
-      update(prevCards, {
-        $splice: [
-          [dragIndex, 1],
-          [hoverIndex, 0, prevCards[dragIndex]],
-        ],
-      }),
-    )
-  }, [])
   
   const renderCard = useCallback((card, index) => {
     return (
       <SortingIngredients
         index={index}
-        moveCard={moveCard}
-        key={card.uniqID} 
+        key={card.uniqID}
+        item={card}
       />
     )
   }, [])
+
 
 
   return (
@@ -85,7 +69,7 @@ function BurgerConstructor({ onClick }) {
       </div>
 
       <ul className={burgerConstructorStyles.list}>
-      <div >{items.map((card, i) => renderCard(card, i))}</div>
+      <div >{data.map((card, i) => renderCard(card, i))}</div>
       </ul>
 
       <div className={burgerConstructorStyles.item}>
@@ -102,7 +86,7 @@ function BurgerConstructor({ onClick }) {
         <p>Выберите булку и начинку</p>
 
         <ul className={burgerConstructorStyles.list}>
-        <div >{items.map((card, i) => renderCard(card, i))}</div>
+        <div >{data.map((card, i) => renderCard(card, i))}</div>
        </ul>
       </>
       )}

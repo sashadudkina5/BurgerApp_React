@@ -5,7 +5,7 @@ import ProductCard from "../ProductCard/productCard";
 import { useMemo } from "react";
 import { applyPropTypesToArray } from "../../utils/prop-types";
 import { useDispatch, useSelector } from "react-redux";
-import {showIngredientDetails} from "../../redux_services/ingredients/actions"
+import {showIngredientDetails} from "../IngredientDetail/actions"
 import {getBurgerIngredients} from "../../redux_services/selectors";
 
 function BurgerIngredients({ ingredients }) {

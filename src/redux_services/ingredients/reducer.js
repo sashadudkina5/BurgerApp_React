@@ -1,11 +1,7 @@
 import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
-  GET_INGREDIENTS_FAILED,
-  ADD_INGREDIENT,
-  DELETE_INGREDIENT,
-  SHOW_INGREDIENT_DETAILS,
-  HIDE_INGREDIENT_DETAILS,
+  GET_INGREDIENTS_FAILED
 } from "../ingredients/actions";
 
 // Исходное состояние
@@ -15,10 +11,6 @@ const initialState = {
   },
   isLoading: false,
   error: null,
-  constructorIngredients: [],
-  bun: null,
-  ingredientDetails: null,
-  isIngredientDetailModalOpen: false
 };
 
 export const ingredientsReducer = (state = initialState, action) => {
@@ -42,41 +34,6 @@ export const ingredientsReducer = (state = initialState, action) => {
         isLoading: false,
         error: action.error,
       };
-    }
-
-    case ADD_INGREDIENT: {
-        if (action.payload.ingredient.type === "bun") {
-            return {...state, bun: action.payload }
-        }
-
-      return {
-        ...state,
-        constructorIngredients: [
-          ...state.constructorIngredients,
-          action.payload,
-        ],
-      };
-    }
-
-    case DELETE_INGREDIENT: {
-      return {
-        ...state,
-        constructorIngredients: state.constructorIngredients.filter(
-          ({ uniqID }) => uniqID !== action.payload
-        ),
-      };
-    }
-
-    case SHOW_INGREDIENT_DETAILS: {
-      return {
-        ...state,
-        ingredientDetails: action.payload,
-        isIngredientDetailModalOpen: true
-      };
-    }
-
-    case HIDE_INGREDIENT_DETAILS: {
-      return { ...state, ingredientDetails: [], isIngredientDetailModalOpen: false };
     }
 
     // Реакция на прочие типы экшенов

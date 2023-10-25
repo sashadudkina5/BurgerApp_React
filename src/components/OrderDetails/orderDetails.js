@@ -1,13 +1,17 @@
 import orderDetailsStyles from "./orderDetails.module.css";
 import image from "../../images/done.png";
+import { useSelector } from 'react-redux';
 
 function OrderDetails() {
+
+  const orderNumber = useSelector(state => state.orderStore.orderNumber);
+
   return (
     <div className={orderDetailsStyles.wrapper}>
       <h2
         className={`text text_type_digits-large ${orderDetailsStyles.orderNumber}`}
       >
-        034536
+        {orderNumber}
       </h2>
       <p
         className={`text text_type_main-medium ${orderDetailsStyles.description}`}

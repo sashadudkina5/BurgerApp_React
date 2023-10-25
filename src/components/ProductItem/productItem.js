@@ -1,7 +1,7 @@
 import { useDrag } from 'react-dnd';
 import { ItemTypes } from "../../utils/item-types-dnd";
 import { useDispatch } from "react-redux";
-import {addIngredient} from "../../redux_services/ingredients/actions";
+import {addIngredient} from "../BurgerConstructor/actions";
 
 
 function ProductItem ({children, ingredient}) {

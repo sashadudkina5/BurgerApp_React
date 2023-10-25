@@ -2,23 +2,20 @@ import {
     DragIcon,
     ConstructorElement,
   } from "@ya.praktikum/react-developer-burger-ui-components";
-  import { useDispatch, useSelector } from "react-redux";
-import { useMemo } from "react";
+  import { useDispatch } from "react-redux";
 import sortingIngredientsStyles from "./sortingIngredientsStyles.module.css";
-import { deleteIngredient } from "../../redux_services/ingredients/actions";
+import { deleteIngredient } from "../BurgerConstructor/actions";
 import { useRef } from 'react'
 import { useDrop, useDrag } from 'react-dnd'
 import { ItemTypes } from "../../utils/item-types-dnd";
-import { getConstructorIngredients, getBunData } from "../../redux_services/selectors";
+import {CONSTRUCTOR_REORDER} from "../BurgerConstructor/actions"
 
-function SortingIngredients({ index, moveCard }) {
-  const data = useSelector(getConstructorIngredients);
+function SortingIngredients({ index, item }) {
 
     const dispatch = useDispatch();
     const onDelete = (ingredientObj) => {
         dispatch(deleteIngredient(ingredientObj));
       };
-
 
       
       const ref = useRef(null)
@@ -52,7 +49,15 @@ function SortingIngredients({ index, moveCard }) {
           if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
             return
           }
-          moveCard(dragIndex, hoverIndex)
+          dispatch(
+            {
+              type: CONSTRUCTOR_REORDER,
+              payload: {
+                from: dragIndex,
+                to: hoverIndex
+              },
+            }
+          );
           item.index = hoverIndex
         },
       })
@@ -65,10 +70,8 @@ function SortingIngredients({ index, moveCard }) {
           isDragging: monitor.isDragging(),
         }),
       })
-    
-    const mappedElements = useMemo(
-        () =>
-          data.map((item) => (
+      drag(drop(ref))
+      return   ( <div ref={ref} data-handler-id={handlerId}>
             <div className={sortingIngredientsStyles.item} key={item.uniqID}>
               <DragIcon />
               <ConstructorElement
@@ -80,13 +83,6 @@ function SortingIngredients({ index, moveCard }) {
                 key={item.uniqID}
               />
             </div>
-          )), [data, onDelete]
-      );
-
-      console.log(mappedElements)
-      
-      return   ( <div ref={ref} data-handler-id={handlerId}>
-      {mappedElements}
     </div>)
 }
 

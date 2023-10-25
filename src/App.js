@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import React from "react";
 import "./App.css";
 import AppHeader from "./components/AppHeader/appHeader";
 import BurgerIngredients from "./components/BurgerIngredients/burgerIngredients";
@@ -10,14 +11,19 @@ import { getIngredients } from "./utils/burger-api";
 import {
   getIngredientsRequest,
   getIngredientsSuccess,
-  getIngredientsFailed,
+  getIngredientsFailed
+} from "./redux_services/ingredients/actions";
+import {
   showIngredientDetails,
   hideIngredientDetails
-} from "./redux_services/ingredients/actions";
+} from "./components/IngredientDetail/actions";
 import { useDispatch, useSelector } from "react-redux";
 import {getListOfIngredients} from "./redux_services/selectors";
-import { HTML5Backend } from 'react-dnd-html5-backend'
-import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd';
+import {createOrder} from "../src/components/OrderDetails/thunk";
+import { getConstructorIngredients, getBunData } from "../src/redux_services/selectors";
+
 
 function App() {
 
@@ -28,6 +34,23 @@ function App() {
 
   const ingredientsState = useSelector(getListOfIngredients);
   const { ingredientsData, isLoading, error, isIngredientDetailModalOpen} = ingredientsState;
+
+  const data = useSelector(getConstructorIngredients);
+  const bunData = useSelector(getBunData);
+
+
+  const getIngredientIDs = () => {
+    const innerIngredientIDs = data.map(item => item.ingredient._id);
+    const idValue = bunData.ingredient._id;
+    const bunIDs = [idValue];
+    const ingredientIDs = innerIngredientIDs.concat(bunIDs, bunIDs);
+  
+    return {
+      ingredients: ingredientIDs
+    };
+  }
+  
+
 
   useEffect(() => {
 
@@ -45,6 +68,7 @@ function App() {
 
 const openOrderDetailsModal = () => {
     setIsOrderDetailsModalOpen(true);
+    createOrder(getIngredientIDs());
   };
 
   const closeOrderDetailsModal = () => {

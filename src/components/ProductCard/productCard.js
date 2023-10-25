@@ -3,7 +3,7 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { applyPropTypesToArray } from "../../utils/prop-types";
 import { useDispatch, useSelector } from "react-redux";
-import {showIngredientDetails} from "../../redux_services/ingredients/actions";
+import {showIngredientDetails} from "../IngredientDetail/actions";
 import {getConstructorIngredients, getBunData} from "../../redux_services/selectors"
 import React, {useMemo} from "react";
 import ProductItem from "../ProductItem/productItem"
