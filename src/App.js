@@ -18,7 +18,7 @@ import {
   hideIngredientDetails
 } from "./components/IngredientDetail/actions";
 import { useDispatch, useSelector } from "react-redux";
-import {getListOfIngredients} from "./redux_services/selectors";
+import {getListOfIngredients, getIngredientDetailsModalState} from "./redux_services/selectors";
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import {createOrder} from "../src/components/OrderDetails/thunk";
@@ -31,9 +31,13 @@ function App() {
 
   const [isOrderDetailsModalOpen, setIsOrderDetailsModalOpen] = useState(false);
 
+  //const [isIngredientDetailModalOpen, setIngredientDetailsModalOpen] = useState(false);
+
 
   const ingredientsState = useSelector(getListOfIngredients);
-  const { ingredientsData, isLoading, error, isIngredientDetailModalOpen} = ingredientsState;
+  const { ingredientsData, isLoading, error} = ingredientsState;
+
+  const isIngredientDetailModalOpen = useSelector(getIngredientDetailsModalState);
 
   const data = useSelector(getConstructorIngredients);
   const bunData = useSelector(getBunData);

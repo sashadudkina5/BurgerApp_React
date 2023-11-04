@@ -14,6 +14,7 @@ function BurgerIngredients({ ingredients }) {
 
   const openIngredientDetailModal = (ingredient) => {
     dispatch(showIngredientDetails(ingredient));
+    console.log("wefe")
   };
 
 
