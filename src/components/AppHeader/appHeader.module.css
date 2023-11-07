@@ -12,7 +12,6 @@
 
 .link {
     text-decoration: none;
-    color: #8585ad;
     padding-top: 16px;
     padding-bottom: 16px;
     padding-left: 20px;
@@ -30,4 +29,8 @@
 
 .icon {
     display: block;
+}
+
+.activeLink {
+    color: white !important;
 }

@@ -4,11 +4,14 @@ import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { applyPropTypesToArray } from "../../utils/prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import {showIngredientDetails} from "../IngredientDetail/actions";
-import {getConstructorIngredients, getBunData} from "../../redux_services/selectors"
+import {getConstructorIngredients, getBunData, getOpenedIngredientID} from "../../redux_services/selectors"
 import React, {useMemo} from "react";
-import ProductItem from "../ProductItem/productItem"
+import ProductItem from "../ProductItem/productItem";
+import { Link, useLocation } from 'react-router-dom';
 
 const ProductCard = React.forwardRef((props, ref) => {
+
+  let location = useLocation();
 
   const dispatch = useDispatch();
 
@@ -18,6 +21,7 @@ const ProductCard = React.forwardRef((props, ref) => {
 
   const data = useSelector(getConstructorIngredients);
   const bunData = useSelector(getBunData);
+
 
   const ingredientsCounters = useMemo(() => {
     const counters = {};
@@ -33,6 +37,14 @@ const ProductCard = React.forwardRef((props, ref) => {
   return (
     <div className={productCardStyles.product} ref={ref}>
       {props.typeOfIngredient.map((ingredient) => (
+        <Link
+        to={`/ingredients/${ingredient._id}`}
+        state={{ backgroundLocation: location }}
+        style={{
+          textDecoration: "none", 
+          color: "inherit",
+        }}
+      >
         <ProductItem ingredient={ingredient}>
           <div key={ingredient._id}
           className={productCardStyles.productItem}
@@ -53,6 +65,7 @@ const ProductCard = React.forwardRef((props, ref) => {
           <p className="text text_type_main-default">{ingredient.name}</p>
           </div>
         </ProductItem>
+        </Link>
       ))}
     </div>
   );
