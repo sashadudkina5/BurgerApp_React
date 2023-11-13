@@ -6,6 +6,8 @@ export const GET_LOGIN_REQUEST = 'GET_LOGIN_REQUEST';
 export const GET_LOGIN_SUCCESS = 'GET_LOGIN_SUCCESS';
 export const GET_LOGIN_FAILED = 'GET_LOGIN_FAILED';
 
+export const GET_LOGIN_OUT_SUCCESS = 'GET_LOGIN_OUT_SUCCESS';
+
 export const getRegistrationRequest = () => ({
     type: GET_REGISTRATION_REQUEST,
 });
@@ -32,4 +34,8 @@ export const getLoginSuccess = (loginData) => ({
 export const getLoginFailed = (error) => ({
     type: GET_LOGIN_FAILED,
     error: error,
+});
+
+export const getLogOutSuccess = () => ({
+    type: GET_LOGIN_OUT_SUCCESS,
 });

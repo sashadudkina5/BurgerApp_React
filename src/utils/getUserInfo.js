@@ -1,4 +1,6 @@
 import { getCookie, fetchWithRefresh } from "../utils/api";
+import {store} from "../redux_services/store";
+import { getLoginSuccess } from "../redux_services/userData/actions";
 
 export const getUserInfo = async () => {
     try {
@@ -18,6 +20,13 @@ export const getUserInfo = async () => {
 
       if (response.success) {
         const userInfo = response.user
+        const userEmail = userInfo.email;
+        const userName = userInfo.name;
+        const loginData = {
+          email: userEmail,
+          name: userName,
+        };
+        store.dispatch(getLoginSuccess(loginData));
         return userInfo;
       } else {
         console.error("Error getting user information");

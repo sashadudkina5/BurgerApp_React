@@ -40,10 +40,16 @@ function LoginPage() {
     return <Navigate to="/" replace />;
   }
 
+  const handleFormSubmit = (e) => {
+    e.preventDefault(); 
+    onLogin(loginData)
+  };
+
   return (
     <div className={styles.page}>
       <div className={styles.window}>
         <h1 className={`text text_type_main-medium ${styles.title}`}>Вход</h1>
+        <form onSubmit={handleFormSubmit}>
         <Input
           type={"text"}
           placeholder={"E-mail"}
@@ -74,13 +80,13 @@ function LoginPage() {
         />
 
         <Button
-          htmlType="button"
+          htmlType="submit"
           type="primary"
           size="large"
-          onClick={() => onLogin(loginData)}
         >
           Войти
         </Button>
+        </form>
 
         {isLoggedIn && navigate("/")}
 

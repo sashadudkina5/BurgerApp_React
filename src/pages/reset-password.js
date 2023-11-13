@@ -4,13 +4,17 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router";
-import {getLoggedInStatus} from "../redux_services/selectors";
-import {resetPassword} from "../utils/reset-password";
+import { getLoggedInStatus } from "../redux_services/selectors";
+import { resetPassword } from "../utils/reset-password";
 
 function ResetPasswordPage() {
+
+  const navigate = useNavigate();
+
+
   const [passwordValue, setPasswordValue] = React.useState("");
   const inputRefPassword = React.useRef(null);
   const onIconClickPassword = () => {
@@ -25,19 +29,32 @@ function ResetPasswordPage() {
 
   let newPasswordData = {
     password: passwordValue,
-    token: tokenValue
-  }
+    token: tokenValue,
+  };
 
   const isLoggedIn = useSelector(getLoggedInStatus);
   if (isLoggedIn) {
     return <Navigate to="/" replace />;
   }
 
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      await resetPassword(newPasswordData);
+      navigate("/login");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className={styles.page}>
       <div className={styles.window}>
-        <h1 className={`text text_type_main-medium ${styles.title}`}>Восстановление пароля</h1>
-
+        <h1 className={`text text_type_main-medium ${styles.title}`}>
+          Восстановление пароля
+        </h1>
+        <form onSubmit={handleFormSubmit}>
         <Input
           type={"text"}
           placeholder={"Введите новый пароль"}
@@ -53,8 +70,7 @@ function ResetPasswordPage() {
           extraClass="mb-6"
         />
 
-
-<Input
+        <Input
           type={"text"}
           placeholder={"Введите код из письма"}
           onChange={(e) => setValueToken(e.target.value)}
@@ -68,13 +84,20 @@ function ResetPasswordPage() {
           extraClass="mb-6"
         />
 
-        <Button htmlType="button" type="primary" size="large" onClick={resetPassword(newPasswordData)}>
-        Сохранить
+        <Button
+          htmlType="submit"
+          type="primary"
+          size="large"
+        >
+          Сохранить
         </Button>
+        </form>
 
         <div className={`mt-20 ${styles.wrapper}`}>
-            <p className="text text_type_main-default text_color_inactive">Вспомнили пароль?</p>
-            <Link to="/login">
+          <p className="text text_type_main-default text_color_inactive">
+            Вспомнили пароль?
+          </p>
+          <Link to="/login">
             <p className="text text_type_main-default">Войти</p>
           </Link>
         </div>

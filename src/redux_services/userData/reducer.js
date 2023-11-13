@@ -4,7 +4,8 @@ import {
   GET_REGISTRATION_FAILED,
   GET_LOGIN_REQUEST,
   GET_LOGIN_SUCCESS,
-  GET_LOGIN_FAILED
+  GET_LOGIN_FAILED,
+  GET_LOGIN_OUT_SUCCESS
 } from "../userData/actions";
 
 // Исходное состояние
@@ -70,6 +71,14 @@ export const userDataReducer = (state = initialState, action) => {
           error: action.error,
         };
       }
+
+      case GET_LOGIN_OUT_SUCCESS: {
+        return {
+          ...state,
+          userData: { email: "", name: "" },
+          isLoggedIn: false,
+      }
+    };
 
     // Реакция на прочие типы экшенов
     default:

@@ -1,4 +1,6 @@
 import {getCookie, deleteCookie } from "../utils/api";
+import {store} from "../redux_services/store";
+import {getLogOutSuccess} from "../redux_services/userData/actions"
 
 export const logout = async () => {
 
@@ -7,9 +9,11 @@ export const logout = async () => {
     };
   
     try {
+      const accessToken = getCookie("accessToken");
       const response = await fetch("https://norma.nomoreparties.space/api/auth/logout", {
         method: "POST",
         headers: {
+          Authorization: accessToken,
           "Content-Type": "application/json",
         },
         body: JSON.stringify(refreshConfig),
@@ -20,9 +24,8 @@ export const logout = async () => {
         if (data.success) {
           deleteCookie("accessToken");
           deleteCookie("refreshToken");
-  
-          // редирект на страницу входа
-          //navigate("/login");
+          store.dispatch(getLogOutSuccess())
+
         } else {
           console.error("Error during logout");
         }

@@ -50,13 +50,18 @@ function RegisterPage() {
     return <Navigate to="/" replace />;
   }
 
+  const handleFormSubmit = (e) => {
+    e.preventDefault(); 
+    register(registrationData);
+  };
+
   return (
     <div className={styles.page}>
       <div className={styles.window}>
         <h1 className={`text text_type_main-medium ${styles.title}`}>
           Регистрация
         </h1>
-
+        <form onSubmit={handleFormSubmit}>
         <Input
           type={"text"}
           placeholder={"Имя"}
@@ -100,13 +105,13 @@ function RegisterPage() {
         />
 
         <Button
-          htmlType="button"
+          htmlType="submit"
           type="primary"
           size="large"
-          onClick={() => register(registrationData)}
         >
           Зарегистрироваться
         </Button>
+        </form>
 
         {isRegistered && navigate("/")}
 

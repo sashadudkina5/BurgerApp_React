@@ -28,6 +28,7 @@ import { createOrder } from "../src/components/OrderDetails/thunk";
 import {
   getConstructorIngredients,
   getBunData,
+  getLoggedInStatus
 } from "../src/redux_services/selectors";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import LoginPage from "../src/pages/login";
@@ -37,9 +38,8 @@ import ForgotPasswordPage from "../src/pages/forgot-password";
 import ProfilePage from "../src/pages/profile";
 import { ProtectedRouteElement } from "./components/ProtectedRouteElement";
 import { getUserInfo } from "./utils/getUserInfo";
-import { store } from "./redux_services/store";
-import { getLoginSuccess } from "./redux_services/userData/actions";
-import IngredientDetailPageOpened from "./pages/ingredients-id"
+import IngredientDetailPageOpened from "./pages/ingredients-id";
+import { Navigate } from "react-router";
 
 function App() {
   let location = useLocation();
@@ -61,9 +61,7 @@ function App() {
   const ingredientsState = useSelector(getListOfIngredients);
   const { ingredientsData, isLoading, error } = ingredientsState;
 
-  const isIngredientDetailModalOpen = useSelector(
-    getIngredientDetailsModalState
-  );
+
 
   const data = useSelector(getConstructorIngredients);
   const bunData = useSelector(getBunData);
@@ -92,11 +90,18 @@ function App() {
       });
   }, [dispatch]);
 
+  const isAuth = useSelector(getLoggedInStatus);
+
   const openOrderDetailsModal = () => {
-    if (data.length > 0 && bunData !== null) {
+    if (data.length > 0 && bunData !== null && isAuth) {
       setIsOrderDetailsModalOpen(true);
       createOrder(getIngredientIDs());
-    } else {
+    } 
+    else if (!isAuth) {
+      createOrder(getIngredientIDs());
+      navigate("/login");
+    }
+    else {
       return null;
     }
   };
@@ -109,6 +114,11 @@ function App() {
     dispatch(showIngredientDetails(ingredient));
   };
 
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+
+
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -117,24 +127,6 @@ function App() {
     return <p>Произошла ошибка: {error}</p>;
   }
 
-  getUserInfo()
-    .then((userInfo) => {
-      if (userInfo) {
-        const userEmail = userInfo.email;
-        const userName = userInfo.name;
-        const loginData = {
-          email: userEmail,
-          name: userName,
-        };
-
-        store.dispatch(getLoginSuccess(loginData));
-      } else {
-        console.error("Failed to get user information");
-      }
-    })
-    .catch((err) => {
-      console.error("An unexpected error occurred:", err.message);
-    });
 
   return (
       <div className="App">
