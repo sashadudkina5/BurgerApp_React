@@ -1,4 +1,9 @@
-export const resetPassword = async (newPasswordData) => {
+interface InewPasswordData {
+  password: string | number| undefined;
+  token: number | undefined,
+} 
+
+export const resetPassword = async (newPasswordData: InewPasswordData): Promise<void> => {
   try {
     const response = await fetch(
       "https://norma.nomoreparties.space/api/password-reset/reset",

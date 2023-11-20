@@ -4,40 +4,44 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Navigate } from "react-router";
 import { getLoggedInStatus } from "../redux_services/selectors";
 import { resetPassword } from "../utils/reset-password";
 
-function ResetPasswordPage() {
+export const ResetPasswordPage: React.FC = () => {
 
   const navigate = useNavigate();
 
-
-  const [passwordValue, setPasswordValue] = React.useState("");
-  const inputRefPassword = React.useRef(null);
+  const [passwordValue, setPasswordValue] = React.useState<string | number>();
+  const inputRefPassword = React.useRef<HTMLInputElement>(null);
   const onIconClickPassword = () => {
-    setTimeout(() => inputRefPassword.current.focus(), 0);
+    setTimeout(() => inputRefPassword.current?.focus(), 0);
   };
 
-  const [tokenValue, setValueToken] = React.useState("");
-  const inputRefToken = React.useRef(null);
+  const [tokenValue, setValueToken] = React.useState<number>();
+  const inputRefToken = React.useRef<HTMLInputElement>(null);
   const onIconClickToken = () => {
-    setTimeout(() => inputRefToken.current.focus(), 0);
+    setTimeout(() => inputRefToken.current?.focus(), 0);
   };
 
-  let newPasswordData = {
+  interface InewPasswordData {
+    password: string | number| undefined;
+    token: number | undefined,
+  } 
+
+  const newPasswordData: InewPasswordData = {
     password: passwordValue,
     token: tokenValue,
-  };
+   } 
+
 
   const isLoggedIn = useSelector(getLoggedInStatus);
   if (isLoggedIn) {
     return <Navigate to="/" replace />;
   }
 
-  const handleFormSubmit = async (e) => {
+  const handleFormSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
     try {
