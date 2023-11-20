@@ -4,3 +4,8 @@ export const getIngredientDetails = (state) => state.ingredientDetailsStore.ingr
 export const getBurgerIngredients = (state) => state.ingredientsStore.ingredientsData.data;
 export const getBunData = (state) => state.constructorStore.bun;
 export const getIngredientDetailsModalState = (state) => state.ingredientDetailsStore.isIngredientDetailModalOpen;
+export const getUserEmail = (state) => state.userDataStore.userData.email;
+export const getUserError = (state) => state.userDataStore.error;
+export const getLoggedInStatus = (state) => state.userDataStore.isLoggedIn;
+export const getUserData = (state) => state.userDataStore.userData;
+export const getOpenedIngredientID = (state) => state.ingredientDetailsStore.ingredientDetails;

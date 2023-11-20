@@ -1,24 +1,29 @@
-import ingredientDetailStyles from "./ingredientDetail.module.css";
+import React from "react";
+import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import {getIngredientDetails, getOpenedIngredientID} from "../../redux_services/selectors";
-import React from 'react';
+import {getBurgerIngredients} from "../redux_services/selectors";
+import ingredientDetailStyles from "../components/IngredientDetail/ingredientDetail.module.css"
 
-function IngredientDetail({ingredient}) {
+function IngredientDetailPageOpened() {
 
-  const selectedIngredient = useSelector(getIngredientDetails);
+const data = useSelector(getBurgerIngredients)
 
-  if (!selectedIngredient) {
-    return null;
-  }
+const { id } = useParams();
+
+
+ const matchingObject = data.find(obj => obj._id === id);
+
+
+  if (!matchingObject) return <p>Ingredient not found</p>;
 
   return (
     <div className={ingredientDetailStyles.wrapper}>
       <img
         className={ingredientDetailStyles.image}
-        src={selectedIngredient.image}
-        alt={selectedIngredient.name}
+        src={matchingObject.image}
+        alt={matchingObject.name}
       />
-      <p className={ingredientDetailStyles.name}>{selectedIngredient.name}</p>
+      <p className={ingredientDetailStyles.name}>{matchingObject.name}</p>
       <div className={ingredientDetailStyles.details}>
         <ul className={ingredientDetailStyles.detailsList}>
           <li className={ingredientDetailStyles.detailsItem}>
@@ -26,7 +31,7 @@ function IngredientDetail({ingredient}) {
               Калории,ккал
             </p>
             <p className="text text_type_main-default text_color_inactive">
-              {selectedIngredient.calories}
+              {matchingObject.calories}
             </p>
           </li>
           <li className={ingredientDetailStyles.detailsItem}>
@@ -34,7 +39,7 @@ function IngredientDetail({ingredient}) {
               Белки, г
             </p>
             <p className="text text_type_main-default text_color_inactive">
-              {selectedIngredient.proteins}
+              {matchingObject.proteins}
             </p>
           </li>
           <li className={ingredientDetailStyles.detailsItem}>
@@ -42,7 +47,7 @@ function IngredientDetail({ingredient}) {
               Жиры, г
             </p>
             <p className="text text_type_main-default text_color_inactive">
-              {selectedIngredient.fat}
+              {matchingObject.fat}
             </p>
           </li>
           <li className={ingredientDetailStyles.detailsItem}>
@@ -50,7 +55,7 @@ function IngredientDetail({ingredient}) {
               Углеводы, г
             </p>
             <p className="text text_type_main-default text_color_inactive">
-              {selectedIngredient.carbohydrates}
+              {matchingObject.carbohydrates}
             </p>
           </li>
         </ul>
@@ -59,4 +64,4 @@ function IngredientDetail({ingredient}) {
   );
 }
 
-export default IngredientDetail;
+export default IngredientDetailPageOpened;

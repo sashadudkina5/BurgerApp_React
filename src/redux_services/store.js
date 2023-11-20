@@ -4,6 +4,7 @@ import { ingredientsReducer } from "./ingredients/reducer";
 import { orderReducer } from "../components/OrderDetails/reducer";
 import {constructorReducer} from "../components/BurgerConstructor/reducer";
 import {ingredientDetailsReducer} from "../components/IngredientDetail/reducer";
+import { userDataReducer } from "./userData/reducer";
 
 
 const rootReducer = combineReducers({
@@ -11,6 +12,8 @@ const rootReducer = combineReducers({
   orderStore: orderReducer,
   constructorStore: constructorReducer,
   ingredientDetailsStore: ingredientDetailsReducer,
+  userDataStore: userDataReducer
+
 });
 
 export const store = configureStore({
