@@ -4,11 +4,17 @@ import ModalOverlay from "../ModalOverlay/modalOverlay";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useEffect } from "react";
 
-function Modal({ title, children, onClose }) {
-  const modalRoot = document.getElementById("modal-root");
+interface IModalProps {
+  title: string;
+  children: any;
+  onClose: () => void;
+}
+
+const Modal: React.FC<IModalProps> = ({ title, children, onClose }) => {
+  const modalRoot = document.getElementById("modal-root")!;
 
   useEffect(() => {
-    const handleEscapeKey = (event) => {
+    const handleEscapeKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         onClose();
       }
@@ -34,6 +40,6 @@ function Modal({ title, children, onClose }) {
     </>,
     modalRoot
   );
-}
+};
 
 export default Modal;

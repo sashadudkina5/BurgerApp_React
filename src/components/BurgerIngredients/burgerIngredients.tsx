@@ -1,53 +1,58 @@
 import burgerIngredientsStyles from "./burgerIngredients.module.css";
 import Tabs from "../Tabs/tabs";
-import {useInView} from 'react-intersection-observer';
+import { useInView } from "react-intersection-observer";
 import ProductCard from "../ProductCard/productCard";
 import { useMemo } from "react";
-import { applyPropTypesToArray } from "../../utils/prop-types";
-import { useDispatch, useSelector } from "react-redux";
-import {showIngredientDetails} from "../IngredientDetail/actions"
-import {getBurgerIngredients} from "../../redux_services/selectors";
+import { useDispatch } from "react-redux";
+import { showIngredientDetails } from "../IngredientDetail/actions";
 
-function BurgerIngredients({ ingredients }) {
+interface IIngredient {
+  type?: string;
+  name: string;
+  price: number;
+  _id: number;
+  image: string;
+}
+
+interface IBurgerIngredients {
+  ingredients: IIngredient[];
+  onClick: (ingredient: IIngredient) => void;
+}
+
+function BurgerIngredients({ ingredients, onClick }: IBurgerIngredients) {
   const dispatch = useDispatch();
-  const data = useSelector(getBurgerIngredients)
 
-  const openIngredientDetailModal = (ingredient) => {
+  const openIngredientDetailModal = (ingredient: IIngredient) => {
     dispatch(showIngredientDetails(ingredient));
-    console.log("wefe")
   };
 
-
   const [bunsRef, inViewBuns] = useInView({
-    treshold: 0, 
+    threshold: 0,
   });
 
   const [saucesRef, inViewSauces] = useInView({
-    treshold: 0, 
+    threshold: 0,
   });
 
   const [mainRef, inViewMain] = useInView({
-    treshold: 0,
+    threshold: 0,
   });
-
-
 
   const bunIngredients = useMemo(
     () => ingredients?.filter((ingredient) => ingredient.type === "bun") || [],
     [ingredients]
   );
-  
+
   const sauceIngredients = useMemo(
-    () => ingredients?.filter((ingredient) => ingredient.type === "sauce") || [],
+    () =>
+      ingredients?.filter((ingredient) => ingredient.type === "sauce") || [],
     [ingredients]
   );
-  
+
   const mainIngredients = useMemo(
     () => ingredients?.filter((ingredient) => ingredient.type === "main") || [],
     [ingredients]
   );
-
-  
 
   return (
     <div className={burgerIngredientsStyles.wrapper}>
@@ -56,33 +61,50 @@ function BurgerIngredients({ ingredients }) {
       >
         Соберите бургер
       </h1>
-      <Tabs inViewBuns={inViewBuns} inViewSauces={inViewSauces} inViewMain={inViewMain}/>
+      <Tabs
+        inViewBuns={inViewBuns}
+        inViewSauces={inViewSauces}
+        inViewMain={inViewMain}
+      />
       <section className={burgerIngredientsStyles.section}>
         <h2
           className={`${burgerIngredientsStyles.title} text text_type_main-medium`}
         >
           Булки
         </h2>
-        <ProductCard typeOfIngredient={bunIngredients} onClick={openIngredientDetailModal} data-testid={`box`} ref={bunsRef}/>
+        <ProductCard
+          typeOfIngredients={bunIngredients}
+          onClick={openIngredientDetailModal}
+          data-testid={`box`}
+          ref={bunsRef}
+        />
 
         <h2
           className={`${burgerIngredientsStyles.title} text text_type_main-medium`}
         >
           Соусы
         </h2>
-        <ProductCard typeOfIngredient={sauceIngredients} onClick={openIngredientDetailModal} data-testid={`box`} ref={saucesRef} />
+        <ProductCard
+          typeOfIngredients={sauceIngredients}
+          onClick={openIngredientDetailModal}
+          data-testid={`box`}
+          ref={saucesRef}
+        />
 
         <h2
           className={`${burgerIngredientsStyles.title} text text_type_main-medium`}
         >
           Начинка
         </h2>
-        <ProductCard typeOfIngredient={mainIngredients} onClick={openIngredientDetailModal} data-testid={`box`} ref={mainRef} />
+        <ProductCard
+          typeOfIngredients={mainIngredients}
+          onClick={openIngredientDetailModal}
+          data-testid={`box`}
+          ref={mainRef}
+        />
       </section>
     </div>
   );
 }
-
-applyPropTypesToArray(BurgerIngredients, "ingredients");
 
 export default BurgerIngredients;

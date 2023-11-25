@@ -14,7 +14,7 @@ import {
     switch (action.type) {
   
       case ADD_INGREDIENT: {
-          if (action.payload.ingredient.type === "bun") {
+          if (action.payload.type === "bun") {
               return {...state, bun: action.payload }
           }
   

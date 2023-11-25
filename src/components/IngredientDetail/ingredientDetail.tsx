@@ -1,29 +1,23 @@
-import React from "react";
-import { useParams } from "react-router-dom";
+import ingredientDetailStyles from "./ingredientDetail.module.css";
 import { useSelector } from "react-redux";
-import {getBurgerIngredients} from "../redux_services/selectors";
-import ingredientDetailStyles from "../components/IngredientDetail/ingredientDetail.module.css"
+import { getIngredientDetails } from "../../redux_services/selectors";
+import React from "react";
 
-function IngredientDetailPageOpened() {
+function IngredientDetail() {
+  const selectedIngredient = useSelector(getIngredientDetails);
 
-const data = useSelector(getBurgerIngredients)
-
-const { id } = useParams();
-
-
- const matchingObject = data.find(obj => obj._id === id);
-
-
-  if (!matchingObject) return <p>Ingredient not found</p>;
+  if (!selectedIngredient) {
+    return null;
+  }
 
   return (
     <div className={ingredientDetailStyles.wrapper}>
       <img
         className={ingredientDetailStyles.image}
-        src={matchingObject.image}
-        alt={matchingObject.name}
+        src={selectedIngredient.image}
+        alt={selectedIngredient.name}
       />
-      <p className={ingredientDetailStyles.name}>{matchingObject.name}</p>
+      <p className={ingredientDetailStyles.name}>{selectedIngredient.name}</p>
       <div className={ingredientDetailStyles.details}>
         <ul className={ingredientDetailStyles.detailsList}>
           <li className={ingredientDetailStyles.detailsItem}>
@@ -31,7 +25,7 @@ const { id } = useParams();
               Калории,ккал
             </p>
             <p className="text text_type_main-default text_color_inactive">
-              {matchingObject.calories}
+              {selectedIngredient.calories}
             </p>
           </li>
           <li className={ingredientDetailStyles.detailsItem}>
@@ -39,7 +33,7 @@ const { id } = useParams();
               Белки, г
             </p>
             <p className="text text_type_main-default text_color_inactive">
-              {matchingObject.proteins}
+              {selectedIngredient.proteins}
             </p>
           </li>
           <li className={ingredientDetailStyles.detailsItem}>
@@ -47,7 +41,7 @@ const { id } = useParams();
               Жиры, г
             </p>
             <p className="text text_type_main-default text_color_inactive">
-              {matchingObject.fat}
+              {selectedIngredient.fat}
             </p>
           </li>
           <li className={ingredientDetailStyles.detailsItem}>
@@ -55,7 +49,7 @@ const { id } = useParams();
               Углеводы, г
             </p>
             <p className="text text_type_main-default text_color_inactive">
-              {matchingObject.carbohydrates}
+              {selectedIngredient.carbohydrates}
             </p>
           </li>
         </ul>
@@ -64,4 +58,4 @@ const { id } = useParams();
   );
 }
 
-export default IngredientDetailPageOpened;
+export default IngredientDetail;

@@ -4,9 +4,15 @@ import {
   getRegistrationFailed,
 } from "../redux_services/userData/actions";
 import { store } from "../redux_services/store";
-import { setCookie } from "../utils/api";
+import { setCookie } from "./api";
 
-export const register = async (registrationData) => {
+interface IregistrationData {
+  password: string | number;
+  email: string;
+  name: string;
+}
+
+export const register = async (registrationData: IregistrationData) => {
   try {
     store.dispatch(getRegistrationRequest());
 
@@ -18,8 +24,8 @@ export const register = async (registrationData) => {
         cache: "no-cache",
         credentials: "same-origin",
         headers: {
-            'Content-Type': 'application/json',
-          },
+          "Content-Type": "application/json",
+        },
         redirect: "follow",
         referrerPolicy: "no-referrer",
         body: JSON.stringify(registrationData),

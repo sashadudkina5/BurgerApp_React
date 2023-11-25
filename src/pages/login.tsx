@@ -18,20 +18,25 @@ function LoginPage() {
   const registerError = useSelector(getUserError);
 
   const [emailValue, setEmailValue] = React.useState("");
-  const inputEmailRef = React.useRef(null);
+  const inputEmailRef = React.useRef<HTMLInputElement>(null);
   const onIconClickEmail = () => {
-    setTimeout(() => inputEmailRef.current.focus(), 0);
+    setTimeout(() => inputEmailRef.current?.focus(), 0);
     alert("Icon Click Callback");
   };
 
   const [passwordValue, setPasswordValue] = React.useState("");
-  const inputPasswordRef = React.useRef(null);
+  const inputPasswordRef = React.useRef<HTMLInputElement>(null);
   const onIconClickPassword = () => {
-    setTimeout(() => inputPasswordRef.current.focus(), 0);
+    setTimeout(() => inputPasswordRef.current?.focus(), 0);
     alert("Icon Click Callback");
   };
 
-  const loginData = {
+  interface ILoginData {
+    password: string | number;
+    email: string;
+  }
+
+  const loginData: ILoginData = {
     email: emailValue,
     password: passwordValue,
   };
@@ -40,9 +45,9 @@ function LoginPage() {
     return <Navigate to="/" replace />;
   }
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault(); 
-    onLogin(loginData)
+  const handleFormSubmit = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    onLogin(loginData);
   };
 
   return (
@@ -50,42 +55,38 @@ function LoginPage() {
       <div className={styles.window}>
         <h1 className={`text text_type_main-medium ${styles.title}`}>Вход</h1>
         <form onSubmit={handleFormSubmit}>
-        <Input
-          type={"text"}
-          placeholder={"E-mail"}
-          onChange={(e) => setEmailValue(e.target.value)}
-          value={emailValue}
-          name={"name"}
-          error={false}
-          ref={inputEmailRef}
-          onIconClick={onIconClickEmail}
-          errorText={"Ошибка"}
-          size={"default"}
-          extraClass="mb-6"
-        />
+          <Input
+            type={"text"}
+            placeholder={"E-mail"}
+            onChange={(e) => setEmailValue(e.target.value)}
+            value={emailValue}
+            name={"name"}
+            error={false}
+            ref={inputEmailRef}
+            onIconClick={onIconClickEmail}
+            errorText={"Ошибка"}
+            size={"default"}
+            extraClass="mb-6"
+          />
 
-        <Input
-          type={"text"}
-          placeholder={"Пароль"}
-          onChange={(e) => setPasswordValue(e.target.value)}
-          icon={"ShowIcon"}
-          value={passwordValue}
-          name={"name"}
-          error={false}
-          ref={inputPasswordRef}
-          onIconClick={onIconClickPassword}
-          errorText={"Ошибка"}
-          size={"default"}
-          extraClass="mb-6"
-        />
+          <Input
+            type={"text"}
+            placeholder={"Пароль"}
+            onChange={(e) => setPasswordValue(e.target.value)}
+            icon={"ShowIcon"}
+            value={passwordValue}
+            name={"name"}
+            error={false}
+            ref={inputPasswordRef}
+            onIconClick={onIconClickPassword}
+            errorText={"Ошибка"}
+            size={"default"}
+            extraClass="mb-6"
+          />
 
-        <Button
-          htmlType="submit"
-          type="primary"
-          size="large"
-        >
-          Войти
-        </Button>
+          <Button htmlType="submit" type="primary" size="large">
+            Войти
+          </Button>
         </form>
 
         {isLoggedIn && navigate("/")}

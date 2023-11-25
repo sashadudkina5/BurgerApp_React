@@ -1,60 +1,67 @@
 import React from "react";
 import styles from "./pages.module.css";
-import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import {
+  Input,
+  Button,
+} from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector } from "react-redux";
 import { getUserData } from "../redux_services/selectors";
-import {useState} from "react";
-import {changeUserInfo} from "../utils/change-profile-info";
-import {logout} from "../utils/logout";
+import { useState } from "react";
+import { changeUserInfo } from "../utils/change-profile-info";
+import { logout } from "../utils/logout";
 import { useNavigate } from "react-router-dom";
 
-
 function ProfilePage() {
-
   const navigate = useNavigate();
 
-  const handleLogout = (e) => {
+  const handleLogout = (e: React.SyntheticEvent) => {
     logout();
     navigate("/login");
   };
 
   const userData = useSelector(getUserData);
-  const userName = userData.name;
-  const userEmail = userData.email;
+  const userName: string = userData.name;
+  const userEmail: string = userData.email;
 
-  const [emailValue, setEmailValue] = React.useState(userEmail);
-  const inputEmailRef = React.useRef(null);
+  const [emailValue, setEmailValue] = React.useState<string>(userEmail);
+  const inputEmailRef = React.useRef<HTMLInputElement>(null);
   const onIconClickEmail = () => {
-    setTimeout(() => inputEmailRef.current.focus(), 0);
+    setTimeout(() => inputEmailRef.current?.focus(), 0);
   };
-  const [isEmailEditing, setIsEmailEditing] = useState(false);
+  const [isEmailEditing, setIsEmailEditing] = useState<boolean>(false);
 
-  const [nameValue, setNameValue] = React.useState(userName);
-  const inputNameRef = React.useRef(null);
+  const [nameValue, setNameValue] = React.useState<string>(userName);
+  const inputNameRef = React.useRef<HTMLInputElement>(null);
   const onIconClickName = () => {
-    setTimeout(() => inputNameRef.current.focus(), 0);
+    setTimeout(() => inputNameRef.current?.focus(), 0);
   };
-  const [isNameEditing, setIsNameEditing] = useState(false);
+  const [isNameEditing, setIsNameEditing] = useState<boolean>(false);
 
-  const [passwordValue, setPasswordValue] = React.useState("*****");
-  const inputPasswordRef = React.useRef(null);
+  const [passwordValue, setPasswordValue] = React.useState<string>("*****");
+  const inputPasswordRef = React.useRef<HTMLInputElement>(null);
   const onIconClickPassword = () => {
-    setTimeout(() => inputPasswordRef.current.focus(), 0);
+    setTimeout(() => inputPasswordRef.current?.focus(), 0);
   };
-  const [isPasswordEditing, setIsPasswordEditing] = useState(false);
+  const [isPasswordEditing, setIsPasswordEditing] = useState<boolean>(false);
 
-  const changedData = {
+  interface IСhangedData {
+    email: string;
+    password: string | number;
+    name: string;
+  }
+
+  const changedData: IСhangedData = {
     email: emailValue,
     password: passwordValue,
     name: nameValue,
   };
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault(); 
+  const handleFormSubmit = (e: React.SyntheticEvent) => {
+    e.preventDefault();
     setIsEmailEditing(false);
     setIsNameEditing(false);
     setIsPasswordEditing(false);
-    changeUserInfo(changedData)
+    changeUserInfo(changedData);
   };
 
   const handleCancel = () => {
@@ -80,8 +87,8 @@ function ProfilePage() {
           </li>
 
           <li className={styles.item}>
-            <button htmlType="button" onClick={handleLogout}>
-            <p className="text text_type_main-medium">Выход</p>
+            <button type="button" onClick={handleLogout}>
+              <p className="text text_type_main-medium">Выход</p>
             </button>
           </li>
         </ul>
@@ -147,12 +154,17 @@ function ProfilePage() {
           size={"default"}
           extraClass="mb-6"
         />
- {(isEmailEditing || isNameEditing || isPasswordEditing) && (
+        {(isEmailEditing || isNameEditing || isPasswordEditing) && (
           <div className={styles.buttonsWrapper}>
             <Button type="primary" size="medium" htmlType="submit">
               Сохранить
             </Button>
-            <Button type="secondary" size="medium" onClick={handleCancel}>
+            <Button
+              htmlType="button"
+              type="secondary"
+              size="medium"
+              onClick={handleCancel}
+            >
               Отмена
             </Button>
           </div>

@@ -1,6 +1,10 @@
 import modalOverlayStyles from "./modalOverlay.module.css";
 
-function ModalOverlay({ onClick }) {
+interface IModalOverlayProps {
+  onClick: () => void;
+}
+
+const ModalOverlay: React.FC<IModalOverlayProps> = ({ onClick }) => {
   return <div className={modalOverlayStyles.overlay} onClick={onClick}></div>;
 }
 

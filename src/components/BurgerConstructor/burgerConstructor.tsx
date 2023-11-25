@@ -4,21 +4,31 @@ import {
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { applyPropTypesToArray } from "../../utils/prop-types";
+//import { applyPropTypesToArray } from "../../utils/prop-types";
 import { useSelector } from "react-redux";
 import {
   getConstructorIngredients,
   getBunData,
-  getLoggedInStatus,
 } from "../../redux_services/selectors";
 import { useDrop } from "react-dnd";
 import { ItemTypes } from "../../utils/item-types-dnd";
 import { useMemo, useCallback } from "react";
 import SortingIngredients from "../SortingIngredients/sortingIngredients";
 
-function BurgerConstructor({ onClick }) {
+interface IIngredientCard {
+  type: string;
+  name: string;
+  price: number;
+  _id: number;
+  image: string;
+  index: number;
+  uniqID: number;
+}
 
-  const data = useSelector(getConstructorIngredients);
+interface IIngredients extends Array<IIngredientCard> {}
+
+function BurgerConstructor({ onClick }: any) {
+  const data: IIngredients = useSelector(getConstructorIngredients);
   const bunData = useSelector(getBunData);
 
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
@@ -38,40 +48,41 @@ function BurgerConstructor({ onClick }) {
   }
 
   const price = useMemo(() => {
-    const bunPrice = bunData?.ingredient?.price || 0;
-    const ingredientsPrice = data.reduce((s, v) => s + v.ingredient.price, 0);
+    const bunPrice = bunData?.price || 0;
+    const ingredientsData: IIngredients = data || [];
+    const ingredientsPrice = ingredientsData.reduce((s, v) => s + v.price, 0);
     return bunPrice * 2 + ingredientsPrice;
   }, [data, bunData]);
 
-  const renderCard = useCallback((card, index) => {
-    return <SortingIngredients index={index} key={card.uniqID} item={card} />;
+  const renderCard = useCallback((card: IIngredientCard, i: number) => {
+    return <SortingIngredients index={i} key={card.uniqID} item={card} />;
   }, []);
 
   return (
     <div className={burgerConstructorStyles.wrapper} ref={drop}>
-      {bunData && bunData.ingredient ? (
+      {bunData ? (
         <>
           <div className={burgerConstructorStyles.item}>
             <ConstructorElement
               type="top"
               isLocked={true}
-              text={bunData.ingredient.name}
-              price={bunData.ingredient.price}
-              thumbnail={bunData.ingredient.image}
+              text={bunData.name}
+              price={bunData.price}
+              thumbnail={bunData.image}
             />
           </div>
 
           <ul className={burgerConstructorStyles.list}>
-            <div>{data.map((card, i) => renderCard(card, i))}</div>
+            <div>{data && data.map((card, i) => renderCard(card, i))}</div>
           </ul>
 
           <div className={burgerConstructorStyles.item}>
             <ConstructorElement
               type="bottom"
               isLocked={true}
-              text={bunData.ingredient.name}
-              price={bunData.ingredient.price}
-              thumbnail={bunData.ingredient.image}
+              text={bunData.name}
+              price={bunData.price}
+              thumbnail={bunData.image}
             />
           </div>
         </>
@@ -80,7 +91,7 @@ function BurgerConstructor({ onClick }) {
           <p>Выберите булку и начинку</p>
 
           <ul className={burgerConstructorStyles.list}>
-            <div>{data.map((card, i) => renderCard(card, i))}</div>
+            <div>{data && data.map((card, i) => renderCard(card, i))}</div>
           </ul>
         </>
       )}
@@ -88,21 +99,20 @@ function BurgerConstructor({ onClick }) {
         <div className={burgerConstructorStyles.finalPriceWrapper}>
           <p className="text text_type_main-large">{price}</p>
           <CurrencyIcon width={"33px"} style={{ display: "block" }} />
-            <Button
-              htmlType="button"
-              type="primary"
-              size="large"
-              onClick={onClick}
-            >
-              Оформить заказ
-            </Button>
-
+          <Button
+            htmlType="button"
+            type="primary"
+            size="large"
+            onClick={onClick}
+          >
+            Оформить заказ
+          </Button>
         </div>
       </section>
     </div>
   );
 }
 
-applyPropTypesToArray(BurgerConstructor, "ingredients");
+//applyPropTypesToArray(BurgerConstructor, "ingredients");
 
 export default BurgerConstructor;

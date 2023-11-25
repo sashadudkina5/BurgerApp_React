@@ -1,4 +1,8 @@
-export const forgotPassword = async (emailData) => {
+interface IEmailInfo {
+  email: string;
+}
+
+export const forgotPassword = async (emailData: IEmailInfo) => {
   try {
     const response = await fetch(
       "https://norma.nomoreparties.space/api/password-reset",

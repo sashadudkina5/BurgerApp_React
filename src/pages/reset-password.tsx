@@ -10,31 +10,29 @@ import { getLoggedInStatus } from "../redux_services/selectors";
 import { resetPassword } from "../utils/reset-password";
 
 export const ResetPasswordPage: React.FC = () => {
-
   const navigate = useNavigate();
 
-  const [passwordValue, setPasswordValue] = React.useState<string | number>();
+  const [passwordValue, setPasswordValue] = React.useState<string | number>("");
   const inputRefPassword = React.useRef<HTMLInputElement>(null);
   const onIconClickPassword = () => {
     setTimeout(() => inputRefPassword.current?.focus(), 0);
   };
 
-  const [tokenValue, setValueToken] = React.useState<number>();
+  const [tokenValue, setValueToken] = React.useState<string | number>("");
   const inputRefToken = React.useRef<HTMLInputElement>(null);
   const onIconClickToken = () => {
     setTimeout(() => inputRefToken.current?.focus(), 0);
   };
 
   interface InewPasswordData {
-    password: string | number| undefined;
-    token: number | undefined,
-  } 
+    password: string | number;
+    token: string | number;
+  }
 
   const newPasswordData: InewPasswordData = {
     password: passwordValue,
     token: tokenValue,
-   } 
-
+  };
 
   const isLoggedIn = useSelector(getLoggedInStatus);
   if (isLoggedIn) {
@@ -59,42 +57,38 @@ export const ResetPasswordPage: React.FC = () => {
           Восстановление пароля
         </h1>
         <form onSubmit={handleFormSubmit}>
-        <Input
-          type={"text"}
-          placeholder={"Введите новый пароль"}
-          onChange={(e) => setPasswordValue(e.target.value)}
-          icon={"ShowIcon"}
-          value={passwordValue}
-          name={"name"}
-          error={false}
-          ref={inputRefPassword}
-          onIconClick={onIconClickPassword}
-          errorText={"Ошибка"}
-          size={"default"}
-          extraClass="mb-6"
-        />
+          <Input
+            type={"text"}
+            placeholder={"Введите новый пароль"}
+            onChange={(e) => setPasswordValue(e.target.value)}
+            icon={"ShowIcon"}
+            value={passwordValue}
+            name={"name"}
+            error={false}
+            ref={inputRefPassword}
+            onIconClick={onIconClickPassword}
+            errorText={"Ошибка"}
+            size={"default"}
+            extraClass="mb-6"
+          />
 
-        <Input
-          type={"text"}
-          placeholder={"Введите код из письма"}
-          onChange={(e) => setValueToken(e.target.value)}
-          value={tokenValue}
-          name={"name"}
-          error={false}
-          ref={inputRefToken}
-          onIconClick={onIconClickToken}
-          errorText={"Ошибка"}
-          size={"default"}
-          extraClass="mb-6"
-        />
+          <Input
+            type={"text"}
+            placeholder={"Введите код из письма"}
+            onChange={(e) => setValueToken(e.target.value)}
+            value={tokenValue}
+            name={"name"}
+            error={false}
+            ref={inputRefToken}
+            onIconClick={onIconClickToken}
+            errorText={"Ошибка"}
+            size={"default"}
+            extraClass="mb-6"
+          />
 
-        <Button
-          htmlType="submit"
-          type="primary"
-          size="large"
-        >
-          Сохранить
-        </Button>
+          <Button htmlType="submit" type="primary" size="large">
+            Сохранить
+          </Button>
         </form>
 
         <div className={`mt-20 ${styles.wrapper}`}>
@@ -108,6 +102,6 @@ export const ResetPasswordPage: React.FC = () => {
       </div>
     </div>
   );
-}
+};
 
 export default ResetPasswordPage;

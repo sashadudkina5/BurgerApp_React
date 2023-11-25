@@ -4,9 +4,14 @@ import {
   getLoginFailed,
 } from "../redux_services/userData/actions";
 import { store } from "../redux_services/store";
-import {setCookie} from "../utils/api"
+import { setCookie } from "./api";
 
-export const onLogin = async (loginData) => {
+interface ILoginData {
+  password: string | number;
+  email: string;
+}
+
+export const onLogin = async (loginData: ILoginData) => {
   try {
     store.dispatch(getLoginRequest());
 
@@ -18,7 +23,7 @@ export const onLogin = async (loginData) => {
         cache: "no-cache",
         credentials: "same-origin",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         redirect: "follow",
         referrerPolicy: "no-referrer",
@@ -31,7 +36,6 @@ export const onLogin = async (loginData) => {
 
       setCookie("accessToken", data.accessToken);
       setCookie("refreshToken", data.refreshToken);
-      
     } else {
       const data = await response.json();
       store.dispatch(getLoginFailed(data.message));
