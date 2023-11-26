@@ -4,7 +4,6 @@ import {
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-//import { applyPropTypesToArray } from "../../utils/prop-types";
 import { useSelector } from "react-redux";
 import {
   getConstructorIngredients,
@@ -112,7 +111,5 @@ function BurgerConstructor({ onClick }: any) {
     </div>
   );
 }
-
-//applyPropTypesToArray(BurgerConstructor, "ingredients");
 
 export default BurgerConstructor;
