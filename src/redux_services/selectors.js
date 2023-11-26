@@ -9,3 +9,4 @@ export const getUserError = (state) => state.userDataStore.error;
 export const getLoggedInStatus = (state) => state.userDataStore.isLoggedIn;
 export const getUserData = (state) => state.userDataStore.userData;
 export const getOpenedIngredientID = (state) => state.ingredientDetailsStore.ingredientDetails;
+export const getOrferNumber = (state) => state.orderStore.orderNumber;

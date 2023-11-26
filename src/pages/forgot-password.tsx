@@ -33,7 +33,7 @@ function ForgotPasswordPage() {
     return <Navigate to="/" replace />;
   }
 
-  const handleFormSubmit = async (e: React.SyntheticEvent) => {
+  const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
     try {

@@ -45,7 +45,7 @@ function LoginPage() {
     return <Navigate to="/" replace />;
   }
 
-  const handleFormSubmit = (e: React.SyntheticEvent) => {
+  const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (e: React.SyntheticEvent) => {
     e.preventDefault();
     onLogin(loginData);
   };

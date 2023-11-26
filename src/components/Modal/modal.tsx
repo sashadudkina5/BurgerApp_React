@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 interface IModalProps {
   title: string;
-  children: any;
+  children: React.ReactNode;
   onClose: () => void;
 }
 

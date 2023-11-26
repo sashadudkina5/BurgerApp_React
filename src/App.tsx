@@ -169,7 +169,6 @@ function App() {
                     onClick={openIngredientDetailModal}
                   />
                   <BurgerConstructor
-                    // ingredients={ingredientsData.data}
                     onClick={openOrderDetailsModal}
                   />
 

@@ -3,11 +3,11 @@ import { useSelector } from "react-redux";
 import { getLoggedInStatus } from "../redux_services/selectors";
 
 interface IProtectedRouteElementProps {
-  children: any;
+  children: React.ReactNode;
 }
 
 const ProtectedRouteElement: React.FC<IProtectedRouteElementProps> = ({
-  children,
+  children
 }) => {
   const location = useLocation();
   const isLoggedIn = useSelector(getLoggedInStatus);
@@ -16,7 +16,7 @@ const ProtectedRouteElement: React.FC<IProtectedRouteElementProps> = ({
     return <Navigate to={"/login"} state={{ from: location }} />;
   }
 
-  return children;
+  return <>{children}</>; 
 };
 
 export default ProtectedRouteElement;

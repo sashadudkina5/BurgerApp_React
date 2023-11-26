@@ -26,7 +26,11 @@ interface IIngredientCard {
 
 interface IIngredients extends Array<IIngredientCard> {}
 
-function BurgerConstructor({ onClick }: any) {
+interface IBurgerConstructorProps {
+  onClick: ((e: React.SyntheticEvent<Element, Event>) => void);
+}
+
+function BurgerConstructor({ onClick }: IBurgerConstructorProps) {
   const data: IIngredients = useSelector(getConstructorIngredients);
   const bunData = useSelector(getBunData);
 

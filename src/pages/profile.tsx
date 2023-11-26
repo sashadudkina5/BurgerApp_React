@@ -56,7 +56,7 @@ function ProfilePage() {
     name: nameValue,
   };
 
-  const handleFormSubmit = (e: React.SyntheticEvent) => {
+  const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (e: React.SyntheticEvent) => {
     e.preventDefault();
     setIsEmailEditing(false);
     setIsNameEditing(false);
@@ -105,7 +105,7 @@ function ProfilePage() {
         <Input
           type={"text"}
           placeholder={"Имя"}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setNameValue(e.target.value);
             setIsNameEditing(true);
           }}
@@ -123,7 +123,7 @@ function ProfilePage() {
         <Input
           type={"text"}
           placeholder={"Логин"}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setEmailValue(e.target.value);
             setIsEmailEditing(true);
           }}
@@ -141,7 +141,7 @@ function ProfilePage() {
         <Input
           type={"text"}
           placeholder={"Пароль"}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setPasswordValue(e.target.value);
             setIsPasswordEditing(true);
           }}
