@@ -1,6 +1,7 @@
 import { getCookie, fetchWithRefresh } from "./api";
 import { store } from "../redux_services/store";
-import { getLoginSuccess } from "../redux_services/userData/actions";
+import { getLoginSuccess, getLoginRequest } from "../redux_services/UserData/actions";
+import { BASE_URL } from "./ApiConfig";
 
 interface UserInfo {
   email: string;
@@ -9,6 +10,7 @@ interface UserInfo {
 
 export const getUserInfo = async (): Promise<UserInfo | null> => {
   try {
+    store.dispatch(getLoginRequest());
     const accessToken = getCookie("accessToken");
 
     if (!accessToken) {
@@ -17,7 +19,7 @@ export const getUserInfo = async (): Promise<UserInfo | null> => {
     }
 
     const response = await fetchWithRefresh(
-      "https://norma.nomoreparties.space/api/auth/user",
+      `${BASE_URL}/auth/user`,
       {
         method: "GET",
         headers: {

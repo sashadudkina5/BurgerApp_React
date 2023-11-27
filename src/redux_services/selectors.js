@@ -1,5 +1,6 @@
 export const getConstructorIngredients = (state) => state.constructorStore.constructorIngredients;
 export const getListOfIngredients = (state) => state.ingredientsStore;
+export const getListOfIngredientsArray = (state) => state.ingredientsStore.ingredientsData.data;
 export const getIngredientDetails = (state) => state.ingredientDetailsStore.ingredientDetails;
 export const getBurgerIngredients = (state) => state.ingredientsStore.ingredientsData.data;
 export const getBunData = (state) => state.constructorStore.bun;
@@ -10,3 +11,4 @@ export const getLoggedInStatus = (state) => state.userDataStore.isLoggedIn;
 export const getUserData = (state) => state.userDataStore.userData;
 export const getOpenedIngredientID = (state) => state.ingredientDetailsStore.ingredientDetails;
 export const getOrferNumber = (state) => state.orderStore.orderNumber;
+export const getLoggingInLoading = (state) => state.userDataStore.isLoading;

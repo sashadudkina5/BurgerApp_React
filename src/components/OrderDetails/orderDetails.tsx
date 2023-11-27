@@ -1,4 +1,4 @@
-import orderDetailsStyles from "./orderDetails.module.css";
+import orderDetailsStyles from "./OrderDetails.module.css";
 import image from "../../images/done.png";
 import { useSelector } from 'react-redux';
 import {getOrferNumber} from "../../redux_services/selectors";

@@ -1,10 +1,32 @@
-import ingredientDetailStyles from "./ingredientDetail.module.css";
-import { useSelector } from "react-redux";
+import ingredientDetailStyles from "./IngredientDetail.module.css";
+import { useSelector, useDispatch } from "react-redux";
 import { getIngredientDetails } from "../../redux_services/selectors";
 import React from "react";
+import { useParams } from "react-router-dom";
+import { getListOfIngredientsArray } from "../../redux_services/selectors";
+import { reopenIngredientDetails } from "../IngredientDetail/actions";
+
+interface IIngredientCard {
+  type?: string;
+  name: string;
+  price: number;
+  _id: string;
+  image: string;
+}
+
+interface IIngredients extends Array<IIngredientCard> {}
 
 function IngredientDetail() {
+  const dispatch = useDispatch();
+
   const selectedIngredient = useSelector(getIngredientDetails);
+  const routeParams = useParams();
+  const data: IIngredients = useSelector(getListOfIngredientsArray);
+
+  if (routeParams) {
+  const filteredArray = data.filter((obj) => obj._id === routeParams.id);
+  dispatch(reopenIngredientDetails(filteredArray[0]))
+  }
 
   if (!selectedIngredient) {
     return null;

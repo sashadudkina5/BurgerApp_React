@@ -3,7 +3,7 @@ import {
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch } from "react-redux";
-import sortingIngredientsStyles from "./sortingIngredientsStyles.module.css";
+import sortingIngredientsStyles from "./SortingIngredientsStyles.module.css";
 import { deleteIngredient } from "../BurgerConstructor/actions";
 import { useRef } from "react";
 import { useDrop, useDrag, DropTargetMonitor } from "react-dnd";
@@ -98,7 +98,7 @@ const SortingIngredients: React.FC<ISortingIngredientsProps> = ({
   return (
     <div ref={ref} data-handler-id={handlerId}>
       <div className={sortingIngredientsStyles.item} key={item.uniqID}>
-        <DragIcon />
+        <DragIcon type="secondary"/>
         <ConstructorElement
           data-testid="dustbin"
           text={item.name}

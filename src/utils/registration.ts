@@ -2,9 +2,10 @@ import {
   getRegistrationRequest,
   getRegistrationSuccess,
   getRegistrationFailed,
-} from "../redux_services/userData/actions";
+} from "../redux_services/UserData/actions";
 import { store } from "../redux_services/store";
 import { setCookie } from "./api";
+import { BASE_URL } from "./ApiConfig";
 
 interface IregistrationData {
   password: string | number;
@@ -17,7 +18,7 @@ export const register = async (registrationData: IregistrationData) => {
     store.dispatch(getRegistrationRequest());
 
     const response = await fetch(
-      "https://norma.nomoreparties.space/api/auth/register",
+      `${BASE_URL}/auth/register`,
       {
         method: "POST",
         mode: "cors",

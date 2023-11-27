@@ -1,41 +1,41 @@
 import { useState, useEffect } from "react";
 import React from "react";
-import "./App.css";
-import AppHeader from "./components/AppHeader/appHeader";
-import BurgerIngredients from "./components/BurgerIngredients/burgerIngredients";
-import BurgerConstructor from "./components/BurgerConstructor/burgerConstructor";
-import Modal from "./components/Modal/modal";
-import OrderDetails from "./components/OrderDetails/orderDetails";
-import IngredientDetail from "./components/IngredientDetail/ingredientDetail";
-import { getIngredients } from "./utils/burger-api";
+import appStyles from "./App.module.css";
+import AppHeader from "../AppHeader/AppHeader";
+import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
+import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
+import Modal from "../Modal/Modal";
+import OrderDetails from "../OrderDetails/OrderDetails";
+import IngredientDetail from "../IngredientDetail/IngredientDetail";
+import { getIngredients } from "../../utils/burger-api";
 import {
   getIngredientsRequest,
   getIngredientsSuccess,
   getIngredientsFailed,
-} from "./redux_services/ingredients/actions";
+} from "../../redux_services/ingredients/actions";
 import {
   showIngredientDetails,
   hideIngredientDetails,
-} from "./components/IngredientDetail/actions";
+} from "../IngredientDetail/actions";
 import { useDispatch, useSelector } from "react-redux";
-import { getListOfIngredients } from "./redux_services/selectors";
+import { getListOfIngredients } from "../../redux_services/selectors";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
-import { createOrder } from "./components/OrderDetails/thunk";
+import { createOrder } from "../OrderDetails/thunk";
 import {
   getConstructorIngredients,
   getBunData,
   getLoggedInStatus,
-} from "./redux_services/selectors";
+} from "../../redux_services/selectors";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
-import LoginPage from "./pages/login";
-import RegisterPage from "./pages/register";
-import ResetPasswordPage from "./pages/reset-password";
-import ForgotPasswordPage from "./pages/forgot-password";
-import ProfilePage from "./pages/profile";
-import ProtectedRouteElement from "./components/ProtectedRouteElement";
-import { getUserInfo } from "./utils/getUserInfo";
-import IngredientDetailPageOpened from "./pages/ingredients-id";
+import LoginPage from "../../pages/login";
+import RegisterPage from "../../pages/register";
+import ResetPasswordPage from "../../pages/reset-password";
+import ForgotPasswordPage from "../../pages/forgot-password";
+import ProfilePage from "../../pages/profile";
+import ProtectedRouteElement from "../ProtectedRouteElement";
+import { getUserInfo } from "../../utils/GetUserInfo";
+import IngredientDetailPageOpened from "../../pages/ingredients-id";
 import { Navigate } from "react-router";
 
 interface IIngredientCard {
@@ -46,24 +46,23 @@ interface IIngredientCard {
   image: string;
 }
 
-interface IIngredients {
-  ingredients: IIngredientCard[];
-}
+
+interface IIngredients extends Array<IIngredientCard> {}
 
 function App() {
   let location = useLocation();
 
   let state = location.state || {};
   let backgroundLocation = state.backgroundLocation;
-
+  let navigate = useNavigate();
   const dispatch = useDispatch();
 
-  let navigate = useNavigate();
 
   function onDismiss() {
     navigate(-1);
     dispatch(hideIngredientDetails());
   }
+
 
   const [isOrderDetailsModalOpen, setIsOrderDetailsModalOpen] = useState(false);
 
@@ -74,7 +73,7 @@ function App() {
   const bunData = useSelector(getBunData);
 
   const getIngredientIDs = () => {
-    const innerIngredientIDs = data?.ingredients?.map((item) => item._id) || [];
+    const innerIngredientIDs = data?.map((item) => item._id) || [];
     const idValue = bunData._id;
     const bunIDs = [idValue];
     const ingredientIDs = innerIngredientIDs.concat(bunIDs, bunIDs);
@@ -102,8 +101,8 @@ function App() {
   const openOrderDetailsModal = () => {
     if (
       data &&
-      data.ingredients &&
-      data.ingredients.length > 0 &&
+      data &&
+      data.length > 0 &&
       bunData !== null &&
       isAuth
     ) {
@@ -128,6 +127,7 @@ function App() {
   useEffect(() => {
     getUserInfo();
   }, []);
+  
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -138,7 +138,7 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className={appStyles.App}>
       <DndProvider backend={HTML5Backend}>
         <AppHeader />
         <Routes location={state?.backgroundLocation || location}>
@@ -162,7 +162,7 @@ function App() {
           <Route
             path="/"
             element={
-              <main className="mainWrapper">
+              <main className={appStyles.mainWrapper}>
                 <>
                   <BurgerIngredients
                     ingredients={ingredientsData.data}

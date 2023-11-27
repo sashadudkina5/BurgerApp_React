@@ -1,3 +1,5 @@
+import { BASE_URL } from "./ApiConfig";
+
 interface InewPasswordData {
   password: string | number;
   token: string | number;
@@ -8,7 +10,7 @@ export const resetPassword = async (
 ): Promise<void> => {
   try {
     const response = await fetch(
-      "https://norma.nomoreparties.space/api/password-reset/reset",
+      `${BASE_URL}/password-reset/reset`,
       {
         method: "POST",
         mode: "cors",

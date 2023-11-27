@@ -12,21 +12,21 @@ import { resetPassword } from "../utils/reset-password";
 export const ResetPasswordPage: React.FC = () => {
   const navigate = useNavigate();
 
-  const [passwordValue, setPasswordValue] = React.useState<string | number>("");
+  const [passwordValue, setPasswordValue] = React.useState<string>("");
   const inputRefPassword = React.useRef<HTMLInputElement>(null);
   const onIconClickPassword = () => {
     setTimeout(() => inputRefPassword.current?.focus(), 0);
   };
 
-  const [tokenValue, setValueToken] = React.useState<string | number>("");
+  const [tokenValue, setValueToken] = React.useState<string>("");
   const inputRefToken = React.useRef<HTMLInputElement>(null);
   const onIconClickToken = () => {
     setTimeout(() => inputRefToken.current?.focus(), 0);
   };
 
   interface InewPasswordData {
-    password: string | number;
-    token: string | number;
+    password: string;
+    token: string;
   }
 
   const newPasswordData: InewPasswordData = {

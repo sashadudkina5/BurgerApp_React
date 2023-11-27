@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getBurgerIngredients } from "../redux_services/selectors";
-import ingredientDetailStyles from "../components/IngredientDetail/ingredientDetail.module.css";
+import ingredientDetailStyles from "../components/IngredientDetail/IngredientDetail.module.css";
 
 function IngredientDetailPageOpened() {
   interface BurgerIngredient {
@@ -18,6 +18,8 @@ function IngredientDetailPageOpened() {
   const data = useSelector(getBurgerIngredients);
 
   const { id } = useParams();
+
+  localStorage.setItem('currentRoute', '/ingredients/:id');
 
   const matchingObject: BurgerIngredient | undefined = data.find(
     (obj: BurgerIngredient) => obj._id === id

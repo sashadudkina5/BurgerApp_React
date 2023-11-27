@@ -2,9 +2,10 @@ import {
   getLoginRequest,
   getLoginSuccess,
   getLoginFailed,
-} from "../redux_services/userData/actions";
+} from "../redux_services/UserData/actions";
 import { store } from "../redux_services/store";
 import { setCookie } from "./api";
+import { BASE_URL } from "./ApiConfig";
 
 interface ILoginData {
   password: string | number;
@@ -16,7 +17,7 @@ export const onLogin = async (loginData: ILoginData) => {
     store.dispatch(getLoginRequest());
 
     const response = await fetch(
-      "https://norma.nomoreparties.space/api/auth/login",
+      `${BASE_URL}/auth/login`,
       {
         method: "POST",
         mode: "cors",

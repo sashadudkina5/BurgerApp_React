@@ -1,6 +1,7 @@
 import { getCookie, deleteCookie } from "./api";
 import { store } from "../redux_services/store";
-import { getLogOutSuccess } from "../redux_services/userData/actions";
+import { getLogOutSuccess } from "../redux_services/UserData/actions";
+import { BASE_URL } from "./ApiConfig";
 
 export const logout = async () => {
   const refreshConfig = {
@@ -18,7 +19,7 @@ export const logout = async () => {
     }
 
     const response = await fetch(
-      "https://norma.nomoreparties.space/api/auth/logout",
+      `${BASE_URL}/auth/logout`,
       {
         method: "POST",
         headers: headers,

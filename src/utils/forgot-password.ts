@@ -1,3 +1,5 @@
+import { BASE_URL } from "./ApiConfig";
+
 interface IEmailInfo {
   email: string;
 }
@@ -5,7 +7,7 @@ interface IEmailInfo {
 export const forgotPassword = async (emailData: IEmailInfo) => {
   try {
     const response = await fetch(
-      "https://norma.nomoreparties.space/api/password-reset",
+      `${BASE_URL}/password-reset`,
       {
         method: "POST",
         mode: "cors",

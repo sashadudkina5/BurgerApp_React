@@ -1,4 +1,4 @@
-import modalOverlayStyles from "./modalOverlay.module.css";
+import modalOverlayStyles from "./ModalOverlay.module.css";
 
 interface IModalOverlayProps {
   onClick: () => void;

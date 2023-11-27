@@ -12,6 +12,7 @@ import { logout } from "../utils/logout";
 import { useNavigate } from "react-router-dom";
 
 function ProfilePage() {
+
   const navigate = useNavigate();
 
   const handleLogout = (e: React.SyntheticEvent) => {

@@ -1,6 +1,7 @@
 import { getCookie, fetchWithRefresh } from "./api";
 import { store } from "../redux_services/store";
-import { getLoginSuccess } from "../redux_services/userData/actions";
+import { getLoginSuccess } from "../redux_services/UserData/actions";
+import { BASE_URL } from "./ApiConfig";
 
 interface IСhangedData {
   email: string;
@@ -19,7 +20,7 @@ export const changeUserInfo = async (changedData: IСhangedData) => {
     }
 
     const response = await fetchWithRefresh(
-      "https://norma.nomoreparties.space/api/auth/user",
+      `${BASE_URL}/auth/user`,
       {
         method: "PATCH",
         headers: {

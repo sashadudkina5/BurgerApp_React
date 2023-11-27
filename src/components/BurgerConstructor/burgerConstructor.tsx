@@ -1,4 +1,4 @@
-import burgerConstructorStyles from "./burgerConstructor.module.css";
+import burgerConstructorStyles from "./BurgerConstructor.module.css";
 import {
   Button,
   ConstructorElement,
@@ -12,7 +12,7 @@ import {
 import { useDrop } from "react-dnd";
 import { ItemTypes } from "../../utils/item-types-dnd";
 import { useMemo, useCallback } from "react";
-import SortingIngredients from "../SortingIngredients/sortingIngredients";
+import SortingIngredients from "../SortingIngredients/SortingIngredients";
 
 interface IIngredientCard {
   type: string;
@@ -101,7 +101,7 @@ function BurgerConstructor({ onClick }: IBurgerConstructorProps) {
       <section className={burgerConstructorStyles.finalPrice}>
         <div className={burgerConstructorStyles.finalPriceWrapper}>
           <p className="text text_type_main-large">{price}</p>
-          <CurrencyIcon width={"33px"} style={{ display: "block" }} />
+          <CurrencyIcon type="primary"/>
           <Button
             htmlType="button"
             type="primary"

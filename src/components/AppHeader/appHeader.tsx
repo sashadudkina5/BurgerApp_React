@@ -1,5 +1,5 @@
 import { Logo } from "@ya.praktikum/react-developer-burger-ui-components";
-import appHeaderStyles from "./appHeader.module.css";
+import appHeaderStyles from "./AppHeader.module.css";
 import { BurgerIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ListIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -10,11 +10,15 @@ function AppHeader() {
     <div className={appHeaderStyles.header}>
       <div className={appHeaderStyles.navBar}>
         <NavLink
-          to={"/"}
-          className={appHeaderStyles.link}
-          activeClassName={appHeaderStyles.activeLink}
+          to="/"
+          className={({ isActive }) =>
+            `${appHeaderStyles.link} ${
+              isActive ? appHeaderStyles.link_active : ""
+            }`
+          }
+          end
         >
-          <BurgerIcon type="secondary" className={appHeaderStyles.icon} />
+          <BurgerIcon type="secondary"/>
           <p
             className={`text text_type_main-default text_color_inactive ${appHeaderStyles.linkText}`}
           >
@@ -24,10 +28,14 @@ function AppHeader() {
 
         <NavLink
           to={"/profile/orders"}
-          className={appHeaderStyles.link}
-          activeClassName={appHeaderStyles.activeLink}
+          className={({ isActive }) =>
+            `${appHeaderStyles.link} ${
+              isActive ? appHeaderStyles.link_active : ""
+            }`
+          }
+          end
         >
-          <ListIcon type="secondary" className={appHeaderStyles.icon} />
+          <ListIcon type="secondary"/>
           <p
             className={`text text_type_main-default text_color_inactive ${appHeaderStyles.linkText}`}
           >
@@ -40,10 +48,14 @@ function AppHeader() {
 
       <NavLink
         to={"/profile"}
-        className={appHeaderStyles.link}
-        activeClassName={appHeaderStyles.activeLink}
+        className={({ isActive }) =>
+          `${appHeaderStyles.link} ${
+            isActive ? appHeaderStyles.link_active : ""
+          }`
+        }
+        end
       >
-        <ProfileIcon type="secondary" className={appHeaderStyles.icon} />
+        <ProfileIcon type="secondary"/>
         <p
           className={`text text_type_main-default text_color_inactive ${appHeaderStyles.linkText}`}
         >

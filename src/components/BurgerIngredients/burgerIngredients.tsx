@@ -1,7 +1,7 @@
-import burgerIngredientsStyles from "./burgerIngredients.module.css";
-import Tabs from "../Tabs/tabs";
+import burgerIngredientsStyles from "./BurgerIngredients.module.css";
+import Tabs from "../Tabs/Tabs";
 import { useInView } from "react-intersection-observer";
-import ProductCard from "../ProductCard/productCard";
+import ProductCard from "../ProductCard/ProductCard";
 import { useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { showIngredientDetails } from "../IngredientDetail/actions";

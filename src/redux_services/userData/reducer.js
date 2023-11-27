@@ -6,7 +6,7 @@ import {
   GET_LOGIN_SUCCESS,
   GET_LOGIN_FAILED,
   GET_LOGIN_OUT_SUCCESS
-} from "../userData/actions";
+} from "./actions";
 
 // Исходное состояние
 const initialState = {
@@ -14,7 +14,7 @@ const initialState = {
     email: "",
     name: "",
   },
-  isLoading: false,
+  isLoading: true,
   error: null,
   isLoggedIn: false,
 };

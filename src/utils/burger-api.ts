@@ -1,7 +1,8 @@
-const NORMA_API = "https://norma.nomoreparties.space/api/ingredients";
+import { BASE_URL } from "./ApiConfig";
+
 
 export function getIngredients() {
-  return fetch(`${NORMA_API}`)
+  return fetch(`${BASE_URL}/ingredients`)
     .then((response) => {
       if (!response.ok) {
         throw new Error("Ошибка при загрузке данных с сервера");

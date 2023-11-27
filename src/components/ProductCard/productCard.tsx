@@ -1,4 +1,4 @@
-import productCardStyles from "./productCard.module.css";
+import productCardStyles from "./ProductCard.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,7 +8,7 @@ import {
   getBunData,
 } from "../../redux_services/selectors";
 import React from "react";
-import ProductItem from "../ProductItem/productItem";
+import ProductItem from "../ProductItem/ProductItem";
 import { Link, useLocation } from "react-router-dom";
 
 interface ProductCardProps {
@@ -81,7 +81,6 @@ const ProductCard = React.forwardRef<HTMLDivElement, IIngredients>(
                   count={ingredientsCounters[ingredient._id] || 0}
                   size="default"
                   extraClass="m-1"
-                  name={ingredient.name}
                 />
                 <img
                   src={ingredient.image}
