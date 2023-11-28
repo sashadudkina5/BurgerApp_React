@@ -10,19 +10,13 @@ import {
 import React from "react";
 import ProductItem from "../ProductItem/ProductItem";
 import { Link, useLocation } from "react-router-dom";
+import {IIngredientCard} from "../App/App";
 
-interface ProductCardProps {
-  type?: string;
-  name: string;
-  price: number;
-  _id: number;
-  image: string;
-}
 
 interface IIngredients {
-  onClick: (ingredient: ProductCardProps) => void;
+  onClick: (ingredient: IIngredientCard) => void;
   "data-testid": string;
-  typeOfIngredients: Array<ProductCardProps>;
+  typeOfIngredients: Array<IIngredientCard>;
 }
 
 const ProductCard = React.forwardRef<HTMLDivElement, IIngredients>(
@@ -31,7 +25,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, IIngredients>(
 
     const dispatch = useDispatch();
 
-    const openIngredientDetailModal = (ingredient: ProductCardProps) => {
+    const openIngredientDetailModal = (ingredient: IIngredientCard) => {
       dispatch(showIngredientDetails(ingredient));
     };
 
@@ -49,7 +43,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, IIngredients>(
         counters[bunData._id] = 2;
       }
 
-      data.forEach((ingredient: ProductCardProps) => {
+      data.forEach((ingredient: IIngredientCard) => {
         if (!counters[ingredient._id]) {
           counters[ingredient._id] = 0;
         }

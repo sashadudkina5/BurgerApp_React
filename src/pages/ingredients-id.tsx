@@ -3,17 +3,9 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getBurgerIngredients } from "../redux_services/selectors";
 import ingredientDetailStyles from "../components/IngredientDetail/IngredientDetail.module.css";
+import { IIngredientCard} from "../components/App/App";
 
 function IngredientDetailPageOpened() {
-  interface BurgerIngredient {
-    _id: string;
-    image: string;
-    name: string;
-    calories: number;
-    proteins: number;
-    fat: number;
-    carbohydrates: number;
-  }
 
   const data = useSelector(getBurgerIngredients);
 
@@ -21,8 +13,8 @@ function IngredientDetailPageOpened() {
 
   localStorage.setItem('currentRoute', '/ingredients/:id');
 
-  const matchingObject: BurgerIngredient | undefined = data.find(
-    (obj: BurgerIngredient) => obj._id === id
+  const matchingObject: IIngredientCard | undefined = data.find(
+    (obj: IIngredientCard) => obj._id === id
   );
 
   if (!matchingObject) return <p>Ingredient not found</p>;

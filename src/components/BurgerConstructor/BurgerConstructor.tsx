@@ -13,18 +13,8 @@ import { useDrop } from "react-dnd";
 import { ItemTypes } from "../../utils/item-types-dnd";
 import { useMemo, useCallback } from "react";
 import SortingIngredients from "../SortingIngredients/SortingIngredients";
+import {IIngredients, IIngredientCard} from "../App/App";
 
-interface IIngredientCard {
-  type: string;
-  name: string;
-  price: number;
-  _id: number;
-  image: string;
-  index: number;
-  uniqID: number;
-}
-
-interface IIngredients extends Array<IIngredientCard> {}
 
 interface IBurgerConstructorProps {
   onClick: ((e: React.SyntheticEvent<Element, Event>) => void);

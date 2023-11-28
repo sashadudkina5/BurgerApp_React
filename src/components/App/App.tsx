@@ -38,15 +38,21 @@ import { getUserInfo } from "../../utils/GetUserInfo";
 import IngredientDetailPageOpened from "../../pages/ingredients-id";
 import { Navigate } from "react-router";
 
-interface IIngredientCard {
+export interface IIngredientCard {
   type?: string;
   name: string;
   price: number;
-  _id: number;
+  _id: string;
   image: string;
+  uniqID: number;
+  index?: number;
+  calories: number;
+  proteins: number;
+  fat: number;
+  carbohydrates: number;
 }
 
-interface IIngredients extends Array<IIngredientCard> {}
+export interface IIngredients extends Array<IIngredientCard> {}
 
 function App() {
   let location = useLocation();

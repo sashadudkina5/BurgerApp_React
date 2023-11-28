@@ -9,28 +9,11 @@ import { useRef } from "react";
 import { useDrop, useDrag, DropTargetMonitor } from "react-dnd";
 import { ItemTypes } from "../../utils/item-types-dnd";
 import { CONSTRUCTOR_REORDER } from "../BurgerConstructor/actions";
+import {IIngredientCard} from "../App/App";
 
 interface ISortingIngredientsProps {
-  item: {
-    type: string;
-    name: string;
-    price: number;
-    _id: number;
-    image: string;
-    index: number;
-    uniqID: number;
-  };
+  item: IIngredientCard;
   index: number;
-}
-
-interface IIngredientObj {
-  type: string;
-  name: string;
-  price: number;
-  _id: number;
-  image: string;
-  index: number;
-  uniqID: number;
 }
 
 const SortingIngredients: React.FC<ISortingIngredientsProps> = ({
@@ -50,7 +33,7 @@ const SortingIngredients: React.FC<ISortingIngredientsProps> = ({
         handlerId: monitor.getHandlerId(),
       };
     },
-    hover: (item: IIngredientObj, monitor: DropTargetMonitor) => {
+    hover: (item: ISortingIngredientsProps, monitor: DropTargetMonitor) => {
       if (!ref.current) {
         return;
       }

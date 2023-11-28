@@ -5,16 +5,8 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { getListOfIngredientsArray } from "../../redux_services/selectors";
 import { reopenIngredientDetails } from "../IngredientDetail/actions";
+import {IIngredients, IIngredientCard} from "../App/App";
 
-interface IIngredientCard {
-  type?: string;
-  name: string;
-  price: number;
-  _id: string;
-  image: string;
-}
-
-interface IIngredients extends Array<IIngredientCard> {}
 
 function IngredientDetail() {
   const dispatch = useDispatch();

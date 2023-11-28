@@ -5,24 +5,18 @@ import ProductCard from "../ProductCard/ProductCard";
 import { useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { showIngredientDetails } from "../IngredientDetail/actions";
+import {IIngredients, IIngredientCard} from "../App/App";
 
-interface IIngredient {
-  type?: string;
-  name: string;
-  price: number;
-  _id: number;
-  image: string;
-}
 
 interface IBurgerIngredients {
-  ingredients: IIngredient[];
-  onClick: (ingredient: IIngredient) => void;
+  ingredients: IIngredients;
+  onClick: (ingredient: IIngredientCard) => void;
 }
 
 function BurgerIngredients({ ingredients, onClick }: IBurgerIngredients) {
   const dispatch = useDispatch();
 
-  const openIngredientDetailModal = (ingredient: IIngredient) => {
+  const openIngredientDetailModal = (ingredient: IIngredientCard) => {
     dispatch(showIngredientDetails(ingredient));
   };
 

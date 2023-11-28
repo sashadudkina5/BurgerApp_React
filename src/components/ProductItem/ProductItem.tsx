@@ -3,24 +3,17 @@ import { ItemTypes } from "../../utils/item-types-dnd";
 import { useDispatch } from "react-redux";
 import { addIngredient } from "../BurgerConstructor/actions";
 import React from "react";
-
-interface IIngredientItem {
-  type?: string;
-  name: string;
-  price: number;
-  _id: number;
-  image: string;
-}
+import {IIngredientCard} from "../App/App";
 
 interface IProductItemProps {
-  ingredient: IIngredientItem;
-  children: any;
+  ingredient: IIngredientCard;
+  children: React.ReactNode;
 }
 
 const ProductItem: React.FC<IProductItemProps> = ({ children, ingredient }) => {
   const dispatch = useDispatch();
 
-  const onAdd = (ingredientObj: IIngredientItem) => {
+  const onAdd = (ingredientObj: IIngredientCard) => {
     dispatch(addIngredient(ingredientObj));
   };
 
