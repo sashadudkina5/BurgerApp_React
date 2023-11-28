@@ -1,4 +1,4 @@
-export function getCookie(name) {
+export function getCookie(name: string) {
   const matches = document.cookie.match(
     new RegExp(
       "(?:^|; )" +
@@ -9,7 +9,7 @@ export function getCookie(name) {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-export function setCookie(name, value, props) {
+export function setCookie(name: string, value: any, props?: any) {
   props = props || {};
   let exp = props.expires;
   if (typeof exp == "number" && exp) {
@@ -32,7 +32,7 @@ export function setCookie(name, value, props) {
   document.cookie = updatedCookie;
 }
 
-export function deleteCookie(name) {
+export function deleteCookie(name: string) {
   setCookie(name, null, { expires: -1 });
 }
 
@@ -59,14 +59,14 @@ export const refreshToken = async () => {
         console.error("Error during token refresh:", errorData.message);
         return { success: false, message: errorData.message };
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Network error during token refresh:", error.message);
       return { success: false, message: "Network error during token refresh" };
     }
   };
 
 
-  export const checkResponse = async (response) => {
+  export const checkResponse = async (response: any) => {
     if (response.ok) {
         return response.json();
     } else {
@@ -77,13 +77,13 @@ export const refreshToken = async () => {
 };
 
   
-  export const fetchWithRefresh = async (url, options) => {
+  export const fetchWithRefresh = async (url: string, options: any) => {
     try {
       const res = await fetch(url, options);
       return await checkResponse(res);
-    } catch (err) {
+    } catch (err: any) {
       if (err.message === "jwt expired") {
-        const refreshData = await refreshToken();
+        const refreshData: any = await refreshToken();
         if (!refreshData.success) {
           return Promise.reject(refreshData);
         }

@@ -46,7 +46,6 @@ interface IIngredientCard {
   image: string;
 }
 
-
 interface IIngredients extends Array<IIngredientCard> {}
 
 function App() {

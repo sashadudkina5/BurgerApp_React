@@ -1,6 +1,6 @@
 import { getCookie, fetchWithRefresh } from "./api";
 import { store } from "../redux_services/store";
-import { getLoginSuccess, getLoginRequest } from "../redux_services/UserData/actions";
+import { getLoginSuccess, getLoginRequest, getLoginFailed } from "../redux_services/UserData/actions";
 import { BASE_URL } from "./ApiConfig";
 
 interface UserInfo {
@@ -44,6 +44,7 @@ export const getUserInfo = async (): Promise<UserInfo | null> => {
     }
   } catch (err: any) {
     console.error("An unexpected error occurred:", err.message);
+    store.dispatch(getLoginFailed(err));
     return null;
   }
 };

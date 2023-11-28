@@ -92,7 +92,7 @@ function LoginPage() {
 
         {isLoggedIn && navigate("/")}
 
-        {registerError && <p>{registerError}</p>}
+        {registerError && <p>{registerError.message}</p>}
 
         <div className={`mt-20 ${styles.wrapper}`}>
           <p className="text text_type_main-default text_color_inactive">
