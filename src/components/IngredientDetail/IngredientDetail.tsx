@@ -1,11 +1,10 @@
 import ingredientDetailStyles from "./IngredientDetail.module.css";
-import { useSelector, useDispatch } from "react-redux";
-import { getIngredientDetails } from "../../redux_services/selectors";
 import React from "react";
 import { useParams } from "react-router-dom";
 import { getListOfIngredientsArray } from "../../redux_services/selectors";
 import { reopenIngredientDetails } from "../IngredientDetail/actions";
 import {IIngredients, IIngredientCard} from "../../utils/types";
+import { useAppSelector, useAppDispatch } from "../../hooks/dispatch-selectos"
 
 interface IIngredientDetailProps {
   selectedIngredient: IIngredientCard;
@@ -13,11 +12,10 @@ interface IIngredientDetailProps {
 
 
 function IngredientDetail({selectedIngredient}: IIngredientDetailProps) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch()
 
-  // const selectedIngredient = useSelector(getIngredientDetails);
   const routeParams = useParams();
-  const data: IIngredients = useSelector(getListOfIngredientsArray);
+  const data: IIngredients = useAppSelector(getListOfIngredientsArray);
 
   if (routeParams) {
   const filteredArray = data.filter((obj) => obj._id === routeParams.id);

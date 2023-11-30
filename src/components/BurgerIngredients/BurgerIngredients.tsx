@@ -3,9 +3,9 @@ import Tabs from "../Tabs/Tabs";
 import { useInView } from "react-intersection-observer";
 import ProductCard from "../ProductCard/ProductCard";
 import { useMemo } from "react";
-import { useDispatch } from "react-redux";
 import { showIngredientDetails } from "../IngredientDetail/actions";
 import {IIngredients, IIngredientCard} from "../../utils/types";
+import { useAppDispatch } from "../../hooks/dispatch-selectos"
 
 
 interface IBurgerIngredients {
@@ -14,7 +14,7 @@ interface IBurgerIngredients {
 }
 
 function BurgerIngredients({ ingredients, onClick }: IBurgerIngredients) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch()
 
   const openIngredientDetailModal = (ingredient: IIngredientCard) => {
     dispatch(showIngredientDetails(ingredient));

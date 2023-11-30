@@ -12,16 +12,16 @@ import {
   getUserError,
   getLoggedInStatus,
 } from "../redux_services/selectors";
-import { useSelector } from "react-redux";
 import { Navigate } from "react-router";
 import {TSubmitHandler} from "../utils/types";
-import {useForm} from "../hooks/useForm"
+import {useForm} from "../hooks/useForm";
+import { useAppSelector } from "../hooks/dispatch-selectos"
 
 function RegisterPage() {
   const navigate = useNavigate();
 
-  const isRegistered = useSelector(getUserEmail);
-  const registerError = useSelector(getUserError);
+  const isRegistered = useAppSelector(getUserEmail);
+  const registerError = useAppSelector(getUserError);
 
   const inputNameRef = React.useRef<HTMLInputElement>(null);
   const onIconClickName = () => {
@@ -43,7 +43,7 @@ function RegisterPage() {
 
   const { values, handleChange } = useForm(); 
 
-  const isLoggedIn = useSelector(getLoggedInStatus);
+  const isLoggedIn = useAppSelector(getLoggedInStatus);
   if (isLoggedIn) {
     return <Navigate to="/" replace />;
   }

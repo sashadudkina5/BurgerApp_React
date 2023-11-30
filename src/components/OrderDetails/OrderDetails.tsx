@@ -1,11 +1,11 @@
 import orderDetailsStyles from "./OrderDetails.module.css";
 import image from "../../images/done.png";
-import { useSelector } from 'react-redux';
 import {getOrferNumber} from "../../redux_services/selectors";
+import { useAppSelector } from "../../hooks/dispatch-selectos"
 
 function OrderDetails() {
 
-  const orderNumber = useSelector(getOrferNumber);
+  const orderNumber = useAppSelector(getOrferNumber);
 
   return (
     <div className={orderDetailsStyles.wrapper}>

@@ -1,9 +1,9 @@
 import { useDrag } from "react-dnd";
 import { ItemTypes } from "../../utils/item-types-dnd";
-import { useDispatch } from "react-redux";
 import { addIngredient } from "../BurgerConstructor/actions";
 import React from "react";
 import {IIngredientCard} from "../../utils/types";
+import { useAppDispatch } from "../../hooks/dispatch-selectos"
 
 interface IProductItemProps {
   ingredient: IIngredientCard;
@@ -11,7 +11,7 @@ interface IProductItemProps {
 }
 
 const ProductItem: React.FC<IProductItemProps> = ({ children, ingredient }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch()
 
   const onAdd = (ingredientObj: IIngredientCard) => {
     dispatch(addIngredient(ingredientObj));

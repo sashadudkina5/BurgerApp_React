@@ -4,7 +4,6 @@ import {
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
 import {
   getConstructorIngredients,
   getBunData,
@@ -14,6 +13,7 @@ import { ItemTypes } from "../../utils/item-types-dnd";
 import { useMemo, useCallback } from "react";
 import SortingIngredients from "../SortingIngredients/SortingIngredients";
 import {IIngredients, IIngredientCard} from "../../utils/types";
+import { useAppSelector } from "../../hooks/dispatch-selectos"
 
 
 interface IBurgerConstructorProps {
@@ -21,8 +21,8 @@ interface IBurgerConstructorProps {
 }
 
 function BurgerConstructor({ onClick }: IBurgerConstructorProps) {
-  const data: IIngredients = useSelector(getConstructorIngredients);
-  const bunData = useSelector(getBunData);
+  const data: IIngredients = useAppSelector(getConstructorIngredients);
+  const bunData = useAppSelector(getBunData);
 
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: ItemTypes.BOX,

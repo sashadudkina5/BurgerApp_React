@@ -6,19 +6,18 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 import { loginThunk } from "../redux_services/thunk-functions/OnLogin";
-import { useSelector, useDispatch } from "react-redux";
 import { getUserError, getLoggedInStatus } from "../redux_services/selectors";
 import { useNavigate } from "react-router-dom";
 import { Navigate } from "react-router";
 import {TSubmitHandler} from "../utils/types";
 import {useForm} from "../hooks/useForm";
-import { AppDispatch } from "../redux_services/store";
+import { useAppSelector, useAppDispatch } from "../hooks/dispatch-selectos"
 
 function LoginPage() {
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useAppDispatch()
   const navigate = useNavigate();
-  const isLoggedIn = useSelector(getLoggedInStatus);
-  const registerError = useSelector(getUserError);
+  const isLoggedIn = useAppSelector(getLoggedInStatus);
+  const registerError = useAppSelector(getUserError);
 
   const inputEmailRef = React.useRef<HTMLInputElement>(null);
   const onIconClickEmail = () => {

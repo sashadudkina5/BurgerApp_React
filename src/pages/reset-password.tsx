@@ -5,15 +5,14 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate, Navigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
 import { getLoggedInStatus } from "../redux_services/selectors";
 import { resetPasswordThunk } from "../redux_services/thunk-functions/reset-password";
 import {TSubmitHandler} from "../utils/types";
 import {useForm} from "../hooks/useForm";
-import { AppDispatch } from "../redux_services/store";
+import { useAppSelector, useAppDispatch } from "../hooks/dispatch-selectos"
 
 export const ResetPasswordPage: React.FC = () => {
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useAppDispatch()
   const navigate = useNavigate();
 
   const inputRefPassword = React.useRef<HTMLInputElement>(null);
@@ -28,7 +27,7 @@ export const ResetPasswordPage: React.FC = () => {
 
   const { values, handleChange } = useForm();
 
-  const isLoggedIn = useSelector(getLoggedInStatus);
+  const isLoggedIn = useAppSelector(getLoggedInStatus);
   if (isLoggedIn) {
     return <Navigate to="/" replace />;
   }

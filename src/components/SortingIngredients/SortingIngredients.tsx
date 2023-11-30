@@ -2,7 +2,6 @@ import {
   DragIcon,
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch } from "react-redux";
 import sortingIngredientsStyles from "./SortingIngredientsStyles.module.css";
 import { deleteIngredient } from "../BurgerConstructor/actions";
 import { useRef } from "react";
@@ -10,6 +9,7 @@ import { useDrop, useDrag, DropTargetMonitor } from "react-dnd";
 import { ItemTypes } from "../../utils/item-types-dnd";
 import { CONSTRUCTOR_REORDER } from "../BurgerConstructor/actions";
 import {IIngredientCard} from "../../utils/types";
+import { useAppDispatch } from "../../hooks/dispatch-selectos"
 
 interface ISortingIngredientsProps {
   item: IIngredientCard;
@@ -20,7 +20,7 @@ const SortingIngredients: React.FC<ISortingIngredientsProps> = ({
   index,
   item,
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch()
   const onDelete = (ingredientId: number) => {
     dispatch(deleteIngredient(ingredientId));
   };

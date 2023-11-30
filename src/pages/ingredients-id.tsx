@@ -1,13 +1,13 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { getBurgerIngredients } from "../redux_services/selectors";
 import {IIngredientCard} from "../utils/types";
 import IngredientDetail from "../components/IngredientDetail/IngredientDetail"
+import { useAppSelector } from "../hooks/dispatch-selectos"
 
 function IngredientDetailPageOpened() {
 
-  const data = useSelector(getBurgerIngredients);
+  const data = useAppSelector(getBurgerIngredients);
 
   const { id } = useParams();
 

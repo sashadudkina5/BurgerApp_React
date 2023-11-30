@@ -4,17 +4,16 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector, useDispatch } from "react-redux";
 import { getUserData } from "../redux_services/selectors";
 import { useState } from "react";
 import { changeUserInfoThunk } from "../redux_services/thunk-functions/change-profile-info";
 import { logoutThunk } from "../redux_services/thunk-functions/logout";
 import { useNavigate } from "react-router-dom";
 import {TSubmitHandler} from "../utils/types";
-import { AppDispatch } from "../redux_services/store";
+import { useAppSelector, useAppDispatch } from "../hooks/dispatch-selectos"
 
 function ProfilePage() {
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useAppDispatch()
 
   const navigate = useNavigate();
 
@@ -23,7 +22,7 @@ function ProfilePage() {
     navigate("/login");
   };
 
-  const userData = useSelector(getUserData);
+  const userData = useAppSelector(getUserData);
   const userName: string = userData.name;
   const userEmail: string = userData.email;
 

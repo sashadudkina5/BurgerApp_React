@@ -11,7 +11,6 @@ import {
   showIngredientDetails,
   hideIngredientDetails
 } from "../IngredientDetail/actions";
-import { useDispatch, useSelector } from "react-redux";
 import { getListOfIngredients, getIngredientDetails } from "../../redux_services/selectors";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
@@ -32,13 +31,13 @@ import { getUserInfoThunk } from "../../redux_services/thunk-functions/GetUserIn
 import IngredientDetailPageOpened from "../../pages/ingredients-id";
 import {IIngredients, IIngredientCard} from "../../utils/types";
 import {fetchIngredients} from "../../redux_services/thunk-functions/FetchIngredients";
-import { AppDispatch } from "../../redux_services/store";
+import { useAppSelector, useAppDispatch } from "../../hooks/dispatch-selectos"
 import {cleanConstructor} from "../BurgerConstructor/actions"
 
 
 function App() {
   const location = useLocation();
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useAppDispatch()
 
   const state = location.state || {};
   const backgroundLocation = state.backgroundLocation;
@@ -53,12 +52,12 @@ function App() {
 
   const [isOrderDetailsModalOpen, setIsOrderDetailsModalOpen] = useState(false);
 
-  const ingredientsState = useSelector(getListOfIngredients);
+  const ingredientsState = useAppSelector(getListOfIngredients);
   const { ingredientsData, isLoading, error } = ingredientsState;
 
-  const data: IIngredients = useSelector(getConstructorIngredients);
-  const bunData = useSelector(getBunData);
-  const selectedIngredient = useSelector(getIngredientDetails);
+  const data: IIngredients = useAppSelector(getConstructorIngredients);
+  const bunData = useAppSelector(getBunData);
+  const selectedIngredient = useAppSelector(getIngredientDetails);
 
   const getIngredientIDs = () => {
     const innerIngredientIDs = data?.map((item) => item._id) || [];
@@ -75,7 +74,7 @@ function App() {
     dispatch(fetchIngredients());
   }, [dispatch]);
 
-  const isAuth = useSelector(getLoggedInStatus);
+  const isAuth = useAppSelector(getLoggedInStatus);
 
   const openOrderDetailsModal = () => {
     if (

@@ -1,7 +1,6 @@
 import productCardStyles from "./ProductCard.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
 import { showIngredientDetails } from "../IngredientDetail/actions";
 import {
   getConstructorIngredients,
@@ -11,6 +10,7 @@ import React from "react";
 import ProductItem from "../ProductItem/ProductItem";
 import { Link, useLocation } from "react-router-dom";
 import {IIngredientCard} from "../../utils/types";
+import { useAppSelector, useAppDispatch } from "../../hooks/dispatch-selectos"
 
 
 interface IIngredients {
@@ -23,14 +23,14 @@ const ProductCard = React.forwardRef<HTMLDivElement, IIngredients>(
   (props, ref) => {
     let location = useLocation();
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch()
 
     const openIngredientDetailModal = (ingredient: IIngredientCard) => {
       dispatch(showIngredientDetails(ingredient));
     };
 
-    const data = useSelector(getConstructorIngredients);
-    const bunData = useSelector(getBunData);
+    const data = useAppSelector(getConstructorIngredients);
+    const bunData = useAppSelector(getBunData);
 
     const [ingredientsCounters, setIngredientsCounters] = React.useState<{
       [key: string]: number;

@@ -6,16 +6,15 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 import { forgotPasswordThunk } from "../redux_services/thunk-functions/forgot-password";
-import { useSelector, useDispatch } from "react-redux";
 import { Navigate } from "react-router";
 import { getLoggedInStatus } from "../redux_services/selectors";
 import { useNavigate } from "react-router-dom";
 import {TSubmitHandler} from "../utils/types";
-import { AppDispatch } from "../redux_services/store";
+import { useAppSelector, useAppDispatch } from "../hooks/dispatch-selectos"
 
 function ForgotPasswordPage() {
   const navigate = useNavigate();
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useAppDispatch()
 
   const [value, setValue] = React.useState("");
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -31,7 +30,7 @@ function ForgotPasswordPage() {
     email: value,
   };
 
-  const isLoggedIn = useSelector(getLoggedInStatus);
+  const isLoggedIn = useAppSelector(getLoggedInStatus);
   if (isLoggedIn) {
     return <Navigate to="/" replace />;
   }
