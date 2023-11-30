@@ -5,52 +5,43 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
-import { onLogin } from "../utils/OnLogin";
-import { useSelector } from "react-redux";
+import { loginThunk } from "../redux_services/thunk-functions/OnLogin";
+import { useSelector, useDispatch } from "react-redux";
 import { getUserError, getLoggedInStatus } from "../redux_services/selectors";
 import { useNavigate } from "react-router-dom";
 import { Navigate } from "react-router";
+import {TSubmitHandler} from "../utils/types";
+import {useForm} from "../hooks/useForm";
+import { AppDispatch } from "../redux_services/store";
 
 function LoginPage() {
+  const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
   const isLoggedIn = useSelector(getLoggedInStatus);
-
-
   const registerError = useSelector(getUserError);
 
-
-  const [emailValue, setEmailValue] = React.useState("");
   const inputEmailRef = React.useRef<HTMLInputElement>(null);
   const onIconClickEmail = () => {
     setTimeout(() => inputEmailRef.current?.focus(), 0);
     alert("Icon Click Callback");
   };
 
-  const [passwordValue, setPasswordValue] = React.useState("");
   const inputPasswordRef = React.useRef<HTMLInputElement>(null);
   const onIconClickPassword = () => {
     setTimeout(() => inputPasswordRef.current?.focus(), 0);
     alert("Icon Click Callback");
   };
 
-  interface ILoginData {
-    password: string | number;
-    email: string;
-  }
+  const { values, handleChange } = useForm();
 
-  const loginData: ILoginData = {
-    email: emailValue,
-    password: passwordValue,
+  const handleFormSubmit: TSubmitHandler = (e) => {
+    e.preventDefault();
+    dispatch(loginThunk(values));
   };
 
   if (isLoggedIn) {
     return <Navigate to="/" replace />;
   }
-
-  const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (e: React.SyntheticEvent) => {
-    e.preventDefault();
-    onLogin(loginData);
-  };
 
   return (
     <div className={styles.page}>
@@ -60,9 +51,9 @@ function LoginPage() {
           <Input
             type={"text"}
             placeholder={"E-mail"}
-            onChange={(e) => setEmailValue(e.target.value)}
-            value={emailValue}
-            name={"name"}
+            onChange={handleChange}
+            value={values.email}
+            name={"email"}
             error={false}
             ref={inputEmailRef}
             onIconClick={onIconClickEmail}
@@ -74,10 +65,10 @@ function LoginPage() {
           <Input
             type={"text"}
             placeholder={"Пароль"}
-            onChange={(e) => setPasswordValue(e.target.value)}
+            onChange={handleChange}
             icon={"ShowIcon"}
-            value={passwordValue}
-            name={"name"}
+            value={values.password}
+            name={"password"}
             error={false}
             ref={inputPasswordRef}
             onIconClick={onIconClickPassword}

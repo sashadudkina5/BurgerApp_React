@@ -7,21 +7,15 @@ import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import IngredientDetail from "../IngredientDetail/IngredientDetail";
-import { getIngredients } from "../../utils/burger-api";
-import {
-  getIngredientsRequest,
-  getIngredientsSuccess,
-  getIngredientsFailed,
-} from "../../redux_services/ingredients/actions";
 import {
   showIngredientDetails,
-  hideIngredientDetails,
+  hideIngredientDetails
 } from "../IngredientDetail/actions";
 import { useDispatch, useSelector } from "react-redux";
-import { getListOfIngredients } from "../../redux_services/selectors";
+import { getListOfIngredients, getIngredientDetails } from "../../redux_services/selectors";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
-import { createOrder } from "../OrderDetails/thunk";
+import { createOrderThunk } from "../../redux_services/thunk-functions/GetOrderID";
 import {
   getConstructorIngredients,
   getBunData,
@@ -34,33 +28,21 @@ import ResetPasswordPage from "../../pages/reset-password";
 import ForgotPasswordPage from "../../pages/forgot-password";
 import ProfilePage from "../../pages/profile";
 import ProtectedRouteElement from "../ProtectedRouteElement";
-import { getUserInfo } from "../../utils/GetUserInfo";
+import { getUserInfoThunk } from "../../redux_services/thunk-functions/GetUserInfo";
 import IngredientDetailPageOpened from "../../pages/ingredients-id";
-import { Navigate } from "react-router";
+import {IIngredients, IIngredientCard} from "../../utils/types";
+import {fetchIngredients} from "../../redux_services/thunk-functions/FetchIngredients";
+import { AppDispatch } from "../../redux_services/store";
+import {cleanConstructor} from "../BurgerConstructor/actions"
 
-export interface IIngredientCard {
-  type?: string;
-  name: string;
-  price: number;
-  _id: string;
-  image: string;
-  uniqID: number;
-  index?: number;
-  calories: number;
-  proteins: number;
-  fat: number;
-  carbohydrates: number;
-}
-
-export interface IIngredients extends Array<IIngredientCard> {}
 
 function App() {
-  let location = useLocation();
+  const location = useLocation();
+  const dispatch: AppDispatch = useDispatch();
 
-  let state = location.state || {};
-  let backgroundLocation = state.backgroundLocation;
-  let navigate = useNavigate();
-  const dispatch = useDispatch();
+  const state = location.state || {};
+  const backgroundLocation = state.backgroundLocation;
+  const navigate = useNavigate();
 
 
   function onDismiss() {
@@ -76,6 +58,7 @@ function App() {
 
   const data: IIngredients = useSelector(getConstructorIngredients);
   const bunData = useSelector(getBunData);
+  const selectedIngredient = useSelector(getIngredientDetails);
 
   const getIngredientIDs = () => {
     const innerIngredientIDs = data?.map((item) => item._id) || [];
@@ -89,16 +72,7 @@ function App() {
   };
 
   useEffect(() => {
-    dispatch(getIngredientsRequest());
-
-    getIngredients()
-      .then((ingredientsData) => {
-        dispatch(getIngredientsSuccess(ingredientsData));
-      })
-      .catch((error) => {
-        console.log(error);
-        dispatch(getIngredientsFailed(error.message));
-      });
+    dispatch(fetchIngredients());
   }, [dispatch]);
 
   const isAuth = useSelector(getLoggedInStatus);
@@ -112,9 +86,8 @@ function App() {
       isAuth
     ) {
       setIsOrderDetailsModalOpen(true);
-      createOrder(getIngredientIDs());
+      dispatch(createOrderThunk(getIngredientIDs()));
     } else if (!isAuth) {
-      createOrder(getIngredientIDs());
       navigate("/login");
     } else {
       return null;
@@ -123,6 +96,7 @@ function App() {
 
   const closeOrderDetailsModal = () => {
     setIsOrderDetailsModalOpen(false);
+    dispatch(cleanConstructor())
   };
 
   const openIngredientDetailModal = (ingredient: IIngredientCard) => {
@@ -130,7 +104,7 @@ function App() {
   };
 
   useEffect(() => {
-    getUserInfo();
+    dispatch(getUserInfoThunk());
   }, []);
   
 
@@ -194,7 +168,7 @@ function App() {
               path="/ingredients/:id"
               element={
                 <Modal title={"Детали ингредиента"} onClose={onDismiss}>
-                  <IngredientDetail />
+                  <IngredientDetail selectedIngredient={selectedIngredient}/>
                 </Modal>
               }
             />

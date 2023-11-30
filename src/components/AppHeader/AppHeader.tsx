@@ -7,7 +7,7 @@ import { NavLink } from "react-router-dom";
 
 function AppHeader() {
   return (
-    <div className={appHeaderStyles.header}>
+    <header className={appHeaderStyles.header}>
       <div className={appHeaderStyles.navBar}>
         <NavLink
           to="/"
@@ -18,7 +18,7 @@ function AppHeader() {
           }
           end
         >
-          <BurgerIcon type="secondary"/>
+          <BurgerIcon type="secondary" />
           <p
             className={`text text_type_main-default text_color_inactive ${appHeaderStyles.linkText}`}
           >
@@ -35,7 +35,7 @@ function AppHeader() {
           }
           end
         >
-          <ListIcon type="secondary"/>
+          <ListIcon type="secondary" />
           <p
             className={`text text_type_main-default text_color_inactive ${appHeaderStyles.linkText}`}
           >
@@ -43,8 +43,9 @@ function AppHeader() {
           </p>
         </NavLink>
       </div>
-
-      <Logo />
+      <NavLink to="/" end>
+        <Logo />
+      </NavLink>
 
       <NavLink
         to={"/profile"}
@@ -55,14 +56,14 @@ function AppHeader() {
         }
         end
       >
-        <ProfileIcon type="secondary"/>
+        <ProfileIcon type="secondary" />
         <p
           className={`text text_type_main-default text_color_inactive ${appHeaderStyles.linkText}`}
         >
           Личный кабинет
         </p>
       </NavLink>
-    </div>
+    </header>
   );
 }
 

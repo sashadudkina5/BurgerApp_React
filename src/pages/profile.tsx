@@ -4,19 +4,22 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getUserData } from "../redux_services/selectors";
 import { useState } from "react";
-import { changeUserInfo } from "../utils/change-profile-info";
-import { logout } from "../utils/logout";
+import { changeUserInfoThunk } from "../redux_services/thunk-functions/change-profile-info";
+import { logoutThunk } from "../redux_services/thunk-functions/logout";
 import { useNavigate } from "react-router-dom";
+import {TSubmitHandler} from "../utils/types";
+import { AppDispatch } from "../redux_services/store";
 
 function ProfilePage() {
+  const dispatch: AppDispatch = useDispatch();
 
   const navigate = useNavigate();
 
   const handleLogout = (e: React.SyntheticEvent) => {
-    logout();
+    dispatch(logoutThunk());
     navigate("/login");
   };
 
@@ -57,12 +60,12 @@ function ProfilePage() {
     name: nameValue,
   };
 
-  const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (e: React.SyntheticEvent) => {
+  const handleFormSubmit: TSubmitHandler = (e) => {
     e.preventDefault();
     setIsEmailEditing(false);
     setIsNameEditing(false);
     setIsPasswordEditing(false);
-    changeUserInfo(changedData);
+    dispatch(changeUserInfoThunk(changedData));
   };
 
   const handleCancel = () => {

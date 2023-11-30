@@ -2,10 +2,10 @@ import {
   getRegistrationRequest,
   getRegistrationSuccess,
   getRegistrationFailed,
-} from "../redux_services/UserData/actions";
-import { store } from "../redux_services/store";
-import { setCookie } from "./api";
-import { BASE_URL } from "./ApiConfig";
+} from "../UserData/actions";
+import { store } from "../store";
+import { setCookie } from "../../utils/api";
+import { BASE_URL } from "../../utils/ApiConfig";
 
 interface IregistrationData {
   password: string | number;

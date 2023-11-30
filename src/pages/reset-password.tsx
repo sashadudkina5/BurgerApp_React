@@ -5,45 +5,39 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate, Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getLoggedInStatus } from "../redux_services/selectors";
-import { resetPassword } from "../utils/reset-password";
+import { resetPasswordThunk } from "../redux_services/thunk-functions/reset-password";
+import {TSubmitHandler} from "../utils/types";
+import {useForm} from "../hooks/useForm";
+import { AppDispatch } from "../redux_services/store";
 
 export const ResetPasswordPage: React.FC = () => {
+  const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [passwordValue, setPasswordValue] = React.useState<string>("");
   const inputRefPassword = React.useRef<HTMLInputElement>(null);
   const onIconClickPassword = () => {
     setTimeout(() => inputRefPassword.current?.focus(), 0);
   };
 
-  const [tokenValue, setValueToken] = React.useState<string>("");
   const inputRefToken = React.useRef<HTMLInputElement>(null);
   const onIconClickToken = () => {
     setTimeout(() => inputRefToken.current?.focus(), 0);
   };
 
-  interface InewPasswordData {
-    password: string;
-    token: string;
-  }
-
-  const newPasswordData: InewPasswordData = {
-    password: passwordValue,
-    token: tokenValue,
-  };
+  const { values, handleChange } = useForm();
 
   const isLoggedIn = useSelector(getLoggedInStatus);
   if (isLoggedIn) {
     return <Navigate to="/" replace />;
   }
 
-  const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = async (e: React.SyntheticEvent) => {
+  const handleFormSubmit: TSubmitHandler = async (e) => {
     e.preventDefault();
 
     try {
-      await resetPassword(newPasswordData);
+      await dispatch(resetPasswordThunk(values));
       navigate("/login");
     } catch (error) {
       console.error(error);
@@ -58,12 +52,12 @@ export const ResetPasswordPage: React.FC = () => {
         </h1>
         <form onSubmit={handleFormSubmit}>
           <Input
-            type={"text"}
+            type={"password"}
             placeholder={"Введите новый пароль"}
-            onChange={(e) => setPasswordValue(e.target.value)}
+            onChange={handleChange}
             icon={"ShowIcon"}
-            value={passwordValue}
-            name={"name"}
+            value={values.password}
+            name={"password"}
             error={false}
             ref={inputRefPassword}
             onIconClick={onIconClickPassword}
@@ -75,9 +69,9 @@ export const ResetPasswordPage: React.FC = () => {
           <Input
             type={"text"}
             placeholder={"Введите код из письма"}
-            onChange={(e) => setValueToken(e.target.value)}
-            value={tokenValue}
-            name={"name"}
+            onChange={handleChange}
+            value={values.token}
+            name={"token"}
             error={false}
             ref={inputRefToken}
             onIconClick={onIconClickToken}

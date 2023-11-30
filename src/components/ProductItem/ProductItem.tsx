@@ -3,7 +3,7 @@ import { ItemTypes } from "../../utils/item-types-dnd";
 import { useDispatch } from "react-redux";
 import { addIngredient } from "../BurgerConstructor/actions";
 import React from "react";
-import {IIngredientCard} from "../App/App";
+import {IIngredientCard} from "../../utils/types";
 
 interface IProductItemProps {
   ingredient: IIngredientCard;

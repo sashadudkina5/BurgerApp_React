@@ -9,7 +9,7 @@ import { useRef } from "react";
 import { useDrop, useDrag, DropTargetMonitor } from "react-dnd";
 import { ItemTypes } from "../../utils/item-types-dnd";
 import { CONSTRUCTOR_REORDER } from "../BurgerConstructor/actions";
-import {IIngredientCard} from "../App/App";
+import {IIngredientCard} from "../../utils/types";
 
 interface ISortingIngredientsProps {
   item: IIngredientCard;

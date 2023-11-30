@@ -1,7 +1,8 @@
 import {
     ADD_INGREDIENT,
     DELETE_INGREDIENT,
-    CONSTRUCTOR_REORDER
+    CONSTRUCTOR_REORDER,
+    CLEAN_CONSTRUCTOR
   } from "./actions";
   
   // Исходное состояние
@@ -47,6 +48,14 @@ import {
                ...state,
                constructorIngredients
         }
+      }
+
+      case CLEAN_CONSTRUCTOR: {
+        return {
+          ...state,
+          constructorIngredients: [],
+          bun: null,
+        };
       }
   
       // Реакция на прочие типы экшенов

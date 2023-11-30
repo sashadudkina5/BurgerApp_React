@@ -1,3 +1,5 @@
+import { BASE_URL } from "./ApiConfig";
+
 export function getCookie(name: string) {
   const matches = document.cookie.match(
     new RegExp(
@@ -42,7 +44,7 @@ export const refreshToken = async () => {
     };
   
     try {
-      const response = await fetch("https://norma.nomoreparties.space/api/auth/token", {
+      const response = await fetch(`${BASE_URL}/auth/token`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -66,7 +68,7 @@ export const refreshToken = async () => {
   };
 
 
-  export const checkResponse = async (response: any) => {
+  export const checkResponse = async (response: Response) => {
     if (response.ok) {
         return response.json();
     } else {

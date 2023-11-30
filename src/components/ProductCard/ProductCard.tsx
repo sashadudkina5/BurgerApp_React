@@ -10,7 +10,7 @@ import {
 import React from "react";
 import ProductItem from "../ProductItem/ProductItem";
 import { Link, useLocation } from "react-router-dom";
-import {IIngredientCard} from "../App/App";
+import {IIngredientCard} from "../../utils/types";
 
 
 interface IIngredients {
@@ -64,6 +64,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, IIngredients>(
               textDecoration: "none",
               color: "inherit",
             }}
+            key={ingredient._id}
           >
             <ProductItem ingredient={ingredient}>
               <div

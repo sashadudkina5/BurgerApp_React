@@ -13,7 +13,7 @@ import { useDrop } from "react-dnd";
 import { ItemTypes } from "../../utils/item-types-dnd";
 import { useMemo, useCallback } from "react";
 import SortingIngredients from "../SortingIngredients/SortingIngredients";
-import {IIngredients, IIngredientCard} from "../App/App";
+import {IIngredients, IIngredientCard} from "../../utils/types";
 
 
 interface IBurgerConstructorProps {
@@ -59,7 +59,7 @@ function BurgerConstructor({ onClick }: IBurgerConstructorProps) {
             <ConstructorElement
               type="top"
               isLocked={true}
-              text={bunData.name}
+              text={`${bunData.name} (верх)`}
               price={bunData.price}
               thumbnail={bunData.image}
             />
@@ -73,7 +73,7 @@ function BurgerConstructor({ onClick }: IBurgerConstructorProps) {
             <ConstructorElement
               type="bottom"
               isLocked={true}
-              text={bunData.name}
+              text={`${bunData.name} (низ)`}
               price={bunData.price}
               thumbnail={bunData.image}
             />

@@ -5,13 +5,17 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { getListOfIngredientsArray } from "../../redux_services/selectors";
 import { reopenIngredientDetails } from "../IngredientDetail/actions";
-import {IIngredients, IIngredientCard} from "../App/App";
+import {IIngredients, IIngredientCard} from "../../utils/types";
+
+interface IIngredientDetailProps {
+  selectedIngredient: IIngredientCard;
+}
 
 
-function IngredientDetail() {
+function IngredientDetail({selectedIngredient}: IIngredientDetailProps) {
   const dispatch = useDispatch();
 
-  const selectedIngredient = useSelector(getIngredientDetails);
+  // const selectedIngredient = useSelector(getIngredientDetails);
   const routeParams = useParams();
   const data: IIngredients = useSelector(getListOfIngredientsArray);
 

@@ -5,7 +5,7 @@ import ProductCard from "../ProductCard/ProductCard";
 import { useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { showIngredientDetails } from "../IngredientDetail/actions";
-import {IIngredients, IIngredientCard} from "../App/App";
+import {IIngredients, IIngredientCard} from "../../utils/types";
 
 
 interface IBurgerIngredients {
