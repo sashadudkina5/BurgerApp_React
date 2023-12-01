@@ -9,12 +9,12 @@ import { loginThunk } from "../redux_services/thunk-functions/OnLogin";
 import { getUserError, getLoggedInStatus } from "../redux_services/selectors";
 import { useNavigate } from "react-router-dom";
 import { Navigate } from "react-router";
-import {TSubmitHandler} from "../utils/types";
-import {useForm} from "../hooks/useForm";
-import { useAppSelector, useAppDispatch } from "../hooks/dispatch-selectos"
+import { TSubmitHandler } from "../utils/types";
+import { useForm } from "../hooks/useForm";
+import { useAppSelector, useAppDispatch } from "../hooks/dispatch-selectos";
 
 function LoginPage() {
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isLoggedIn = useAppSelector(getLoggedInStatus);
   const registerError = useAppSelector(getUserError);

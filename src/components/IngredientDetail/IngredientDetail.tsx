@@ -10,17 +10,17 @@ interface IIngredientDetailProps {
   selectedIngredient: IIngredientCard;
 }
 
-
-function IngredientDetail({selectedIngredient}: IIngredientDetailProps) {
-  const dispatch = useAppDispatch()
-
+function IngredientDetail({ selectedIngredient }: IIngredientDetailProps) {
+  const dispatch = useAppDispatch();
   const routeParams = useParams();
   const data: IIngredients = useAppSelector(getListOfIngredientsArray);
 
-  if (routeParams) {
-  const filteredArray = data.filter((obj) => obj._id === routeParams.id);
-  dispatch(reopenIngredientDetails(filteredArray[0]))
-  }
+  React.useEffect(() => {
+    if (routeParams && data) {
+      const filteredArray = data.filter((obj) => obj._id === routeParams.id);
+      dispatch(reopenIngredientDetails(filteredArray[0]));
+    }
+  }, [dispatch, routeParams, data]);
 
   if (!selectedIngredient) {
     return null;

@@ -9,11 +9,11 @@ import { useState } from "react";
 import { changeUserInfoThunk } from "../redux_services/thunk-functions/change-profile-info";
 import { logoutThunk } from "../redux_services/thunk-functions/logout";
 import { useNavigate } from "react-router-dom";
-import {TSubmitHandler} from "../utils/types";
-import { useAppSelector, useAppDispatch } from "../hooks/dispatch-selectos"
+import { TSubmitHandler } from "../utils/types";
+import { useAppSelector, useAppDispatch } from "../hooks/dispatch-selectos";
 
 function ProfilePage() {
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
 

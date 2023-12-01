@@ -1,5 +1,4 @@
 import { getCookie, fetchWithRefresh } from "../../utils/api";
-import { store } from "../store";
 import { getLoginSuccess, getLoginRequest, getLoginFailed } from "../UserData/actions";
 import { BASE_URL } from "../../utils/ApiConfig";
 
@@ -17,6 +16,7 @@ export const getUserInfoThunk = () => async (
 
     if (!accessToken) {
       console.error('AccessToken is missing');
+      dispatch(getLoginFailed());
       return null;
     }
 
@@ -27,6 +27,7 @@ export const getUserInfoThunk = () => async (
       },
     });
 
+    // cant use CheckResponse here as response is not json type
     if (response.success) {
       const userInfo: UserInfo = response.user;
       const userEmail: string = userInfo.email;

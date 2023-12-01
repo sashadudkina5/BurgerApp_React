@@ -9,12 +9,12 @@ import { forgotPasswordThunk } from "../redux_services/thunk-functions/forgot-pa
 import { Navigate } from "react-router";
 import { getLoggedInStatus } from "../redux_services/selectors";
 import { useNavigate } from "react-router-dom";
-import {TSubmitHandler} from "../utils/types";
-import { useAppSelector, useAppDispatch } from "../hooks/dispatch-selectos"
+import { TSubmitHandler } from "../utils/types";
+import { useAppSelector, useAppDispatch } from "../hooks/dispatch-selectos";
 
 function ForgotPasswordPage() {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   const [value, setValue] = React.useState("");
   const inputRef = React.useRef<HTMLInputElement>(null);

@@ -5,7 +5,7 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
-import { register } from "../redux_services/thunk-functions/registration";
+import { registerThunk } from "../redux_services/thunk-functions/registration";
 import { useNavigate } from "react-router-dom";
 import {
   getUserEmail,
@@ -13,12 +13,13 @@ import {
   getLoggedInStatus,
 } from "../redux_services/selectors";
 import { Navigate } from "react-router";
-import {TSubmitHandler} from "../utils/types";
-import {useForm} from "../hooks/useForm";
-import { useAppSelector } from "../hooks/dispatch-selectos"
+import { TSubmitHandler } from "../utils/types";
+import { useForm } from "../hooks/useForm";
+import { useAppSelector, useAppDispatch } from "../hooks/dispatch-selectos";
 
 function RegisterPage() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const isRegistered = useAppSelector(getUserEmail);
   const registerError = useAppSelector(getUserError);
@@ -41,7 +42,7 @@ function RegisterPage() {
     alert("Icon Click Callback");
   };
 
-  const { values, handleChange } = useForm(); 
+  const { values, handleChange } = useForm();
 
   const isLoggedIn = useAppSelector(getLoggedInStatus);
   if (isLoggedIn) {
@@ -50,7 +51,7 @@ function RegisterPage() {
 
   const handleFormSubmit: TSubmitHandler = (e) => {
     e.preventDefault();
-    register(values);
+    dispatch(registerThunk(values));
   };
 
   return (

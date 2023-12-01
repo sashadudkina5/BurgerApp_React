@@ -39,66 +39,63 @@ export function deleteCookie(name: string) {
 }
 
 export const refreshToken = async () => {
-    const refreshConfig = {
-      token: getCookie("refreshToken"),
-    };
-  
-    try {
-      const response = await fetch(`${BASE_URL}/auth/token`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(refreshConfig),
-      });
-  
-      if (response.ok) {
-        const data = await response.json();
-        setCookie("accessToken", data.accessToken);
-        return { success: true };
-      } else {
-        const errorData = await response.json();
-        console.error("Error during token refresh:", errorData.message);
-        return { success: false, message: errorData.message };
-      }
-    } catch (error: any) {
-      console.error("Network error during token refresh:", error.message);
-      return { success: false, message: "Network error during token refresh" };
-    }
+  const refreshConfig = {
+    token: getCookie("refreshToken"),
   };
 
+  try {
+    const response = await fetch(`${BASE_URL}/auth/token`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(refreshConfig),
+    });
 
-  export const checkResponse = async (response: Response) => {
     if (response.ok) {
-        return response.json();
+      const data = await response.json();
+      setCookie("accessToken", data.accessToken);
+      return { success: true };
     } else {
-        const errorData = await response.json();
-        console.error("Error in response:", errorData.message);
-        return Promise.reject(errorData);
+      const errorData = await response.json();
+      console.error("Error during token refresh:", errorData.message);
+      return { success: false, message: errorData.message };
     }
+  } catch (error: any) {
+    console.error("Network error during token refresh:", error.message);
+    return { success: false, message: "Network error during token refresh" };
+  }
 };
 
-  
-  export const fetchWithRefresh = async (url: string, options: any) => {
-    try {
+export const checkResponse = async (response: Response) => {
+  if (response.ok) {
+    return response.json();
+  } else {
+    const errorData = await response.json();
+    console.error("Error in response:", errorData.message);
+    throw new Error(errorData.message);
+  }
+};
+
+export const fetchWithRefresh = async (url: any, options: any) => {
+  try {
+    const res = await fetch(url, options);
+    return await checkResponse(res);
+  } catch (err: any) {
+    if (err.message === "jwt expired") {
+      const refreshData: any = await refreshToken();
+      if (!refreshData.success) {
+        return Promise.reject(refreshData);
+      }
+
+      localStorage.setItem("refreshToken", refreshData.refreshToken);
+      setCookie("accessToken", refreshData.accessToken);
+      options.headers.authorization = refreshData.accessToken;
+
       const res = await fetch(url, options);
       return await checkResponse(res);
-    } catch (err: any) {
-      if (err.message === "jwt expired") {
-        const refreshData: any = await refreshToken();
-        if (!refreshData.success) {
-          return Promise.reject(refreshData);
-        }
-  
-        localStorage.setItem("refreshToken", refreshData.refreshToken);
-        setCookie("accessToken", refreshData.accessToken);
-        options.headers.authorization = refreshData.accessToken;
-  
-        const res = await fetch(url, options);
-        return await checkResponse(res);
-      } else {
-        return Promise.reject(err);
-      }
+    } else {
+      return Promise.reject(err);
     }
-  };
-  
+  }
+};

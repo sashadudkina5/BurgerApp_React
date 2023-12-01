@@ -18,7 +18,7 @@ const ProtectedRouteElement: React.FC<IProtectedRouteElementProps> = ({
     return <div>Loading...</div>;
   }
 
-  if (!isLoggedIn) {
+  else if (!isLoggedIn) {
     return <Navigate to={"/login"} state={{ from: location }} />;
   }
 

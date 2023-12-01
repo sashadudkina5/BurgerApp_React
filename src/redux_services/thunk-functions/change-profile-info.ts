@@ -1,7 +1,7 @@
 import { getCookie, fetchWithRefresh } from "../../utils/api";
-import { store } from "../store";
 import { getLoginSuccess } from "../UserData/actions";
 import { BASE_URL } from "../../utils/ApiConfig";
+import { checkResponse } from "../../utils/api";
 
 interface IСhangedData {
   email: string;
@@ -9,30 +9,27 @@ interface IСhangedData {
   name: string;
 }
 
-export const changeUserInfoThunk = (
-  changedData: IСhangedData
-) => async (
-  dispatch: any
-) => {
-  try {
-    const accessToken = getCookie('accessToken');
+export const changeUserInfoThunk =
+  (changedData: IСhangedData) => async (dispatch: any) => {
+    try {
+      const accessToken = getCookie("accessToken");
 
-    if (!accessToken) {
-      console.error('AccessToken is missing');
-      return null;
-    }
+      if (!accessToken) {
+        console.error("AccessToken is missing");
+        return null;
+      }
 
-    const response = await fetchWithRefresh(`${BASE_URL}/auth/user`, {
-      method: 'PATCH',
-      headers: {
-        Authorization: accessToken,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(changedData),
-    });
+      const response = await fetchWithRefresh(`${BASE_URL}/auth/user`, {
+        method: "PATCH",
+        headers: {
+          Authorization: accessToken,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(changedData),
+      });
+      const data = await checkResponse(response);
 
-    if (response.success) {
-      const userInfo = response.user;
+      const userInfo = data.user;
       const userEmail: string = userInfo.email;
       const userName: string = userInfo.name;
       const loginData = {
@@ -40,10 +37,7 @@ export const changeUserInfoThunk = (
         name: userName,
       };
       dispatch(getLoginSuccess(loginData));
-    } else {
-      console.error('Error:', response.message || 'Unknown error');
+    } catch (error: any) {
+      console.error("Network error:", error.message || "Unknown error");
     }
-  } catch (error: any) {
-    console.error('Network error:', error.message || 'Unknown error');
-  }
-};
+  };

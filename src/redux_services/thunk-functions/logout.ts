@@ -1,16 +1,17 @@
 import { getCookie, deleteCookie } from "../../utils/api";
 import { getLogOutSuccess } from "../UserData/actions";
 import { BASE_URL } from "../../utils/ApiConfig";
+import { checkResponse } from "../../utils/api";
 
 export const logoutThunk = () => async (dispatch: any) => {
   const refreshConfig = {
-    token: getCookie('refreshToken'),
+    token: getCookie("refreshToken"),
   };
 
   try {
-    const accessToken = getCookie('accessToken');
+    const accessToken = getCookie("accessToken");
     const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     };
 
     if (accessToken) {
@@ -18,24 +19,17 @@ export const logoutThunk = () => async (dispatch: any) => {
     }
 
     const response = await fetch(`${BASE_URL}/auth/logout`, {
-      method: 'POST',
+      method: "POST",
       headers: headers,
       body: JSON.stringify(refreshConfig),
     });
 
-    if (response.ok) {
-      const data = await response.json();
-      if (data.success) {
-        deleteCookie('accessToken');
-        deleteCookie('refreshToken');
-        dispatch(getLogOutSuccess());
-      } else {
-        console.error('Error during logout');
-      }
-    } else {
-      console.error('Error during logout');
-    }
+    await checkResponse(response);
+    deleteCookie("accessToken");
+    deleteCookie("refreshToken");
+    dispatch(getLogOutSuccess());
+
   } catch (error) {
-    console.error('Network error during logout');
+      console.error("Network error during logout:", error);
+    }
   }
-};

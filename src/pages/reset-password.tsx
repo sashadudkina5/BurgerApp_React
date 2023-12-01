@@ -7,12 +7,12 @@ import {
 import { Link, useNavigate, Navigate } from "react-router-dom";
 import { getLoggedInStatus } from "../redux_services/selectors";
 import { resetPasswordThunk } from "../redux_services/thunk-functions/reset-password";
-import {TSubmitHandler} from "../utils/types";
-import {useForm} from "../hooks/useForm";
-import { useAppSelector, useAppDispatch } from "../hooks/dispatch-selectos"
+import { TSubmitHandler } from "../utils/types";
+import { useForm } from "../hooks/useForm";
+import { useAppSelector, useAppDispatch } from "../hooks/dispatch-selectos";
 
 export const ResetPasswordPage: React.FC = () => {
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const inputRefPassword = React.useRef<HTMLInputElement>(null);
