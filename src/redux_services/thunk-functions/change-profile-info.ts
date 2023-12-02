@@ -20,24 +20,27 @@ export const changeUserInfoThunk =
       }
 
       const response = await fetchWithRefresh(`${BASE_URL}/auth/user`, {
-        method: "PATCH",
+        method: 'PATCH',
         headers: {
           Authorization: accessToken,
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(changedData),
       });
-      const data = await checkResponse(response);
-
-      const userInfo = data.user;
-      const userEmail: string = userInfo.email;
-      const userName: string = userInfo.name;
-      const loginData = {
-        email: userEmail,
-        name: userName,
-      };
-      dispatch(getLoginSuccess(loginData));
+  
+      if (response.success) {
+        const userInfo = response.user;
+        const userEmail: string = userInfo.email;
+        const userName: string = userInfo.name;
+        const loginData = {
+          email: userEmail,
+          name: userName,
+        };
+        dispatch(getLoginSuccess(loginData));
+      } else {
+        console.error('Error:', response.message || 'Unknown error');
+      }
     } catch (error: any) {
-      console.error("Network error:", error.message || "Unknown error");
+      console.error('Network error:', error.message || 'Unknown error');
     }
   };

@@ -33,7 +33,7 @@ export const getLoginSuccess = (loginData) => ({
   
 export const getLoginFailed = (error) => ({
     type: GET_LOGIN_FAILED,
-    error: error,
+    payload: error.message,
 });
 
 export const getLogOutSuccess = () => ({

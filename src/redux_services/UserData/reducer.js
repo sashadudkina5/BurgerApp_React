@@ -68,7 +68,7 @@ export const userDataReducer = (state = initialState, action) => {
           ...state,
           userData: { email: "", name: "" },
           isLoading: false,
-          error: action.error,
+          error: action.payload,
         };
       }
 
