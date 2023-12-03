@@ -1,6 +1,7 @@
 import {
     SHOW_INGREDIENT_DETAILS,
     HIDE_INGREDIENT_DETAILS,
+    REOPEN_INGREDIENT_DETAILS
   } from "./actions";
   
 
@@ -23,6 +24,14 @@ const initialState = {
   
       case HIDE_INGREDIENT_DETAILS: {
         return { ...state, ingredientDetails: [], isIngredientDetailModalOpen: false };
+      }
+
+      case REOPEN_INGREDIENT_DETAILS: {
+        return {
+          ...state,
+          ingredientDetails: action.payload,
+          isIngredientDetailModalOpen: true
+        };
       }
   
       // Реакция на прочие типы экшенов

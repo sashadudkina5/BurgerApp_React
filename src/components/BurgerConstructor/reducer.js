@@ -1,7 +1,8 @@
 import {
     ADD_INGREDIENT,
     DELETE_INGREDIENT,
-    CONSTRUCTOR_REORDER
+    CONSTRUCTOR_REORDER,
+    CLEAN_CONSTRUCTOR
   } from "./actions";
   
   // Исходное состояние
@@ -14,7 +15,7 @@ import {
     switch (action.type) {
   
       case ADD_INGREDIENT: {
-          if (action.payload.ingredient.type === "bun") {
+          if (action.payload.type === "bun") {
               return {...state, bun: action.payload }
           }
   
@@ -47,6 +48,14 @@ import {
                ...state,
                constructorIngredients
         }
+      }
+
+      case CLEAN_CONSTRUCTOR: {
+        return {
+          ...state,
+          constructorIngredients: [],
+          bun: null,
+        };
       }
   
       // Реакция на прочие типы экшенов
