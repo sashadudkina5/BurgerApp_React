@@ -26,6 +26,7 @@ import RegisterPage from "../../pages/register";
 import ResetPasswordPage from "../../pages/reset-password";
 import ForgotPasswordPage from "../../pages/forgot-password";
 import ProfilePage from "../../pages/profile";
+import OrderFeed from "../../pages/order-feed"
 import ProtectedRouteElement from "../ProtectedRouteElement";
 import { getUserInfoThunk } from "../../redux_services/thunk-functions/GetUserInfo";
 import IngredientDetailPageOpened from "../../pages/ingredients-id";
@@ -61,7 +62,7 @@ function App() {
 
   const getIngredientIDs = () => {
     const innerIngredientIDs = data?.map((item) => item._id) || [];
-    const idValue = bunData._id;
+    const idValue = bunData?._id;
     const bunIDs = [idValue];
     const ingredientIDs = innerIngredientIDs.concat(bunIDs, bunIDs);
 
@@ -124,6 +125,7 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route path="/feed" element={<OrderFeed />} />
           <Route
             path="/ingredients/:id"
             element={<IngredientDetailPageOpened />}

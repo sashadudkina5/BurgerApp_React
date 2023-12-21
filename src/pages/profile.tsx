@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./pages.module.css";
+import styles from "./styles/pages.module.css";
 import {
   Input,
   Button,
@@ -23,8 +23,8 @@ function ProfilePage() {
   };
 
   const userData = useAppSelector(getUserData);
-  const userName: string = userData.name;
-  const userEmail: string = userData.email;
+  const userName: string = userData.name!;
+  const userEmail: string = userData.email!;
 
   const [emailValue, setEmailValue] = React.useState<string>(userEmail);
   const inputEmailRef = React.useRef<HTMLInputElement>(null);

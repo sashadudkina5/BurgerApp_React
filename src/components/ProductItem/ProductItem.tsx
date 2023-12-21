@@ -2,7 +2,7 @@ import { useDrag } from "react-dnd";
 import { ItemTypes } from "../../utils/item-types-dnd";
 import { addIngredient } from "../BurgerConstructor/actions";
 import React from "react";
-import {IIngredientCard} from "../../utils/types";
+import {IIngredientCard, IIngredientCardConstructor} from "../../utils/types";
 import { useAppDispatch } from "../../hooks/dispatch-selectos"
 
 interface IProductItemProps {
