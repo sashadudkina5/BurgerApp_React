@@ -1,16 +1,9 @@
 import styles from "./styles/user-ordes.module.css";
-import OrderFeedItem from "../components/OderFeedItem/OrderFeedItem";
 import {
-  connect as OrdersConnect,
   disconnected as OrdersDisconnect,
 } from "../redux_services/web-socket-actions";
-import { WS_URL } from "../utils/ApiConfig";
 import { useEffect } from "react";
-import {
-  getTotalOrders,
-  getTotalTodatOrders,
-} from "../redux_services/selectors";
-import { useAppSelector, useAppDispatch } from "../hooks/dispatch-selectos";
+import { useAppDispatch } from "../hooks/dispatch-selectos";
 import { getUserOrders } from "../redux_services/thunk-functions/GetUserOrders";
 import UserOrderItem from "../components/UserOrderItem/UserOrderItem";
 

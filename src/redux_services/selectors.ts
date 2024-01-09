@@ -22,19 +22,14 @@ export const getLoggedInStatus = (state: RootState) =>
 export const getUserData = (state: RootState) => state.userDataStore.userData;
 export const getOpenedIngredientID = (state: RootState) =>
   state.ingredientDetailsStore.ingredientDetails;
-export const getOrferNumber = (state: RootState) =>
+export const getOrderNumber = (state: RootState) =>
   state.orderStore.orderNumber;
   export const isOrderRequestLoading = (state: RootState) =>
   state.orderStore.loading;
 export const getLoggingInLoading = (state: RootState) =>
   state.userDataStore.isLoading;
 
-// export const getReadyOrders = createSelector(
-//   (state: RootState) => state.webSocketStore.getData.orders,
-//   (orders) => orders.filter((order) => order.status === "done")
-// );
-
-export const getReadyOrders = (state: RootState) =>
+export const getAllCreatedOrders = (state: RootState) =>
   state.webSocketStore.getData.orders;
 
 export const getInProcessOrders = createSelector(
@@ -57,3 +52,4 @@ state.doneOrderDetailsStore.orderDetails;
 
 export const isWSLoading = (state: RootState) =>
   state.webSocketStore.wsConnectingLoading;
+

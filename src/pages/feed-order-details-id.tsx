@@ -1,8 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { getReadyOrders, getSelectedOrder } from "../redux_services/selectors";
+import { getSelectedOrder } from "../redux_services/selectors";
 import DoneOrderDetails from "../components/DoneOrderDetails/DoneOrderDetails";
-import { TOrder } from "../utils/types";
 import { useAppSelector, useAppDispatch } from "../hooks/dispatch-selectos";
 import { useEffect } from "react";
 import {

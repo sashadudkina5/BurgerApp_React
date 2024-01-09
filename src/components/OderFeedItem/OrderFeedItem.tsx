@@ -1,7 +1,7 @@
 import styles from "./OderFeedItem.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import {
-  getReadyOrders,
+  getAllCreatedOrders,
   getListOfIngredients,
 } from "../../redux_services/selectors";
 import { useAppSelector, useAppDispatch } from "../../hooks/dispatch-selectos";
@@ -15,12 +15,12 @@ import { Link, useLocation } from "react-router-dom";
 const OrderFeedItem = () => {
   let location = useLocation();
   const dispatch = useAppDispatch();
-  const readyOrders = useAppSelector(getReadyOrders);
+  const allCreatedOrders = useAppSelector(getAllCreatedOrders);
   const allIngredients = useAppSelector(getListOfIngredients);
 
   //if there are no orders
 
-  if (!readyOrders || readyOrders.length === 0) {
+  if (!allCreatedOrders || allCreatedOrders.length === 0) {
     return (
       <p className="text text_type_main-default">
         No orders yet
@@ -46,7 +46,7 @@ const OrderFeedItem = () => {
       (ingredient) => [ingredient._id, ingredient.price] as [string, number]
     );
 
-  const ordersWithTotalPrice = readyOrders.map((order) => {
+  const ordersWithTotalPrice = allCreatedOrders.map((order) => {
     const totalPrice = order.ingredients.reduce((sum, ingredientId) => {
       const ingredientPrice = ingredientPricesMap.find(
         ([_id]) => _id === ingredientId
@@ -76,7 +76,7 @@ const OrderFeedItem = () => {
     {} as Record<string, string | undefined>
   );
 
-  const ordersWithImages = readyOrders.map((order) => {
+  const ordersWithImages = allCreatedOrders.map((order) => {
     const images = order.ingredients.map(
       (ingredientId: string) => imageMap[ingredientId]
     );

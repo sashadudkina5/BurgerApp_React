@@ -4,10 +4,13 @@ import { connect as OrdersConnect, disconnected as OrdersDisconnect} from "../re
 import { WS_URL } from "../utils/ApiConfig";
 import { useAppSelector, useAppDispatch } from "../hooks/dispatch-selectos";
 import { useEffect } from "react";
-import {getTotalOrders, getTotalTodatOrders} from "../redux_services/selectors";
+import {getTotalOrders, getTotalTodatOrders, getAllCreatedOrders} from "../redux_services/selectors";
 
 function OrderFeed() {
   const dispatch = useAppDispatch();
+  const totalTodayOrders: number = useAppSelector(getTotalTodatOrders)
+  const totalOrders: number = useAppSelector(getTotalOrders)
+  const allCreatedOrders = useAppSelector(getAllCreatedOrders)
 
   useEffect(() => {
     const connect = () => {
@@ -21,8 +24,24 @@ function OrderFeed() {
   }, [dispatch]);
 
 
-  const totalTodayOrders: number = useAppSelector(getTotalTodatOrders)
-  const totalOrders: number = useAppSelector(getTotalOrders)
+  // most recent 10 ready orders
+
+  const filteredReadyOrders = allCreatedOrders
+    .filter(order => order.status === "done")
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
+  const lastTenReadyOrders = filteredReadyOrders.slice(0, 10);
+const readyOrderNumbers = lastTenReadyOrders.map(order => order.number);
+
+  // most recent 10 orders in process
+
+  const filteredOrdersInProcess = allCreatedOrders
+    .filter(order => order.status === "pending")
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
+  const lastTenOrdersInProcess = filteredOrdersInProcess.slice(0, 10);
+const orderNumbersInProcess = lastTenOrdersInProcess.map(order => order.number);
+
 
   return (
     <section className={styles.feed_section}>
@@ -38,35 +57,21 @@ function OrderFeed() {
           <div className={styles.top_left}>
             <p className="text text_type_main-medium mb-6">Готовы:</p>
             <ul className={styles.orders_list}>
-            <li className="mb-2">
-              <p className="text text_type_digits-default">1234567890</p>
-            </li>
-            <li className="mb-2">
-              <p className="text text_type_digits-default">1234567890</p>
-            </li>
-            <li className="mb-2">
-              <p className="text text_type_digits-default">1234567890</p>
-            </li>
-            <li className="mb-2">
-              <p className="text text_type_digits-default">1234567890</p>
-            </li>
+              {readyOrderNumbers.map((orderId, _id) => (
+                <li key={_id} className="mb-2">
+                  <p className="text text_type_digits-default">{orderId}</p>
+                </li>
+              ))}
             </ul>
           </div>
           <div className={styles.top_right}>
             <p className="text text_type_main-medium mb-6">В работе:</p>
             <ul className={styles.orders_list}>
-            <li className="mb-2">
-                <p className="text text_type_digits-default">1234567890</p>
-              </li>
-              <li className="mb-2">
-                <p className="text text_type_digits-default">1234567890</p>
-              </li>
-              <li className="mb-2">
-                <p className="text text_type_digits-default">1234567890</p>
-              </li>
-              <li className="mb-2">
-                <p className="text text_type_digits-default">1234567890</p>
-              </li>
+              {orderNumbersInProcess.map((orderId, _id) => (
+                <li key={_id} className="mb-2">
+                  <p className="text text_type_digits-default">{orderId}</p>
+                </li>
+              ))}
             </ul>
           </div>
           <div className={styles.full_width}>

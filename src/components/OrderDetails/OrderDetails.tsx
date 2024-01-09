@@ -1,13 +1,13 @@
 import orderDetailsStyles from "./OrderDetails.module.css";
 import image from "../../images/done.png";
 import {
-  getOrferNumber,
+  getOrderNumber,
   isOrderRequestLoading,
 } from "../../redux_services/selectors";
 import { useAppSelector } from "../../hooks/dispatch-selectos";
 
 function OrderDetails() {
-  const orderNumber = useAppSelector(getOrferNumber);
+  const orderNumber = useAppSelector(getOrderNumber);
   const isLoading = useAppSelector(isOrderRequestLoading);
 
   return (

@@ -4,7 +4,7 @@ import { TOrder, IIngredients } from "../../utils/types";
 import { useParams } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../hooks/dispatch-selectos";
 import {
-  getReadyOrders,
+  getAllCreatedOrders,
   isWSLoading,
   getListOfIngredientsArray,
 } from "../../redux_services/selectors";
@@ -22,7 +22,7 @@ function DoneOrderDetails({ matchingOrder }: DoneOrderDetailsProps) {
 
 
   const routeParams = useParams();
-  const readyOrders = useAppSelector(getReadyOrders);
+  const readyOrders = useAppSelector(getAllCreatedOrders);
   const dispatch = useAppDispatch();
 
   const WSLoading = useAppSelector(isWSLoading);
