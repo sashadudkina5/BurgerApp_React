@@ -4,31 +4,14 @@ import { connect as OrdersConnect, disconnected as OrdersDisconnect} from "../re
 import { WS_URL } from "../utils/ApiConfig";
 import { useAppSelector, useAppDispatch } from "../hooks/dispatch-selectos";
 import { useEffect } from "react";
-import {getReadyOrders, getInProcessOrders, getTotalOrders, getTotalTodatOrders} from "../redux_services/selectors"
-
-// interface Order {
-//     ingredients: string[];
-//     _id: string;
-//     status: string;
-//     number: number;
-//     createdAt: string;
-//     updatedAt: string;
-//   }
-
-//   interface WebSocketResponse {
-//     success: boolean;
-//     orders: Order[];
-//     total: number;
-//     totalToday: number;
-//     error?: any
-//   }
+import {getTotalOrders, getTotalTodatOrders} from "../redux_services/selectors";
 
 function OrderFeed() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     const connect = () => {
-      dispatch(OrdersConnect(WS_URL));
+      dispatch(OrdersConnect(`${WS_URL}/orders/all`));
     };
 
     connect();
@@ -41,14 +24,12 @@ function OrderFeed() {
   const totalTodayOrders: number = useAppSelector(getTotalTodatOrders)
   const totalOrders: number = useAppSelector(getTotalOrders)
 
-
-
   return (
     <section className={styles.feed_section}>
       <div className={styles.feed_section_wrapper_orders}>
         <h1 className="text text_type_main-large mb-5">Лента заказов</h1>
         <ul className={styles.feed_section_list}>
-          <OrderFeedItem />
+        <OrderFeedItem />
         </ul>
       </div>
 

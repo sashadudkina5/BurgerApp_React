@@ -12,7 +12,7 @@ import { useDrop } from "react-dnd";
 import { ItemTypes } from "../../utils/item-types-dnd";
 import { useMemo, useCallback } from "react";
 import SortingIngredients from "../SortingIngredients/SortingIngredients";
-import {IIngredients, IIngredientCard, IIngredientCardConstructor, IAllIngredientsConstructor} from "../../utils/types";
+import {IIngredientCardConstructor, IAllIngredientsConstructor} from "../../utils/types";
 import { useAppSelector } from "../../hooks/dispatch-selectos"
 
 
@@ -22,7 +22,6 @@ interface IBurgerConstructorProps {
 
 function BurgerConstructor({ onClick }: IBurgerConstructorProps) {
   const data: IAllIngredientsConstructor = useAppSelector(getConstructorIngredients);
-  console.log(data)
   const bunData = useAppSelector(getBunData);
 
   const [{ canDrop, isOver }, drop] = useDrop(() => ({

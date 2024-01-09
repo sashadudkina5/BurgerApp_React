@@ -11,6 +11,7 @@ import { logoutThunk } from "../redux_services/thunk-functions/logout";
 import { useNavigate } from "react-router-dom";
 import { TSubmitHandler } from "../utils/types";
 import { useAppSelector, useAppDispatch } from "../hooks/dispatch-selectos";
+import UserProfileMenu from "../components/UserProfileMenu/UserProfileMenu"
 
 function ProfilePage() {
   const dispatch = useAppDispatch();
@@ -79,30 +80,7 @@ function ProfilePage() {
 
   return (
     <div className={styles.profileWrapper}>
-      <div className={styles.menu}>
-        <ul className={styles.minuList}>
-          <li className={styles.item}>
-            <p className="text text_type_main-medium">Профиль</p>
-          </li>
-
-          <li className={styles.item}>
-            <p className="text text_type_main-medium">История заказов</p>
-          </li>
-
-          <li className={styles.item}>
-            <button type="button" onClick={handleLogout}>
-              <p className="text text_type_main-medium">Выход</p>
-            </button>
-          </li>
-        </ul>
-
-        <p
-          className="text text_type_main-default text_color_inactive"
-          style={{ textAlign: "left" }}
-        >
-          В этом разделе вы можете изменить свои персональные данные
-        </p>
-      </div>
+      <UserProfileMenu />
 
       <form onSubmit={handleFormSubmit}>
         <Input

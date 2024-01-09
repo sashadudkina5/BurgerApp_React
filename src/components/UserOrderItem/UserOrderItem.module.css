@@ -3,7 +3,7 @@
   justify-content: space-between;
 }
 
-.feed_section_item {
+.user_orders_section_item {
   width: 584px;
   min-height: 214px;
   margin: 0;
@@ -30,8 +30,5 @@
   overflow: hidden;
   object-fit: cover;
   border: 2px solid #801ab2;
-}
-
-.imageWrapper {
   margin-right: -15px;
 }

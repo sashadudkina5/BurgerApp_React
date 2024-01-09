@@ -7,15 +7,7 @@ import {
   getMessage,
 } from "./web-socket-actions";
 
-type TOrder = {
-  ingredients: string[];
-  _id: string;
-  status: string;
-  number: number;
-  createdAt: string;
-  updatedAt: string;
-  name: string
-};
+import {TOrder} from "../utils/types"
 
 export type GetMessagePayload = {
   success: boolean;

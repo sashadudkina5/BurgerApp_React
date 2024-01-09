@@ -1,4 +1,4 @@
-import styles from "./OderFeedItem.module.css";
+import styles from "./UserOrderItem.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import {
   getReadyOrders,
@@ -11,16 +11,17 @@ import { TOrder } from "../../utils/types";
 import React, { MouseEvent } from "react";
 import { showDoneOrderDetails } from "../DoneOrderDetails/actions";
 import { Link, useLocation } from "react-router-dom";
+import {statusTexts} from "../../utils/order-statuses";
 
-const OrderFeedItem = () => {
+const UserOrderItem = () => {
   let location = useLocation();
   const dispatch = useAppDispatch();
   const readyOrders = useAppSelector(getReadyOrders);
   const allIngredients = useAppSelector(getListOfIngredients);
 
-  //if there are no orders
+   //if there are no orders
 
-  if (!readyOrders || readyOrders.length === 0) {
+   if (!readyOrders || readyOrders.length === 0) {
     return (
       <p className="text text_type_main-default">
         No orders yet
@@ -28,7 +29,7 @@ const OrderFeedItem = () => {
     );
   }
 
-  //Opens the modal with order info 
+    //Opens the modal with order info 
 
   const handleClick = (
     event: MouseEvent<HTMLLIElement>,
@@ -38,7 +39,7 @@ const OrderFeedItem = () => {
   };
 
 
-  //Counts total price of the order
+    //Counts total price of the order
 
   const ingredientPricesMap = allIngredients.ingredientsData.data
     .filter((ingredient) => ingredient.price !== undefined)
@@ -66,7 +67,7 @@ const OrderFeedItem = () => {
     };
   });
 
-  //shows ingredients images
+    //shows ingredients images
 
   const imageMap = allIngredients.ingredientsData.data.reduce(
     (map, ingredient) => {
@@ -87,12 +88,17 @@ const OrderFeedItem = () => {
     };
   });
 
+  //sorts by creation date
+  const sortedOrders = ordersWithTotalPrice.sort((a, b) =>
+  moment(b.order.createdAt).diff(moment(a.order.createdAt))
+);
+
 
   return (
     <>
-      {ordersWithTotalPrice.map(({ order, totalPrice }) => (
+      {sortedOrders.map(({ order, totalPrice }) => (
         <Link
-          to={`/feed/${order._id}`}
+          to={`/profile/order/${order._id}`}
           state={{ backgroundLocation: location }}
           style={{
             textDecoration: "none",
@@ -101,7 +107,7 @@ const OrderFeedItem = () => {
           key={order._id}
         >
           <li
-            className={styles.feed_section_item}
+            className={styles.user_orders_section_item}
             key={order.number}
             onClick={(event) => handleClick(event, order)}
           >
@@ -119,6 +125,9 @@ const OrderFeedItem = () => {
               </p>
             </div>
             <h2 className="text text_type_main-medium">{order.name}</h2>
+            <p className="text text_type_main-default">
+              {statusTexts[order.status]}
+            </p>
             <div className={styles.order_info_wrapper}>
               <div className={styles.images_container}>
                 {ordersWithImages
@@ -128,6 +137,7 @@ const OrderFeedItem = () => {
                     className={styles.imageWrapper}
                     key={index}
                     style={{
+                      left: `${index * 15}px`,
                       zIndex: ordersWithImages.length + index,
                     }}
                   >
@@ -153,4 +163,4 @@ const OrderFeedItem = () => {
   );
 };
 
-export default OrderFeedItem;
+export default UserOrderItem;

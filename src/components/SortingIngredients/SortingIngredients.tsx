@@ -8,7 +8,7 @@ import { useRef } from "react";
 import { useDrop, useDrag, DropTargetMonitor } from "react-dnd";
 import { ItemTypes } from "../../utils/item-types-dnd";
 import { CONSTRUCTOR_REORDER } from "../../redux_services/types-of-actions";
-import {IIngredientCard, IIngredientCardConstructor} from "../../utils/types";
+import {IIngredientCardConstructor} from "../../utils/types";
 import { useAppDispatch } from "../../hooks/dispatch-selectos"
 
 interface ISortingIngredientsProps {

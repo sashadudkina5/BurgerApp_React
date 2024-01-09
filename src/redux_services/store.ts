@@ -6,6 +6,7 @@ import {constructorReducer} from "../components/BurgerConstructor/reducer";
 import {ingredientDetailsReducer} from "../components/IngredientDetail/reducer";
 import { userDataReducer } from "./UserData/reducer";
 import {wsReducer} from "./web-socket-reducer";
+import {doneOrderDetailsReducer} from "../components/DoneOrderDetails/reducer"
 import {socketMiddleware} from "./thunk-functions/socketMiddleware";
 import {
   disconnected as OrdersDisconnected,
@@ -29,7 +30,8 @@ export const rootReducer = combineReducers({
   constructorStore: constructorReducer,
   ingredientDetailsStore: ingredientDetailsReducer,
   userDataStore: userDataReducer,
-  webSocketStore: wsReducer
+  webSocketStore: wsReducer,
+  doneOrderDetailsStore: doneOrderDetailsReducer,
 });
 
 export const store = configureStore({
