@@ -32,7 +32,7 @@ const initialState: TWSState = {
     orders: [],
     total: 0,
     totalToday: 0,
-  },
+  }
 };
 
 export const wsReducer = createReducer(initialState, (builder) => {

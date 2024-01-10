@@ -16,6 +16,7 @@ export const getUserOrders = () => async (dispatch: AppDispatch) => {
         console.error('AccessToken is missing');
         return null;
       }
+
       const connect = () => {
         dispatch(OrdersConnect(`${WS_URL}/orders?token=${tokenWithoutBearer}`));
       };

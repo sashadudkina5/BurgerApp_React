@@ -17,7 +17,7 @@ export const getUserInfoThunk = (): GetUserInfoThunk => async (
       dispatch(getLoginFailed(Error));
       return null;
     }
-
+  
     const response = await fetchWithRefresh(`${BASE_URL}/auth/user`, {
       method: 'GET',
       headers: {

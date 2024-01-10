@@ -17,9 +17,16 @@ function UserProfileMenu() {
   return (
       <div className={UserProfileMenuStyles.menu}>
         <ul className={UserProfileMenuStyles.menuList}>
+
+        <NavLink
+          to={"/profile"}
+          end
+        >
           <li className={UserProfileMenuStyles.item}>
             <p className="text text_type_main-medium">Профиль</p>
           </li>
+
+          </NavLink>
 
           <NavLink
           to={"/profile/orders"}

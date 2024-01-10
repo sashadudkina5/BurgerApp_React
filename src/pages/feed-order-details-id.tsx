@@ -33,7 +33,6 @@ function OrderDetailPageOpened({ path }: OrderDetailPageOpenedProps) {
   const { id } = useParams();
 
   const matchingOrder = useAppSelector(getSelectedOrder);
-  console.log(matchingOrder)
 
   useEffect(() => {
     if (id) {
