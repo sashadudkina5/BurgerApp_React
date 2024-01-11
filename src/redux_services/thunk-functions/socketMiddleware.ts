@@ -39,6 +39,7 @@ export const socketMiddleware = (
       if (socket) {
         socket.onopen = () => {
           dispatch(connected());
+          console.log("socket opened")
         };
 
         socket.onerror = (event) => {
@@ -56,6 +57,7 @@ export const socketMiddleware = (
           if (event.code !== 1000) {
             dispatch(connectError(event.code.toString()));
           }
+          console.log("socket closed")
           dispatch(disconnected());
         };
 
