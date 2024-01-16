@@ -15,7 +15,6 @@ export interface IIngredientCard {
   _id?: string;
   image?: string | undefined;
   uniqID?: string | undefined;
-  index?: number;
   calories?: number;
   proteins?: number;
   fat?: number;
@@ -27,7 +26,6 @@ export interface IIngredientCard {
 export interface IIngredientCardConstructor {
   ingredientObj?: IIngredientCard;
   uniqID?: string | undefined;
-  index?: number;
 }
 
 

@@ -26,6 +26,9 @@ import {
     switch (action.type) {
   
       case ADD_INGREDIENT: {
+        console.log('Reducer - ADD_INGREDIENT - state:', state);
+      console.log('Reducer - ADD_INGREDIENT - action:', action);
+      
           if (action.payload.ingredientObj.type === "bun") {
               return {...state, bun: action.payload.ingredientObj }
           }

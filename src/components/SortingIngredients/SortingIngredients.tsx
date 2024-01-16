@@ -20,6 +20,7 @@ const SortingIngredients: React.FC<ISortingIngredientsProps> = ({
   index,
   item,
 }) => {
+
   const dispatch = useAppDispatch()
   const onDelete = (ingredientId: string) => {
     dispatch(deleteIngredient(ingredientId));
