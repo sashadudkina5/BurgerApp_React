@@ -3,8 +3,11 @@ import {BASE_URL} from "../../src/utils/ApiConfig"
 
 describe("create order in burger constructor", () => {
 
+  beforeEach(function() {
+    cy.visit('http://localhost:3000');
+  });
+
   it("should navigate to login page if not logged in and tried to submit an order", () => {
-    cy.visit("http://localhost:3000/");
 
     cy.window()
       .its("store")
@@ -29,8 +32,7 @@ describe("create order in burger constructor", () => {
     cy.url().should("include", "/login");
   });
 
-  it("should open order details modal on button click if logged in", () => {
-    cy.visit("http://localhost:3000/");
+  it("should create a new order and open order details modal on button click if logged in", () => {
 
     cy.intercept("POST", `${BASE_URL}/auth/login`, { fixture: 'onLoginResponse.json' }).as("loginRequest");
 

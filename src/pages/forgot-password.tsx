@@ -54,11 +54,11 @@ function ForgotPasswordPage() {
         </h1>
         <form onSubmit={handleFormSubmit}>
           <Input
-            type={"text"}
+            type={"email"}
             placeholder={"Укажите e-mail"}
             onChange={(e) => setValue(e.target.value)}
             value={value}
-            name={"name"}
+            name={"email"}
             error={false}
             ref={inputRef}
             onIconClick={onIconClick}

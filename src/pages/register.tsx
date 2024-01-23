@@ -75,7 +75,7 @@ function RegisterPage() {
             extraClass="mb-6"
           />
           <Input
-            type={"text"}
+            type={"email"}
             placeholder={"E-mail"}
             onChange={handleChange}
             value={values.email}
@@ -89,7 +89,7 @@ function RegisterPage() {
           />
 
           <Input
-            type={"text"}
+            type={"password"}
             placeholder={"Пароль"}
             onChange={handleChange}
             icon={"ShowIcon"}

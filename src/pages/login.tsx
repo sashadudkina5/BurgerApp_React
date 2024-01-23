@@ -48,7 +48,7 @@ function LoginPage() {
         <h1 className={`text text_type_main-medium ${styles.title}`}>Вход</h1>
         <form onSubmit={handleFormSubmit}>
           <Input
-            type={"text"}
+            type={"email"}
             placeholder={"E-mail"}
             onChange={handleChange}
             value={values.email}
@@ -62,7 +62,7 @@ function LoginPage() {
           />
 
           <Input
-            type={"text"}
+            type={"password"}
             placeholder={"Пароль"}
             onChange={handleChange}
             icon={"ShowIcon"}

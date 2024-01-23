@@ -55,8 +55,8 @@ export const ResetPasswordPage: React.FC = () => {
             placeholder={"Введите новый пароль"}
             onChange={handleChange}
             icon={"ShowIcon"}
-            value={values.password}
-            name={"password"}
+            value={values.newPassword}
+            name={"newPassword"}
             error={false}
             ref={inputRefPassword}
             onIconClick={onIconClickPassword}

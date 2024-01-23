@@ -7,21 +7,12 @@ import {
 import { getUserData } from "../redux_services/selectors";
 import { useState } from "react";
 import { changeUserInfoThunk } from "../redux_services/thunk-functions/change-profile-info";
-import { logoutThunk } from "../redux_services/thunk-functions/logout";
-import { useNavigate } from "react-router-dom";
 import { TSubmitHandler } from "../utils/types";
 import { useAppSelector, useAppDispatch } from "../hooks/dispatch-selectos";
 import UserProfileMenu from "../components/UserProfileMenu/UserProfileMenu"
 
 function ProfilePage() {
   const dispatch = useAppDispatch();
-
-  const navigate = useNavigate();
-
-  const handleLogout = (e: React.SyntheticEvent) => {
-    dispatch(logoutThunk());
-    navigate("/login");
-  };
 
   const userData = useAppSelector(getUserData);
   const userName: string = userData.name!;
@@ -102,7 +93,7 @@ function ProfilePage() {
         />
 
         <Input
-          type={"text"}
+          type={"email"}
           placeholder={"Логин"}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setEmailValue(e.target.value);
@@ -120,7 +111,7 @@ function ProfilePage() {
         />
 
         <Input
-          type={"text"}
+          type={"password"}
           placeholder={"Пароль"}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setPasswordValue(e.target.value);
