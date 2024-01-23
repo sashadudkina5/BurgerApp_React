@@ -12,18 +12,17 @@ export const createOrderThunk = (ingredientIDs: { ingredients: (string | undefin
   try {
     dispatch(createOrderRequest());
     const accessToken = getCookie("accessToken");
-
+    
     const response = await fetch(`${BASE_URL}/orders`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: accessToken ? `${accessToken}` : "", // Send token without "Bearer" prefix
+        Authorization: accessToken ? `${accessToken}` : "", // Sends token with "Bearer" prefix
       },
       body: JSON.stringify(ingredientIDs),
     });
     const data = await checkResponse(response);
     dispatch(createOrderSuccess(data.order.number));
-    console.log(ingredientIDs)
   } catch (error) {
     dispatch(
       createOrderFailure("An error occurred while processing your request.")

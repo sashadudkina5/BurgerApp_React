@@ -23,7 +23,7 @@ type TWSState = {
   error: string;
 };
 
-const initialState: TWSState = {
+export const initialState: TWSState = {
   wsConnected: false,
   error: "",
   wsConnectingLoading: false,
@@ -69,3 +69,5 @@ export const wsReducer = createReducer(initialState, (builder) => {
       state.wsConnectingLoading = false;
     });
 });
+
+export default wsReducer

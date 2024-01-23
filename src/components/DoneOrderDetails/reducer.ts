@@ -15,12 +15,12 @@ import {TOrder} from "../../utils/types";
     isDoneOrderDetailModalOpen: boolean;
   }
 
-const initialState: TDoneOrderDetailsState = {
+export const initialState: TDoneOrderDetailsState = {
     orderDetails: null,
     isDoneOrderDetailModalOpen: false
   };
   
-  export const doneOrderDetailsReducer = (state = initialState, action: TDoneOrderDetailsActions):TDoneOrderDetailsState => {
+export const doneOrderDetailsReducer = (state = initialState, action: TDoneOrderDetailsActions):TDoneOrderDetailsState => {
     switch (action.type) {
   
       case SHOW_ORDER_DETAILS: {
@@ -48,4 +48,6 @@ const initialState: TDoneOrderDetailsState = {
         return state;
     }
   };
+
+  export default doneOrderDetailsReducer;
   

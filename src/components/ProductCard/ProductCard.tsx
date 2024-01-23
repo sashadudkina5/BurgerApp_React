@@ -72,6 +72,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, IIngredients>(
                 key={ingredient._id}
                 className={productCardStyles.productItem}
                 onClick={() => openIngredientDetailModal(ingredient)}
+                id={ingredient._id}
               >
                 <Counter
                   count={ingredientsCounters[ingredient._id!] || 0}

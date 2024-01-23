@@ -19,7 +19,7 @@ type TGetIngredientsState = {
   error: null | any;
 }
 
-const initialState: TGetIngredientsState = {
+export const initialState: TGetIngredientsState = {
   ingredientsData: {
     data: [],
   },
@@ -58,3 +58,5 @@ export const ingredientsReducer = (state = initialState, action: TGetIngredients
       return state;
   }
 };
+
+export default ingredientsReducer;

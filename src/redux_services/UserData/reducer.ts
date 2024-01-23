@@ -23,7 +23,7 @@ type TAppState = {
   isLoggedIn: boolean;
 }
 
-const initialState: TAppState = {
+export const initialState: TAppState = {
   userData: {
     email: "",
     name: "",
@@ -91,6 +91,7 @@ export const userDataReducer = (state = initialState, action: TUserDataActions):
           ...state,
           userData: { email: "", name: "" },
           isLoggedIn: false,
+          isLoading: false
       }
     };
 
@@ -99,3 +100,5 @@ export const userDataReducer = (state = initialState, action: TUserDataActions):
       return state;
   }
 };
+
+export default userDataReducer;

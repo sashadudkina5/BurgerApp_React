@@ -81,7 +81,6 @@ function App() {
     const idValue = bunData?._id;
     const bunIDs = [idValue];
     const ingredientIDs = innerIngredientIDs.concat(bunIDs, bunIDs);
-    console.log(innerIngredientIDs);
 
     return {
       ingredients: ingredientIDs,
@@ -95,7 +94,7 @@ function App() {
   const isAuth = useAppSelector(getLoggedInStatus);
 
   const openOrderDetailsModal = () => {
-    if (data && data && data.length > 0 && bunData !== null && isAuth) {
+    if (data && data.length > 0 && bunData !== null && isAuth) {
       setIsOrderDetailsModalOpen(true);
       dispatch(createOrderThunk(getIngredientIDs()));
     } else if (!isAuth) {
@@ -182,7 +181,7 @@ function App() {
                   <BurgerConstructor onClick={openOrderDetailsModal} />
 
                   {isOrderDetailsModalOpen && (
-                    <Modal title={""} onClose={closeOrderDetailsModal}>
+                    <Modal title={""} onClose={closeOrderDetailsModal} extraClass="order_made_open_modal">
                       <OrderDetails />
                     </Modal>
                   )}

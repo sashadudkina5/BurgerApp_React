@@ -52,7 +52,7 @@ function BurgerConstructor({ onClick }: IBurgerConstructorProps) {
   }, []);
 
   return (
-    <div className={burgerConstructorStyles.wrapper} ref={drop}>
+    <div className={`${burgerConstructorStyles.wrapper} targetitem`} ref={drop}>
       {bunData ? (
         <>
           <div className={burgerConstructorStyles.item}>
@@ -93,6 +93,7 @@ function BurgerConstructor({ onClick }: IBurgerConstructorProps) {
           <p className="text text_type_main-large">{price}</p>
           <CurrencyIcon type="primary"/>
           <Button
+            extraClass='order_botton'
             htmlType="button"
             type="primary"
             size="large"

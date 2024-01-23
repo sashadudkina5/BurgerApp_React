@@ -5,7 +5,7 @@ interface IModalOverlayProps {
 }
 
 const ModalOverlay: React.FC<IModalOverlayProps> = ({ onClick }) => {
-  return <div className={modalOverlayStyles.overlay} onClick={onClick}></div>;
+  return <div className={modalOverlayStyles.overlay} onClick={onClick} id="modal_overlay"></div>;
 }
 
 export default ModalOverlay;

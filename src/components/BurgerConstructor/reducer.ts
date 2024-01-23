@@ -5,7 +5,7 @@ import {
     CLEAN_CONSTRUCTOR
   } from "../../redux_services/types-of-actions";
 
-  import {IIngredients, IIngredientCard, IAllIngredientsConstructor} from "../../utils/types";
+  import {IIngredientCard, IAllIngredientsConstructor} from "../../utils/types";
 
   import {TBurgerConstructorActions} from "./actions"
   
@@ -16,19 +16,16 @@ import {
     bun: IIngredientCard | null;
   }
   
-  const initialState: TConstructorState = {
+  export const initialState: TConstructorState = {
     constructorIngredients: [],
     bun: null,
   };
 
   
-  export const constructorReducer = (state = initialState, action: TBurgerConstructorActions): TConstructorState => {
+export const constructorReducer = (state = initialState, action: TBurgerConstructorActions): TConstructorState => {
     switch (action.type) {
   
       case ADD_INGREDIENT: {
-        console.log('Reducer - ADD_INGREDIENT - state:', state);
-      console.log('Reducer - ADD_INGREDIENT - action:', action);
-      
           if (action.payload.ingredientObj.type === "bun") {
               return {...state, bun: action.payload.ingredientObj }
           }
@@ -75,4 +72,6 @@ import {
         return state;
     }
   };
+
+  export default constructorReducer;
   

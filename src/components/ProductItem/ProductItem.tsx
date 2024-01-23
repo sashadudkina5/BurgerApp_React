@@ -34,7 +34,7 @@ const ProductItem: React.FC<IProductItemProps> = ({ children, ingredient }) => {
   const opacity = isDragging ? 0.4 : 1;
 
   return (
-    <div ref={drag} style={{ opacity }} data-testid={`box`}>
+    <div className="sourceitem" ref={drag} style={{ opacity }} data-testid={`box`}>
       {children}
     </div>
   );
