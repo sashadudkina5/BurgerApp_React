@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/react-project-BurgerApp/static/css/main.d25ee01a.css",
-    "main.js": "/react-project-BurgerApp/static/js/main.3d1eae69.js",
+    "main.js": "/react-project-BurgerApp/static/js/main.2a54f6e5.js",
     "static/js/787.802a99a9.chunk.js": "/react-project-BurgerApp/static/js/787.802a99a9.chunk.js",
     "static/media/JetBrainsMono-Bold.woff": "/react-project-BurgerApp/static/media/JetBrainsMono-Bold.3914674f1cb2335acf26.woff",
     "static/media/JetBrainsMono-Regular.woff": "/react-project-BurgerApp/static/media/JetBrainsMono-Regular.f52bee61d00ce995b89f.woff",
@@ -12,11 +12,11 @@
     "static/media/done.png": "/react-project-BurgerApp/static/media/done.e036971b1d1e32006499.png",
     "index.html": "/react-project-BurgerApp/index.html",
     "main.d25ee01a.css.map": "/react-project-BurgerApp/static/css/main.d25ee01a.css.map",
-    "main.3d1eae69.js.map": "/react-project-BurgerApp/static/js/main.3d1eae69.js.map",
+    "main.2a54f6e5.js.map": "/react-project-BurgerApp/static/js/main.2a54f6e5.js.map",
     "787.802a99a9.chunk.js.map": "/react-project-BurgerApp/static/js/787.802a99a9.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.d25ee01a.css",
-    "static/js/main.3d1eae69.js"
+    "static/js/main.2a54f6e5.js"
   ]
 }
