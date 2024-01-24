@@ -12,7 +12,7 @@ import React, { MouseEvent } from "react";
 import { showDoneOrderDetails } from "../DoneOrderDetails/actions";
 import { Link, useLocation } from "react-router-dom";
 
-const OrderFeedItem = () => {
+function OrderFeedItem ()  {
   let location = useLocation();
   const dispatch = useAppDispatch();
   const allCreatedOrders = useAppSelector(getAllCreatedOrders);
