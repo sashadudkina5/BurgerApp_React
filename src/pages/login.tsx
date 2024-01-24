@@ -39,7 +39,7 @@ function LoginPage() {
   };
 
   if (isLoggedIn) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/react-project-BurgerApp/" replace />;
   }
 
   return (
@@ -81,7 +81,7 @@ function LoginPage() {
           </Button>
         </form>
 
-        {isLoggedIn && navigate("/")}
+        {isLoggedIn && navigate("/react-project-BurgerApp/")}
 
         {registerError && <p>{registerError.message}</p>}
 

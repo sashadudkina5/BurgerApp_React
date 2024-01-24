@@ -10,7 +10,7 @@ function AppHeader() {
     <header className={appHeaderStyles.header}>
       <div className={appHeaderStyles.navBar}>
         <NavLink
-          to="/"
+          to="/react-project-BurgerApp/"
           className={({ isActive }) =>
             `${appHeaderStyles.link} ${
               isActive ? appHeaderStyles.link_active : ""
@@ -43,7 +43,7 @@ function AppHeader() {
           </p>
         </NavLink>
       </div>
-      <NavLink to="/" end>
+      <NavLink to="/react-project-BurgerApp/" end>
         <Logo />
       </NavLink>
 

@@ -170,7 +170,7 @@ function App() {
             }
           />
           <Route
-            path="/"
+            path="/react-project-BurgerApp/"
             element={
               <main className={appStyles.mainWrapper}>
                 <>
