@@ -96,7 +96,6 @@ describe('OrderFeedItem', () => {
             __v: 0
           }];
     
-    // Setup mock return values
     useAppSelector.mockImplementation((selector) => {
       if (selector === getAllCreatedOrders) return mockOrders;
       if (selector === getListOfIngredients) return { ingredientsData: { data: mockIngredients } };
@@ -104,10 +103,8 @@ describe('OrderFeedItem', () => {
     });
     useLocation.mockReturnValue({pathname: '/feed/id123',});
 
-    // Render component
     const { asFragment } = render(<OrderFeedItem />);
 
-    // Assert snapshot
     expect(asFragment()).toMatchSnapshot();
   });
 });
