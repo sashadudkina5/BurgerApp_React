@@ -1,5 +1,5 @@
 import { getCookie, fetchWithRefresh } from "../../utils/api";
-import { getLoginSuccess } from "../UserData/actions";
+import { getLoginSuccess, changeProfileSuccess, changeProfileInfoFailed } from "../UserData/actions";
 import { BASE_URL } from "../../utils/ApiConfig";
 import {AppDispatch, ChangeProfileThunk} from "../../utils/types"
 
@@ -37,10 +37,12 @@ export const changeUserInfoThunk  =
           name: userName,
         };
         dispatch(getLoginSuccess(loginData));
+        dispatch(changeProfileSuccess());
       } else {
         console.error('Error:', response.message || 'Unknown error');
       }
     } catch (error: any) {
+      dispatch(changeProfileInfoFailed());
       console.error('Network error:', error.message || 'Unknown error');
     }
   };

@@ -5,7 +5,10 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate, Navigate } from "react-router-dom";
-import { getLoggedInStatus } from "../redux_services/selectors";
+import {
+  getLoggedInStatus,
+  getResetPasswordError,
+} from "../redux_services/selectors";
 import { resetPasswordThunk } from "../redux_services/thunk-functions/reset-password";
 import { TSubmitHandler } from "../utils/types";
 import { useForm } from "../hooks/useForm";
@@ -14,6 +17,8 @@ import { useAppSelector, useAppDispatch } from "../hooks/dispatch-selectos";
 export const ResetPasswordPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const resetError = useAppSelector(getResetPasswordError);
 
   const inputRefPassword = React.useRef<HTMLInputElement>(null);
   const onIconClickPassword = () => {
@@ -29,7 +34,7 @@ export const ResetPasswordPage: React.FC = () => {
 
   const isLoggedIn = useAppSelector(getLoggedInStatus);
   if (isLoggedIn) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/react-project-BurgerApp/" replace />;
   }
 
   const handleFormSubmit: TSubmitHandler = async (e) => {
@@ -37,7 +42,7 @@ export const ResetPasswordPage: React.FC = () => {
 
     try {
       await dispatch(resetPasswordThunk(values));
-      navigate("/login");
+      navigate("/react-project-BurgerApp/");
     } catch (error) {
       console.error(error);
     }
@@ -79,7 +84,28 @@ export const ResetPasswordPage: React.FC = () => {
             extraClass="mb-6"
           />
 
-          <Button htmlType="submit" type="primary" size="large">
+          {resetError?.includes("Invalid credentials provided") &&
+            values.token &&
+            values.newPassword && (
+              <p className="text text_type_main-default mb-8">
+                Неверный код из письма
+              </p>
+            )}
+
+          {resetError?.includes("Unexpected token") &&
+            values.token &&
+            values.newPassword && (
+              <p className="text text_type_main-default mb-8">
+                Ошибка сети. Повторите попытку позже
+              </p>
+            )}
+
+          <Button
+            htmlType="submit"
+            type="primary"
+            size="large"
+            disabled={!values.token && !values.newPassword}
+          >
             Сохранить
           </Button>
         </form>

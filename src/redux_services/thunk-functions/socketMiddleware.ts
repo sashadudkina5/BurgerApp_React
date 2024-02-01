@@ -12,7 +12,13 @@ export type WSActionTypes = {
   connected: ActionCreatorWithoutPayload;
   connectError: ActionCreatorWithPayload<string>;
   getMessage: ActionCreatorWithPayload<any>;
-  sendMessage?: ActionCreatorWithPayload<any>
+  sendMessage?: ActionCreatorWithPayload<any>;
+};
+
+let connectionState = {
+  isConnected: false,
+  isConnecting: false,
+  hasError: false,
 };
 
 export const socketMiddleware = (
@@ -33,33 +39,45 @@ export const socketMiddleware = (
         sendMessage,
       } = wsActions;
       if (connect.match(action)) {
+        connectionState = {
+          isConnected: false,
+          isConnecting: true,
+          hasError: false,
+        };
         url = action.payload;
         socket = new WebSocket(url);
       }
       if (socket) {
         socket.onopen = () => {
+          console.log("WebSocket connection successfully established.");
+          connectionState = { isConnected: true, isConnecting: false, hasError: false };
           dispatch(connected());
         };
 
         socket.onerror = (event) => {
-          dispatch(connectError(event.type));
+          console.error("WebSocket connection error:", event);
         };
 
         socket.onmessage = (event) => {
           const { data } = event;
           const parsedData = JSON.parse(data);
-        
+
           dispatch(getMessage(parsedData));
         };
 
         socket.onclose = (event) => {
+          console.log("WebSocket connection closed:", event);
           if (event.code !== 1000) {
-            dispatch(connectError(event.code.toString()));
+            connectionState = { isConnected: false, isConnecting: false, hasError: true };
+            dispatch(connectError(`Closed with code: ${event.code}`));
+          } else {
+            connectionState = { isConnected: false, isConnecting: false, hasError: false };
+            dispatch(disconnected());
           }
         };
 
         if (disconnected.match(action)) {
-          socket.close()
+          socket.close();
         }
 
         if (sendMessage?.match(action)) {

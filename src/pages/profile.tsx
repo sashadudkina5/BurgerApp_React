@@ -4,12 +4,15 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { getUserData } from "../redux_services/selectors";
-import { useState } from "react";
+import {
+  getUserData,
+  getChangeProfileInfoStatus,
+} from "../redux_services/selectors";
+import { useState, useEffect } from "react";
 import { changeUserInfoThunk } from "../redux_services/thunk-functions/change-profile-info";
 import { TSubmitHandler } from "../utils/types";
 import { useAppSelector, useAppDispatch } from "../hooks/dispatch-selectos";
-import UserProfileMenu from "../components/UserProfileMenu/UserProfileMenu"
+import UserProfileMenu from "../components/UserProfileMenu/UserProfileMenu";
 
 function ProfilePage() {
   const dispatch = useAppDispatch();
@@ -17,6 +20,29 @@ function ProfilePage() {
   const userData = useAppSelector(getUserData);
   const userName: string = userData.name!;
   const userEmail: string = userData.email!;
+
+  const onChangeStatus = useAppSelector(getChangeProfileInfoStatus);
+  const [showStatus, setShowStatus] = useState<boolean>(false);
+  const [messageOpacity, setMessageOpacity] = useState(false);
+
+useEffect(() => {
+  let timer: any;
+  if (showStatus) {
+    setMessageOpacity(true);
+    timer = setTimeout(() => {
+      setMessageOpacity(false); 
+    }, 3000);
+    const hideTimer = setTimeout(() => {
+      setShowStatus(false);
+    }, 3500);
+
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(hideTimer);
+    };
+  }
+}, [showStatus]);
+
 
   const [emailValue, setEmailValue] = React.useState<string>(userEmail);
   const inputEmailRef = React.useRef<HTMLInputElement>(null);
@@ -57,6 +83,7 @@ function ProfilePage() {
     setIsNameEditing(false);
     setIsPasswordEditing(false);
     dispatch(changeUserInfoThunk(changedData));
+    setShowStatus(true);
   };
 
   const handleCancel = () => {
@@ -127,7 +154,7 @@ function ProfilePage() {
           extraClass="mb-6"
         />
         {(isEmailEditing || isNameEditing || isPasswordEditing) && (
-          <div className={styles.buttonsWrapper}>
+          <div className="mb-4">
             <Button type="primary" size="medium" htmlType="submit">
               Сохранить
             </Button>
@@ -141,6 +168,12 @@ function ProfilePage() {
             </Button>
           </div>
         )}
+{showStatus && (
+  <p className={`text text_type_main-default mb-8 ${styles.statusMessage} ${messageOpacity ? styles.visible : ''}`}>
+    {onChangeStatus}
+  </p>
+)}
+
       </form>
     </div>
   );

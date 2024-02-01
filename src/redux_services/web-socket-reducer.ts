@@ -47,7 +47,7 @@ export const wsReducer = createReducer(initialState, (builder) => {
     })
     .addCase(disconnected, (state) => {
       state.wsConnected = false;
-      state.wsConnectingLoading = false;
+      state.wsConnectingLoading = true;
     })
     .addCase(connectError, (state, action) => {
       state.wsConnected = false;
@@ -56,6 +56,7 @@ export const wsReducer = createReducer(initialState, (builder) => {
     })
     .addCase(getMessage, (state, action) => {
       const { success, orders, total, totalToday } = action.payload;
+      state.error = "";
 
       state.getData = {
         success,

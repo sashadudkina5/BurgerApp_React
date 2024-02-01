@@ -1,8 +1,6 @@
-import { getCookie, fetchWithRefresh, checkResponse } from "../../utils/api";
-import { getLoginSuccess, getLoginRequest, getLoginFailed } from "../UserData/actions";
+import { checkResponse } from "../../utils/api";
 import { BASE_URL } from "../../utils/ApiConfig";
-import {IregistrationData} from "../../utils/types";
-import {AppDispatch, GetUserInfoThunk} from "../../utils/types";
+import {AppDispatch} from "../../utils/types";
 import {showDoneOrderDetails} from "../../components/DoneOrderDetails/actions"
 
 

@@ -10,6 +10,7 @@ import {
   getBunData,
   getLoggedInStatus,
   getListOfIngredients,
+  isSeindingOrderError
 } from "../redux_services/selectors";
 import { createOrderThunk } from "../redux_services/thunk-functions/SendNewOrder";
 import { useNavigate } from "react-router-dom";
@@ -52,10 +53,18 @@ function MainPage() {
     }
   };
 
+  const errorSendingNewOrder = useAppSelector(isSeindingOrderError);
+
   const closeOrderDetailsModal = () => {
-    setIsOrderDetailsModalOpen(false);
-    dispatch(cleanConstructor());
-    dispatch(cleanOrderID());
+    if (!errorSendingNewOrder) {
+        setIsOrderDetailsModalOpen(false);
+        dispatch(cleanConstructor());
+        dispatch(cleanOrderID());
+    }
+    else {
+        setIsOrderDetailsModalOpen(false);
+        dispatch(cleanOrderID());
+    }
   };
 
   const openIngredientDetailModal = (ingredient: IIngredientCard) => {
@@ -66,11 +75,11 @@ function MainPage() {
   const { ingredientsData, isLoading, error } = ingredientsState;
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <p className="text text_type_main-default">Loading...</p>;
   }
 
   if (error) {
-    return <p>Произошла ошибка: {error}</p>;
+    return <p className="text text_type_main-default">Произошла ошибка: {error}</p>;
   }
 
   return (

@@ -1,13 +1,16 @@
 import { getCookie, deleteCookie } from "../../utils/api";
-import { getLogOutSuccess } from "../UserData/actions";
+import { getLogOutSuccess, getLogOutRequest, getLogOutFailed } from "../UserData/actions";
 import { BASE_URL } from "../../utils/ApiConfig";
 import { checkResponse } from "../../utils/api";
 import {AppDispatch, AppThunk} from "../../utils/types"
 
 export const logoutThunk = (): AppThunk => async (dispatch: AppDispatch) => {
+
   const refreshConfig = {
     token: getCookie("refreshToken"),
   };
+
+  dispatch(getLogOutRequest());
 
   try {
     const accessToken = getCookie("accessToken");
@@ -29,8 +32,11 @@ export const logoutThunk = (): AppThunk => async (dispatch: AppDispatch) => {
     deleteCookie("accessToken");
     deleteCookie("refreshToken");
     dispatch(getLogOutSuccess());
+    return Promise.resolve();
 
   } catch (error) {
       console.error("Network error during logout:", error);
+      dispatch(getLogOutFailed())
+      return Promise.reject("Network error");
     }
   }

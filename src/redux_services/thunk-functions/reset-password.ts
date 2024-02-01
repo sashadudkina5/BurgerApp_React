@@ -1,6 +1,7 @@
 import { BASE_URL } from "../../utils/ApiConfig";
 import { checkResponse } from "../../utils/api";
-import {AppDispatch, ForgotPasswordThunk} from "../../utils/types"
+import {AppDispatch, ForgotPasswordThunk} from "../../utils/types";
+import {resetPasswordFailed} from "../UserData/actions"
 
 interface InewPasswordData {
   password: string | number;
@@ -26,6 +27,7 @@ export const resetPasswordThunk =
       await checkResponse(response);
       return Promise.resolve();
     } catch (error) {
+      dispatch(resetPasswordFailed(error));
       return Promise.reject("Network error");
     }
   };

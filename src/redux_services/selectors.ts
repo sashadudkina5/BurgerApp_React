@@ -17,6 +17,9 @@ export const getIngredientDetailsModalState = (state: RootState) =>
 export const getUserEmail = (state: RootState) =>
   state.userDataStore.userData.email;
 export const getUserError = (state: RootState) => state.userDataStore.error;
+export const getForgotPasswordError = (state: RootState) => state.userDataStore.resetPasswordError;
+export const getResetPasswordError = (state: RootState) => state.userDataStore.resetTokenInvalidError;
+export const getLoginLoading = (state: RootState) => state.userDataStore.isLoading;
 export const getLoggedInStatus = (state: RootState) =>
   state.userDataStore.isLoggedIn;
 export const getUserData = (state: RootState) => state.userDataStore.userData;
@@ -26,8 +29,14 @@ export const getOrderNumber = (state: RootState) =>
   state.orderStore.orderNumber;
   export const isOrderRequestLoading = (state: RootState) =>
   state.orderStore.loading;
+  export const isSeindingOrderError = (state: RootState) =>
+  state.orderStore.error;
 export const getLoggingInLoading = (state: RootState) =>
   state.userDataStore.isLoading;
+  export const getChangeProfileInfoStatus = (state: RootState) =>
+  state.userDataStore.changeProfileInfoResponse;
+  export const getLogOutStatus = (state: RootState) =>
+  state.userDataStore.logOutStatus;
 
 export const getAllCreatedOrders = (state: RootState) =>
   state.webSocketStore.getData.orders;
@@ -52,4 +61,7 @@ state.doneOrderDetailsStore.orderDetails;
 
 export const isWSLoading = (state: RootState) =>
   state.webSocketStore.wsConnectingLoading;
+
+  export const getWSError = (state: RootState) =>
+  state.webSocketStore.error;
 

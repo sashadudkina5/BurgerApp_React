@@ -11,6 +11,7 @@ import {
   getUserEmail,
   getUserError,
   getLoggedInStatus,
+  getLoginLoading,
 } from "../redux_services/selectors";
 import { Navigate } from "react-router";
 import { TSubmitHandler } from "../utils/types";
@@ -21,8 +22,16 @@ function RegisterPage() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const isRegistered = useAppSelector(getUserEmail);
+  const userEmail = useAppSelector(getUserEmail);
+  let isRegistered: boolean = false;
+  if (userEmail === "") {
+    isRegistered = false;
+  } else {
+    isRegistered = true;
+  }
+
   const registerError = useAppSelector(getUserError);
+  const registerLoading = useAppSelector(getLoginLoading);
 
   const inputNameRef = React.useRef<HTMLInputElement>(null);
   const onIconClickName = () => {
@@ -46,7 +55,7 @@ function RegisterPage() {
 
   const isLoggedIn = useAppSelector(getLoggedInStatus);
   if (isLoggedIn) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/react-project-BurgerApp/" replace />;
   }
 
   const handleFormSubmit: TSubmitHandler = (e) => {
@@ -103,14 +112,43 @@ function RegisterPage() {
             extraClass="mb-6"
           />
 
+          {registerLoading &&
+            (values.email || values.password || values.name) && (
+              <p className="text text_type_main-default mb-8">Loading...</p>
+            )}
+
+          {registerError?.includes("User already exists") && (
+            <p className="text text_type_main-default mb-8">
+              Пользователь с такой почтой уже зарегистрирован
+            </p>
+          )}
+
+          {registerError?.includes(
+            "Email, password and name are required fields"
+          ) &&
+            [values.email, values.password, values.name].filter(
+              (value) => !value
+            ).length > 0 &&
+            [values.email, values.password, values.name].filter(
+              (value) => !value
+            ).length < 3 && (
+              <p className="text text_type_main-default mb-8">
+                Убедитесь, что заполнены все поля
+              </p>
+            )}
+
+          {registerError?.includes("Unexpected token") && (
+            <p className="text text_type_main-default mb-8">
+              Ошибка при регистрации. Пожалуйста повторите попытку позже
+            </p>
+          )}
+
           <Button htmlType="submit" type="primary" size="large">
             Зарегистрироваться
           </Button>
+
+          {isRegistered && navigate("/react-project-BurgerApp/")}
         </form>
-
-        {isRegistered && navigate("/")}
-
-        {registerError && <p>{registerError}</p>}
 
         <div className={`mt-20 ${styles.wrapper}`}>
           <p className="text text_type_main-default text_color_inactive">

@@ -1,6 +1,7 @@
 import { BASE_URL } from "../../utils/ApiConfig";
 import { checkResponse } from "../../utils/api";
-import {AppDispatch, ForgotPasswordThunk} from "../../utils/types"
+import {AppDispatch, ForgotPasswordThunk} from "../../utils/types";
+import {forgotPasswordFailed} from "../UserData/actions"
 
 interface IEmailInfo {
   email: string;
@@ -24,6 +25,7 @@ export const forgotPasswordThunk =
       await checkResponse(response);
       return Promise.resolve();
     } catch (error) {
+      dispatch(forgotPasswordFailed(error));
       return Promise.reject("Network error");
     }
   };

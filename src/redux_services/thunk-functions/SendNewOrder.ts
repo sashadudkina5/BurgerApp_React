@@ -23,10 +23,16 @@ export const createOrderThunk = (ingredientIDs: { ingredients: (string | undefin
     });
     const data = await checkResponse(response);
     dispatch(createOrderSuccess(data.order.number));
-  } catch (error) {
-    dispatch(
-      createOrderFailure("An error occurred while processing your request.")
-    );
-    console.log(error)
+  } catch (error: any) {
+    let errorMessage = "An unknown error occurred.";
+  
+    if (error instanceof SyntaxError && error.message.includes("Unexpected token")) {
+      errorMessage = "Invalid response format: Expected JSON.";
+    } else if (error.message) {
+      errorMessage = error.message;
+    }
+  
+    dispatch(createOrderFailure(errorMessage));
+    console.log(error);
   }
 };

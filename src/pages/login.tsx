@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./styles/pages.module.css";
 import {
   Input,
@@ -6,7 +6,11 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
 import { loginThunk } from "../redux_services/thunk-functions/OnLogin";
-import { getUserError, getLoggedInStatus } from "../redux_services/selectors";
+import {
+  getUserError,
+  getLoggedInStatus,
+  getLoginLoading,
+} from "../redux_services/selectors";
 import { useNavigate } from "react-router-dom";
 import { Navigate } from "react-router";
 import { TSubmitHandler } from "../utils/types";
@@ -17,7 +21,8 @@ function LoginPage() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isLoggedIn = useAppSelector(getLoggedInStatus);
-  const registerError = useAppSelector(getUserError);
+  const loginError = useAppSelector(getUserError);
+  const loginLoading = useAppSelector(getLoginLoading);
 
   const inputEmailRef = React.useRef<HTMLInputElement>(null);
   const onIconClickEmail = () => {
@@ -75,6 +80,24 @@ function LoginPage() {
             size={"default"}
             extraClass="mb-6"
           />
+          {loginError?.includes("email or password are incorrect") &&
+            values.email &&
+            values.password && (
+              <p className="text text_type_main-default mb-8">
+                Неверный логин или пароль
+              </p>
+            )}
+
+          {loginError &&
+            [values.email, values.password].some((value) => !value) && (
+              <p className="text text_type_main-default mb-8">
+                Убедитесь, что заполнены все поля
+              </p>
+            )}
+
+          {loginLoading && (values.email || values.password) && (
+            <p className="text text_type_main-default mb-8">Loading...</p>
+          )}
 
           <Button htmlType="submit" type="primary" size="large">
             Войти
@@ -82,8 +105,6 @@ function LoginPage() {
         </form>
 
         {isLoggedIn && navigate("/react-project-BurgerApp/")}
-
-        {registerError && <p>{registerError.message}</p>}
 
         <div className={`mt-20 ${styles.wrapper}`}>
           <p className="text text_type_main-default text_color_inactive">

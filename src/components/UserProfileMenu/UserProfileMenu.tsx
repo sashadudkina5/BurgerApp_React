@@ -1,17 +1,26 @@
 import UserProfileMenuStyles from "./UserProfileMenu.module.css";
 import {logoutThunk} from "../../redux_services/thunk-functions/logout";
-import { useAppDispatch } from "../../hooks/dispatch-selectos";
+import { useAppDispatch, useAppSelector } from "../../hooks/dispatch-selectos";
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
+import {getLogOutStatus} from "../../redux_services/selectors"
 
 function UserProfileMenu() {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const handleLogout = (e: React.SyntheticEvent) => {
-        dispatch(logoutThunk());
+    const logOutStatus = useAppSelector(getLogOutStatus)
+
+    const handleLogout = async (e: React.SyntheticEvent) => {
+      e.preventDefault();
+  
+      try {
+        await dispatch(logoutThunk());
         navigate("/login");
-      };
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
 
   return (
@@ -44,6 +53,9 @@ function UserProfileMenu() {
             </button>
           </li>
         </ul>
+
+        <p className="text text_type_main-default mb-5"
+          style={{ textAlign: "left" }}>{logOutStatus}</p>
 
         <p
           className="text text_type_main-default text_color_inactive"
