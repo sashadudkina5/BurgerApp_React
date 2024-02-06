@@ -10,7 +10,7 @@
 }
 
 .section {
-    max-height: 912px;
+    max-height: 58vh;
     overflow-y: auto; 
     padding-right: 15px;
 }

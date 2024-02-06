@@ -14,3 +14,21 @@
   padding-top: 15px;
   padding-bottom: 15px;
 }
+
+.link {
+  text-decoration: none;
+}
+
+.link_active, .link_active .item .linkText {
+  color: white;
+}
+
+.logoutButton {
+  background-color: transparent;
+  border: none;
+  padding-left: 0;
+}
+
+.logoutButton p:active {
+  color: white;
+}

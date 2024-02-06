@@ -20,10 +20,14 @@ export const ResetPasswordPage: React.FC = () => {
 
   const resetError = useAppSelector(getResetPasswordError);
 
-  const inputRefPassword = React.useRef<HTMLInputElement>(null);
+  //for changing password visibility
+  const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
+
   const onIconClickPassword = () => {
-    setTimeout(() => inputRefPassword.current?.focus(), 0);
+    setIsPasswordVisible(!isPasswordVisible);
   };
+
+  const inputRefPassword = React.useRef<HTMLInputElement>(null);
 
   const inputRefToken = React.useRef<HTMLInputElement>(null);
   const onIconClickToken = () => {
@@ -56,10 +60,10 @@ export const ResetPasswordPage: React.FC = () => {
         </h1>
         <form onSubmit={handleFormSubmit}>
           <Input
-            type={"password"}
+            type={isPasswordVisible ? "text" : "password"}
             placeholder={"Введите новый пароль"}
             onChange={handleChange}
-            icon={"ShowIcon"}
+            icon={isPasswordVisible ? "HideIcon" : "ShowIcon"}
             value={values.newPassword}
             name={"newPassword"}
             error={false}
@@ -114,7 +118,7 @@ export const ResetPasswordPage: React.FC = () => {
           <p className="text text_type_main-default text_color_inactive">
             Вспомнили пароль?
           </p>
-          <Link to="/login">
+          <Link to="/login" className={styles.link}>
             <p className="text text_type_main-default">Войти</p>
           </Link>
         </div>

@@ -4,7 +4,6 @@
 }
 
 .window {
-  /* background-color: aqua; */
   width: 480px;
   position: absolute;
   top: 50%;
@@ -50,4 +49,9 @@
 
 .statusMessage.visible {
   opacity: 1;
+}
+
+.link {
+  text-decoration: none;
+  color: white;
 }

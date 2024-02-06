@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styles from "./styles/pages.module.css";
 import {
   Input,
@@ -27,14 +27,16 @@ function LoginPage() {
   const inputEmailRef = React.useRef<HTMLInputElement>(null);
   const onIconClickEmail = () => {
     setTimeout(() => inputEmailRef.current?.focus(), 0);
-    alert("Icon Click Callback");
   };
+
+  //for changing password visibility 
+  const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
 
   const inputPasswordRef = React.useRef<HTMLInputElement>(null);
   const onIconClickPassword = () => {
-    setTimeout(() => inputPasswordRef.current?.focus(), 0);
-    alert("Icon Click Callback");
+    setIsPasswordVisible(!isPasswordVisible); 
   };
+  
 
   const { values, handleChange } = useForm();
 
@@ -67,10 +69,10 @@ function LoginPage() {
           />
 
           <Input
-            type={"password"}
+            type={isPasswordVisible ? "text" : "password"}
             placeholder={"Пароль"}
             onChange={handleChange}
-            icon={"ShowIcon"}
+            icon={isPasswordVisible ? "HideIcon" : "ShowIcon"}
             value={values.password}
             name={"password"}
             error={false}
@@ -110,7 +112,7 @@ function LoginPage() {
           <p className="text text_type_main-default text_color_inactive">
             Вы — новый пользователь?
           </p>
-          <Link to="/register">
+          <Link to="/register" className={styles.link}>
             <p className="text text_type_main-default">Зарегистрироваться</p>
           </Link>
         </div>
@@ -119,7 +121,7 @@ function LoginPage() {
           <p className="text text_type_main-default text_color_inactive">
             Забыли пароль?
           </p>
-          <Link to="/forgot-password">
+          <Link to="/forgot-password" className={styles.link}>
             <p className="text text_type_main-default">Восстановить пароль</p>
           </Link>
         </div>

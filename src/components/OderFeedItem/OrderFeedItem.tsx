@@ -47,7 +47,7 @@ function OrderFeedItem ()  {
   if (!allCreatedOrders || allCreatedOrders.length === 0) {
     return (
       <p className="text text_type_main-default">
-        No orders yet
+        Заказов пока нет
       </p>
     );
   }

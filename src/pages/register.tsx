@@ -30,6 +30,14 @@ function RegisterPage() {
     isRegistered = true;
   }
 
+    //for changing password visibility 
+    const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
+
+    const inputPasswordRef = React.useRef<HTMLInputElement>(null);
+    const onIconClickPassword = () => {
+      setIsPasswordVisible(!isPasswordVisible); 
+    };
+
   const registerError = useAppSelector(getUserError);
   const registerLoading = useAppSelector(getLoginLoading);
 
@@ -42,12 +50,6 @@ function RegisterPage() {
   const inputEmailRef = React.useRef<HTMLInputElement>(null);
   const onIconClickEmail = () => {
     setTimeout(() => inputEmailRef.current?.focus(), 0);
-    alert("Icon Click Callback");
-  };
-
-  const inputPasswordRef = React.useRef<HTMLInputElement>(null);
-  const onIconClickPassword = () => {
-    setTimeout(() => inputPasswordRef.current?.focus(), 0);
     alert("Icon Click Callback");
   };
 
@@ -98,10 +100,10 @@ function RegisterPage() {
           />
 
           <Input
-            type={"password"}
+            type={isPasswordVisible ? "text" : "password"}
             placeholder={"Пароль"}
             onChange={handleChange}
-            icon={"ShowIcon"}
+            icon={isPasswordVisible ? "HideIcon" : "ShowIcon"}
             value={values.password}
             name={"password"}
             error={false}
@@ -154,7 +156,7 @@ function RegisterPage() {
           <p className="text text_type_main-default text_color_inactive">
             Уже зарегистрированы?
           </p>
-          <Link to="/login">
+          <Link to="/login" className={styles.link}>
             <p className="text text_type_main-default">Войти</p>
           </Link>
         </div>

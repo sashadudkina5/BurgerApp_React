@@ -32,13 +32,8 @@ function BurgerConstructor({ onClick }: IBurgerConstructorProps) {
       canDrop: monitor.canDrop(),
     }),
   }));
+
   const isActive = canDrop && isOver;
-  let backgroundColor = "#222";
-  if (isActive) {
-    backgroundColor = "darkgreen";
-  } else if (canDrop) {
-    backgroundColor = "darkkhaki";
-  }
 
   const price = useMemo(() => {
     const bunPrice = bunData?.price || 0;
@@ -47,53 +42,69 @@ function BurgerConstructor({ onClick }: IBurgerConstructorProps) {
     return bunPrice * 2 + ingredientsPrice;
   }, [data, bunData]);
 
+
   const renderCard = useCallback((card: IIngredientCardConstructor, i: number) => {
     return <SortingIngredients index={i} key={card.uniqID} item={card} />;
   }, []);
 
+
+  const renderContent = () => {
+
+    if (!bunData && !data.length) {
+      return <p>Выберите начинку и булку</p>;
+    } else {
+      return (
+        <>
+          {bunData && (
+            <div className={burgerConstructorStyles.item}>
+              <ConstructorElement
+                type="top"
+                isLocked={true}
+                text={`${bunData.name} (верх)`}
+                price={bunData.price!}
+                thumbnail={bunData.image!}
+              />
+            </div>
+          )}
+  
+          <ul className={burgerConstructorStyles.list}>
+            {data.map((card, i) => renderCard(card, i))}
+            {isActive && (
+              <div className={burgerConstructorStyles.placeholder}>
+                Place your ingredient here
+              </div>
+            )}
+          </ul>
+  
+          {bunData && (
+            <div className={burgerConstructorStyles.item}>
+              <ConstructorElement
+                type="bottom"
+                isLocked={true}
+                text={`${bunData.name} (низ)`}
+                price={bunData.price!}
+                thumbnail={bunData.image!}
+              />
+            </div>
+          )}
+          {bunData && !data.length && <p>Выберите начинку</p>}
+          {data.length !== 0 && !bunData && <p>Выберите булку</p>}
+        </>
+      );
+    }
+  };
+  
+
+
   return (
     <div className={`${burgerConstructorStyles.wrapper} targetitem`} ref={drop}>
-      {bunData ? (
-        <>
-          <div className={burgerConstructorStyles.item}>
-            <ConstructorElement
-              type="top"
-              isLocked={true}
-              text={`${bunData.name} (верх)`}
-              price={bunData.price!}
-              thumbnail={bunData.image!}
-            />
-          </div>
-
-          <ul className={burgerConstructorStyles.list}>
-            <div>{data && data.map((card, i) => renderCard(card, i))}</div>
-          </ul>
-
-          <div className={burgerConstructorStyles.item}>
-            <ConstructorElement
-              type="bottom"
-              isLocked={true}
-              text={`${bunData.name} (низ)`}
-              price={bunData.price!}
-              thumbnail={bunData.image!}
-            />
-          </div>
-        </>
-      ) : (
-        <>
-          <p>Выберите булку и начинку</p>
-
-          <ul className={burgerConstructorStyles.list}>
-            <div>{data && data.map((card, i) => renderCard(card, i))}</div>
-          </ul>
-        </>
-      )}
+      {renderContent()}
       <section className={burgerConstructorStyles.finalPrice}>
         <div className={burgerConstructorStyles.finalPriceWrapper}>
           <p className="text text_type_main-large">{price}</p>
-          <CurrencyIcon type="primary"/>
+          <CurrencyIcon type="primary" />
           <Button
-            extraClass='order_botton'
+            extraClass="order_button"
             htmlType="button"
             type="primary"
             size="large"

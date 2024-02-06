@@ -91,7 +91,7 @@ function ForgotPasswordPage() {
           <p className="text text_type_main-default text_color_inactive">
             Вспомнили пароль?
           </p>
-          <Link to="/login">
+          <Link to="/login" className={styles.link}>
             <p className="text text_type_main-default">Войти</p>
           </Link>
         </div>

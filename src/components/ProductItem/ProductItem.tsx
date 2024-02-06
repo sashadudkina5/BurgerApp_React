@@ -31,10 +31,15 @@ const ProductItem: React.FC<IProductItemProps> = ({ children, ingredient }) => {
       handlerId: monitor.getHandlerId(),
     }),
   }));
-  const opacity = isDragging ? 0.4 : 1;
+
+  const style = {
+    opacity: isDragging ? 0.4 : 1,
+    boxShadow: isDragging ? '0px 0px 24px 2px rgba(0,0,0,0.15)' : 'none',
+    borderRadius: 30
+  };
 
   return (
-    <div className="sourceitem" ref={drag} style={{ opacity }} data-testid={`box`}>
+    <div className="sourceitem" ref={drag} style={style} data-testid={`box`}>
       {children}
     </div>
   );

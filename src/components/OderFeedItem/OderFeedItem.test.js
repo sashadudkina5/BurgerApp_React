@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import {OrderFeedItem} from './OrderFeedItem';
+import OrderFeedItem from './OrderFeedItem';
 import { useAppSelector } from '../../hooks/dispatch-selectos';
 import { useLocation } from 'react-router-dom';
 

@@ -33,7 +33,6 @@ function AppHeader() {
               isActive ? appHeaderStyles.link_active : ""
             }`
           }
-          end
         >
           <ListIcon type="secondary" />
           <p
@@ -54,7 +53,6 @@ function AppHeader() {
             isActive ? appHeaderStyles.link_active : ""
           }`
         }
-        end
       >
         <ProfileIcon type="secondary" />
         <p

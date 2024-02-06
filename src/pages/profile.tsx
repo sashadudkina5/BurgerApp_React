@@ -25,6 +25,16 @@ function ProfilePage() {
   const [showStatus, setShowStatus] = useState<boolean>(false);
   const [messageOpacity, setMessageOpacity] = useState(false);
 
+    //for changing password visibility
+    const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
+
+    const onIconClickPassword = () => {
+      setIsPasswordVisible(!isPasswordVisible);
+    };
+  
+    const inputRefPassword = React.useRef<HTMLInputElement>(null);
+
+
 useEffect(() => {
   let timer: any;
   if (showStatus) {
@@ -59,10 +69,7 @@ useEffect(() => {
   const [isNameEditing, setIsNameEditing] = useState<boolean>(false);
 
   const [passwordValue, setPasswordValue] = React.useState<string>("*****");
-  const inputPasswordRef = React.useRef<HTMLInputElement>(null);
-  const onIconClickPassword = () => {
-    setTimeout(() => inputPasswordRef.current?.focus(), 0);
-  };
+
   const [isPasswordEditing, setIsPasswordEditing] = useState<boolean>(false);
 
   interface IСhangedData {
@@ -138,20 +145,21 @@ useEffect(() => {
         />
 
         <Input
-          type={"password"}
+          type={isPasswordVisible ? "text" : "password"}
           placeholder={"Пароль"}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setPasswordValue(e.target.value);
             setIsPasswordEditing(true);
           }}
           onIconClick={onIconClickPassword}
-          icon={"EditIcon"}
+          icon={isPasswordVisible ? "HideIcon" : "ShowIcon"}
           value={passwordValue}
           name={"password"}
           error={false}
           errorText={"Ошибка"}
           size={"default"}
           extraClass="mb-6"
+          ref={inputRefPassword}
         />
         {(isEmailEditing || isNameEditing || isPasswordEditing) && (
           <div className="mb-4">

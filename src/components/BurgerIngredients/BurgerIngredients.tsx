@@ -2,10 +2,10 @@ import burgerIngredientsStyles from "./BurgerIngredients.module.css";
 import Tabs from "../Tabs/Tabs";
 import { useInView } from "react-intersection-observer";
 import ProductCard from "../ProductCard/ProductCard";
-import { useMemo } from "react";
+import React, { useMemo, useState, useRef } from "react";
 import { showIngredientDetails } from "../IngredientDetail/actions";
 import {IIngredients, IIngredientCard} from "../../utils/types";
-import { useAppDispatch } from "../../hooks/dispatch-selectos"
+import { useAppDispatch } from "../../hooks/dispatch-selectos";
 
 
 interface IBurgerIngredients {
@@ -31,6 +31,17 @@ function BurgerIngredients({ ingredients, onClick }: IBurgerIngredients) {
   const [mainRef, inViewMain] = useInView({
     threshold: 0,
   });
+
+  const bunsTitleRef = useRef<HTMLHeadingElement | null>(null);
+  const saucesTitleRef = useRef<HTMLHeadingElement | null>(null);
+  const mainTitleRef = useRef<HTMLHeadingElement | null>(null);
+
+
+ // scroll handlers
+ const scrollToBuns = () => bunsTitleRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+ const scrollToSauces = () => saucesTitleRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+ const scrollToMain = () => mainTitleRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
 
   const bunIngredients = useMemo(
     () => ingredients?.filter((ingredient) => ingredient.type === "bun") || [],
@@ -59,10 +70,14 @@ function BurgerIngredients({ ingredients, onClick }: IBurgerIngredients) {
         inViewBuns={inViewBuns}
         inViewSauces={inViewSauces}
         inViewMain={inViewMain}
+        onBunClick={scrollToBuns}
+        onSauceClick={scrollToSauces}
+        onMainClick={scrollToMain}
       />
       <section className={burgerIngredientsStyles.section}>
         <h2
-          className={`${burgerIngredientsStyles.title} text text_type_main-medium`}
+        ref={bunsTitleRef}
+          className={`${burgerIngredientsStyles.title} text text_type_main-medium`} 
         >
           Булки
         </h2>
@@ -75,6 +90,7 @@ function BurgerIngredients({ ingredients, onClick }: IBurgerIngredients) {
 
         <h2
           className={`${burgerIngredientsStyles.title} text text_type_main-medium`}
+          ref={saucesTitleRef}
         >
           Соусы
         </h2>
@@ -87,6 +103,7 @@ function BurgerIngredients({ ingredients, onClick }: IBurgerIngredients) {
 
         <h2
           className={`${burgerIngredientsStyles.title} text text_type_main-medium`}
+          ref={mainTitleRef}
         >
           Начинка
         </h2>
