@@ -30,6 +30,7 @@
   overflow: hidden;
   object-fit: cover;
   border: 2px solid #801ab2;
+  background-color: #1c1c21;
 }
 
 .imageWrapper {

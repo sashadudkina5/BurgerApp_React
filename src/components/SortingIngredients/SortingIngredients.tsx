@@ -69,8 +69,10 @@ const SortingIngredients: React.FC<ISortingIngredientsProps> = ({
       item.index = hoverIndex;
     },
   });
+
+  
   const [{ isDragging }, drag] = useDrag({
-    type: ItemTypes.BOX,
+    type: ItemTypes.SORTED,
     item: () => ({
       index,
     }),
@@ -78,7 +80,11 @@ const SortingIngredients: React.FC<ISortingIngredientsProps> = ({
       isDragging: monitor.isDragging(),
     }),
   });
+
   drag(drop(ref));
+
+
+
   return (
     <div ref={ref} data-handler-id={handlerId}>
       <div className={sortingIngredientsStyles.item} key={item.uniqID}>
