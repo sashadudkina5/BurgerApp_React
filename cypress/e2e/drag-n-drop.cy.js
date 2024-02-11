@@ -1,7 +1,7 @@
 describe('Dragtest', () => {
 
   before(function() {
-    cy.visit('http://localhost:3000/')
+    cy.visit('/')
   });
   
   it('should dragndrop', () => {

@@ -71,7 +71,7 @@ export type TOrder = {
   ingredients: string[];
   _id: string;
   status: string;
-  number: number;
+  number: number | string;
   createdAt: string;
   updatedAt: string;
   name: string

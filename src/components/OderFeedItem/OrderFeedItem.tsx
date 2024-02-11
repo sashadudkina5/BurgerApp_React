@@ -116,7 +116,7 @@ function OrderFeedItem ()  {
     <>
       {ordersWithTotalPrice.map(({ order, totalPrice }) => (
         <Link
-          to={`/feed/${order._id}`}
+          to={`/feed/${order.number}`}
           state={{ backgroundLocation: location }}
           style={{
             textDecoration: "none",

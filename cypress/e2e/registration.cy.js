@@ -2,6 +2,16 @@ import { getLoginSuccess } from "../../src/redux_services/UserData/actions";
 import {BASE_URL} from "../../src/utils/ApiConfig"
 
 describe("registration", () => {
+
+  const nameInputSelector = '[name="name"]';
+    const emailInputSelector = '[name="email"]';
+    const passwordInputSelector = '[name="password"]';
+
+    const name = "Test Name";
+    const email = "test@example.com";
+    const password = "password123";
+
+
     before(function() {
         cy.visit("http://localhost:3000/register");
       });
@@ -17,19 +27,15 @@ describe("registration", () => {
       isLoggedIn: false,
     });
 
-    const name = "Test Name";
-    const email = "test@example.com";
 
-    const password = "password123";
-
-    cy.get('[name="name"]').type(name);
-    cy.get('[name="name"]').should('have.value', name);
+    cy.get(nameInputSelector).type(name);
+    cy.get(nameInputSelector).should('have.value', name);
     
-    cy.get('[name="email"]').type(email);
-    cy.get('[name="email"]').should('have.value', email);
+    cy.get(emailInputSelector).type(email);
+    cy.get(emailInputSelector).should('have.value', email);
     
-    cy.get('[name="password"]').type(password);
-    cy.get('[name="password"]').should('have.value', password);
+    cy.get(passwordInputSelector).type(password);
+    cy.get(passwordInputSelector).should('have.value', password);
 
     cy.get('button[type="submit"]').click();
 
@@ -37,15 +43,15 @@ describe("registration", () => {
 
     cy.window().then((win) => {
         const loginData = {
-          email: "test@gmail.com",
-          name: "test",
+          email: email,
+          name: name,
         };
         win.store.dispatch(getLoginSuccess(loginData));
       });
   
       cy.setCookie("accessToken", "mockedToken");
 
-      cy.url().should("eq", "http://localhost:3000/");
+      cy.url().should("eq", "http://localhost:3000/react-project-BurgerApp/");
 
   });
 });

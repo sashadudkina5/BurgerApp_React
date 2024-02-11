@@ -122,7 +122,7 @@ const UserOrderItem = () => {
     <>
       {sortedOrders.map(({ order, totalPrice }) => (
         <Link
-          to={`/profile/order/${order._id}`}
+          to={`/profile/order/${order.number}`}
           state={{ backgroundLocation: location }}
           style={{
             textDecoration: "none",

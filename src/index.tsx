@@ -3,25 +3,36 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './components/App/App';
 import reportWebVitals from './reportWebVitals';
-import {Provider} from 'react-redux';
-import {store} from './redux_services/store';
+import { Provider } from 'react-redux';
+import { store } from './redux_services/store';
 import { BrowserRouter } from "react-router-dom";
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root')
-);
+const rootElement = document.getElementById('root');
+if (!rootElement) throw new Error('Failed to find the root element');
+
+declare global {
+  interface Window {
+    Cypress?: any;
+    store?: typeof store;
+  }
+}
+const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
-     <Provider store={store}>
-     <BrowserRouter>
-    <App />
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>
 );
 
+declare global {
+  interface Window { store?: typeof store }
+}
+
 if (window.Cypress) {
-  window.store = store
+  window.store = store;
 }
 
 // If you want to start measuring performance in your app, pass a function

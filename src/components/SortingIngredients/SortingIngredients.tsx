@@ -28,7 +28,7 @@ const SortingIngredients: React.FC<ISortingIngredientsProps> = ({
 
   const ref = useRef<HTMLDivElement>(null);
   const [{ handlerId }, drop] = useDrop({
-    accept: ItemTypes.BOX,
+    accept: ItemTypes.SORTED,
     collect(monitor) {
       return {
         handlerId: monitor.getHandlerId(),

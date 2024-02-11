@@ -47,7 +47,7 @@ export const wsReducer = createReducer(initialState, (builder) => {
     })
     .addCase(disconnected, (state) => {
       state.wsConnected = false;
-      state.wsConnectingLoading = true;
+      state.wsConnectingLoading = false;
     })
     .addCase(connectError, (state, action) => {
       state.wsConnected = false;

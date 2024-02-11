@@ -3,8 +3,13 @@ import {BASE_URL} from "../../src/utils/ApiConfig"
 
 describe("create order in burger constructor", () => {
 
+  const userDataInfo = {
+    email: "test@gmail.com",
+    name: "test",
+  };
+
   beforeEach(function() {
-    cy.visit('http://localhost:3000');
+    cy.visit('/')
   });
 
   it("should navigate to login page if not logged in and tried to submit an order", () => {
@@ -27,8 +32,10 @@ describe("create order in burger constructor", () => {
       .then((success) => {
         assert.isTrue(success);
       });
+      
+      cy.get('.order_button').as('orderButton');
+      cy.get('@orderButton').click();
 
-    cy.get(".order_botton").click();
     cy.url().should("include", "/login");
   });
 
@@ -37,10 +44,7 @@ describe("create order in burger constructor", () => {
     cy.intercept("POST", `${BASE_URL}/auth/login`, { fixture: 'onLoginResponse.json' }).as("loginRequest");
 
     cy.window().then((win) => {
-      const loginData = {
-        email: "test@gmail.com",
-        name: "test",
-      };
+      const loginData = userDataInfo;
       win.store.dispatch(getLoginSuccess(loginData));
     });
 
@@ -51,10 +55,7 @@ describe("create order in burger constructor", () => {
       .invoke("getState")
       .its("userDataStore")
       .should("deep.include", {
-        userData: {
-          email: "test@gmail.com",
-          name: "test",
-        },
+        userData: userDataInfo,
         isLoading: false,
         isLoggedIn: true,
       });
@@ -73,7 +74,8 @@ describe("create order in burger constructor", () => {
       });
       
     cy.intercept("POST", `${BASE_URL}/orders`, { fixture: 'orderResponse.json' }).as("createOrderRequest");
-    cy.get(".order_botton").click();
+    cy.get('.order_button').as('orderButton');
+    cy.get('@orderButton').click();
 
     cy.get("#modal_overlay").should("exist");
     cy.get("#modal").should("exist");

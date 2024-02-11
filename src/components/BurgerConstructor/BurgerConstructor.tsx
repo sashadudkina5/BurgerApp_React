@@ -37,7 +37,10 @@ function BurgerConstructor({ onClick }: IBurgerConstructorProps) {
 
   const [{ canDrop, isOver }, drop] = useDrop<IIngredientCard, unknown, TDropCollectedProps>({
     accept: ItemTypes.BOX,
-    drop: (item) => (dispatch(addIngredient(item))),
+    drop: (item) => {
+      dispatch(addIngredient(item));
+      console.log("drop")
+    },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop(),
@@ -79,11 +82,6 @@ function BurgerConstructor({ onClick }: IBurgerConstructorProps) {
   
           <ul className={burgerConstructorStyles.list}>
             {data.map((card, i) => renderCard(card, i))}
-            {isActive && (
-              <div className={burgerConstructorStyles.placeholder}>
-                Place your ingredient here
-              </div>
-            )}
           </ul>
   
           {bunData && (
@@ -107,8 +105,10 @@ function BurgerConstructor({ onClick }: IBurgerConstructorProps) {
 
 
   return (
-    <div className={`${burgerConstructorStyles.wrapper} targetitem`} ref={drop}>
+    <div className={burgerConstructorStyles.wrapper}>
+      <div ref={drop} className={`${burgerConstructorStyles.targetitem} ${isOver ? burgerConstructorStyles.hovered : ''}`}>
       {renderContent()}
+      </div>
       <section className={burgerConstructorStyles.finalPrice}>
         <div className={burgerConstructorStyles.finalPriceWrapper}>
           <p className="text text_type_main-large">{price}</p>
