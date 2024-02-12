@@ -106,9 +106,9 @@ function BurgerConstructor({ onClick }: IBurgerConstructorProps) {
 
   return (
     <div className={burgerConstructorStyles.wrapper}>
-      <div ref={drop} className={`${burgerConstructorStyles.targetitem} ${isOver ? burgerConstructorStyles.hovered : ''}`}>
-      {renderContent()}
-      </div>
+<div ref={drop} className={`targetitem ${burgerConstructorStyles.targetitem} ${isOver ? burgerConstructorStyles.hovered : ''}`}>
+  {renderContent()}
+</div>
       <section className={burgerConstructorStyles.finalPrice}>
         <div className={burgerConstructorStyles.finalPriceWrapper}>
           <p className="text text_type_main-large">{price}</p>

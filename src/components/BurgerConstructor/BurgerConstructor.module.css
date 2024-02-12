@@ -43,6 +43,7 @@
     min-height: 50px;
     padding: 10px;
     margin-bottom: 20px;
+    position: static;
 }
 
 .targetitem.hovered {
