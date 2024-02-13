@@ -3,6 +3,8 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import {
     getAllCreatedOrders,
   getListOfIngredients,
+  isWSLoading,
+  getWSError
 } from "../../redux_services/selectors";
 import { useAppSelector, useAppDispatch } from "../../hooks/dispatch-selectos";
 import moment from "moment";
@@ -18,13 +20,35 @@ const UserOrderItem = () => {
   const dispatch = useAppDispatch();
   const allCreatedOrders = useAppSelector(getAllCreatedOrders);
   const allIngredients = useAppSelector(getListOfIngredients);
+  const WSLoading = useAppSelector(isWSLoading);
+  const connectionError = useAppSelector(getWSError);
 
-   //if there are no orders
+     //when still loading
+
+  if (WSLoading) {
+    return (
+      <p className="text text_type_main-default">
+        Loading...
+      </p>
+    );
+  }
+
+       //connection errors
+
+       if (connectionError !== "") {
+        return (
+          <p className="text text_type_main-default">
+            Ошибка подключения. Повторите попытку позже
+          </p>
+        );
+      }
+
+   //if there are no orders yet
 
    if (!allCreatedOrders || allCreatedOrders.length === 0) {
     return (
       <p className="text text_type_main-default">
-        No orders yet
+        Заказов пока нет
       </p>
     );
   }
@@ -98,7 +122,7 @@ const UserOrderItem = () => {
     <>
       {sortedOrders.map(({ order, totalPrice }) => (
         <Link
-          to={`/profile/order/${order._id}`}
+          to={`/profile/order/${order.number}`}
           state={{ backgroundLocation: location }}
           style={{
             textDecoration: "none",

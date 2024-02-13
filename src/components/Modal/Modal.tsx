@@ -8,9 +8,10 @@ interface IModalProps {
   title: string;
   children: React.ReactNode;
   onClose: () => void;
+  extraClass?: string;
 }
 
-const Modal: React.FC<IModalProps> = ({ title, children, onClose }) => {
+const Modal: React.FC<IModalProps> = ({ title, children, onClose, extraClass }) => {
   const modalRoot = document.getElementById("modal-root")!;
 
   useEffect(() => {
@@ -30,9 +31,9 @@ const Modal: React.FC<IModalProps> = ({ title, children, onClose }) => {
   return ReactDOM.createPortal(
     <>
       <ModalOverlay onClick={onClose} />
-      <div className={modaltyles.modal}>
+      <div className={modaltyles.modal} id="modal">
         <h1 className="text text_type_main-medium">{title}</h1>
-        <button onClick={onClose} className={modaltyles.closeButton}>
+        <button onClick={onClose} className={modaltyles.closeButton} id="closing_modal">
           <CloseIcon type="primary" />
         </button>
         {children}

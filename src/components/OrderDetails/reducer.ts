@@ -13,7 +13,7 @@ type TCreateOrderState = {
   error: null | any;
 };
 
-const initialState: TCreateOrderState = {
+export const initialState: TCreateOrderState = {
   orderNumber: null,
   loading: false,
   error: null,
@@ -40,3 +40,5 @@ export const orderReducer = (
       return state;
   }
 };
+
+export default orderReducer;

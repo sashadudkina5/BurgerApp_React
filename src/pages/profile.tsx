@@ -4,28 +4,55 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { getUserData } from "../redux_services/selectors";
-import { useState } from "react";
+import {
+  getUserData,
+  getChangeProfileInfoStatus,
+} from "../redux_services/selectors";
+import { useState, useEffect } from "react";
 import { changeUserInfoThunk } from "../redux_services/thunk-functions/change-profile-info";
-import { logoutThunk } from "../redux_services/thunk-functions/logout";
-import { useNavigate } from "react-router-dom";
 import { TSubmitHandler } from "../utils/types";
 import { useAppSelector, useAppDispatch } from "../hooks/dispatch-selectos";
-import UserProfileMenu from "../components/UserProfileMenu/UserProfileMenu"
+import UserProfileMenu from "../components/UserProfileMenu/UserProfileMenu";
 
 function ProfilePage() {
   const dispatch = useAppDispatch();
 
-  const navigate = useNavigate();
-
-  const handleLogout = (e: React.SyntheticEvent) => {
-    dispatch(logoutThunk());
-    navigate("/login");
-  };
-
   const userData = useAppSelector(getUserData);
   const userName: string = userData.name!;
   const userEmail: string = userData.email!;
+
+  const onChangeStatus = useAppSelector(getChangeProfileInfoStatus);
+  const [showStatus, setShowStatus] = useState<boolean>(false);
+  const [messageOpacity, setMessageOpacity] = useState(false);
+
+    //for changing password visibility
+    const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
+
+    const onIconClickPassword = () => {
+      setIsPasswordVisible(!isPasswordVisible);
+    };
+  
+    const inputRefPassword = React.useRef<HTMLInputElement>(null);
+
+
+useEffect(() => {
+  let timer: any;
+  if (showStatus) {
+    setMessageOpacity(true);
+    timer = setTimeout(() => {
+      setMessageOpacity(false); 
+    }, 3000);
+    const hideTimer = setTimeout(() => {
+      setShowStatus(false);
+    }, 3500);
+
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(hideTimer);
+    };
+  }
+}, [showStatus]);
+
 
   const [emailValue, setEmailValue] = React.useState<string>(userEmail);
   const inputEmailRef = React.useRef<HTMLInputElement>(null);
@@ -42,10 +69,7 @@ function ProfilePage() {
   const [isNameEditing, setIsNameEditing] = useState<boolean>(false);
 
   const [passwordValue, setPasswordValue] = React.useState<string>("*****");
-  const inputPasswordRef = React.useRef<HTMLInputElement>(null);
-  const onIconClickPassword = () => {
-    setTimeout(() => inputPasswordRef.current?.focus(), 0);
-  };
+
   const [isPasswordEditing, setIsPasswordEditing] = useState<boolean>(false);
 
   interface IСhangedData {
@@ -66,6 +90,7 @@ function ProfilePage() {
     setIsNameEditing(false);
     setIsPasswordEditing(false);
     dispatch(changeUserInfoThunk(changedData));
+    setShowStatus(true);
   };
 
   const handleCancel = () => {
@@ -102,7 +127,7 @@ function ProfilePage() {
         />
 
         <Input
-          type={"text"}
+          type={"email"}
           placeholder={"Логин"}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setEmailValue(e.target.value);
@@ -120,23 +145,24 @@ function ProfilePage() {
         />
 
         <Input
-          type={"text"}
+          type={isPasswordVisible ? "text" : "password"}
           placeholder={"Пароль"}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setPasswordValue(e.target.value);
             setIsPasswordEditing(true);
           }}
           onIconClick={onIconClickPassword}
-          icon={"EditIcon"}
+          icon={isPasswordVisible ? "HideIcon" : "ShowIcon"}
           value={passwordValue}
           name={"password"}
           error={false}
           errorText={"Ошибка"}
           size={"default"}
           extraClass="mb-6"
+          ref={inputRefPassword}
         />
         {(isEmailEditing || isNameEditing || isPasswordEditing) && (
-          <div className={styles.buttonsWrapper}>
+          <div className="mb-4">
             <Button type="primary" size="medium" htmlType="submit">
               Сохранить
             </Button>
@@ -150,6 +176,12 @@ function ProfilePage() {
             </Button>
           </div>
         )}
+{showStatus && (
+  <p className={`text text_type_main-default mb-8 ${styles.statusMessage} ${messageOpacity ? styles.visible : ''}`}>
+    {onChangeStatus}
+  </p>
+)}
+
       </form>
     </div>
   );

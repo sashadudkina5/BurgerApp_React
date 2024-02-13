@@ -4,7 +4,7 @@
     height: 100%;
     background-color: #000000;
     opacity: 60%;
-    z-index: 199;
+    z-index: 999;
     top: 0;
     bottom: 0;
 }

@@ -5,7 +5,10 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useNavigate, Navigate } from "react-router-dom";
-import { getLoggedInStatus } from "../redux_services/selectors";
+import {
+  getLoggedInStatus,
+  getResetPasswordError,
+} from "../redux_services/selectors";
 import { resetPasswordThunk } from "../redux_services/thunk-functions/reset-password";
 import { TSubmitHandler } from "../utils/types";
 import { useForm } from "../hooks/useForm";
@@ -15,10 +18,16 @@ export const ResetPasswordPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const inputRefPassword = React.useRef<HTMLInputElement>(null);
+  const resetError = useAppSelector(getResetPasswordError);
+
+  //for changing password visibility
+  const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
+
   const onIconClickPassword = () => {
-    setTimeout(() => inputRefPassword.current?.focus(), 0);
+    setIsPasswordVisible(!isPasswordVisible);
   };
+
+  const inputRefPassword = React.useRef<HTMLInputElement>(null);
 
   const inputRefToken = React.useRef<HTMLInputElement>(null);
   const onIconClickToken = () => {
@@ -29,7 +38,7 @@ export const ResetPasswordPage: React.FC = () => {
 
   const isLoggedIn = useAppSelector(getLoggedInStatus);
   if (isLoggedIn) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/react-project-BurgerApp/" replace />;
   }
 
   const handleFormSubmit: TSubmitHandler = async (e) => {
@@ -37,7 +46,7 @@ export const ResetPasswordPage: React.FC = () => {
 
     try {
       await dispatch(resetPasswordThunk(values));
-      navigate("/login");
+      navigate("/react-project-BurgerApp/");
     } catch (error) {
       console.error(error);
     }
@@ -51,12 +60,12 @@ export const ResetPasswordPage: React.FC = () => {
         </h1>
         <form onSubmit={handleFormSubmit}>
           <Input
-            type={"password"}
+            type={isPasswordVisible ? "text" : "password"}
             placeholder={"Введите новый пароль"}
             onChange={handleChange}
-            icon={"ShowIcon"}
-            value={values.password}
-            name={"password"}
+            icon={isPasswordVisible ? "HideIcon" : "ShowIcon"}
+            value={values.newPassword}
+            name={"newPassword"}
             error={false}
             ref={inputRefPassword}
             onIconClick={onIconClickPassword}
@@ -79,7 +88,28 @@ export const ResetPasswordPage: React.FC = () => {
             extraClass="mb-6"
           />
 
-          <Button htmlType="submit" type="primary" size="large">
+          {resetError?.includes("Invalid credentials provided") &&
+            values.token &&
+            values.newPassword && (
+              <p className="text text_type_main-default mb-8">
+                Неверный код из письма
+              </p>
+            )}
+
+          {resetError?.includes("Unexpected token") &&
+            values.token &&
+            values.newPassword && (
+              <p className="text text_type_main-default mb-8">
+                Ошибка сети. Повторите попытку позже
+              </p>
+            )}
+
+          <Button
+            htmlType="submit"
+            type="primary"
+            size="large"
+            disabled={!values.token && !values.newPassword}
+          >
             Сохранить
           </Button>
         </form>
@@ -88,7 +118,7 @@ export const ResetPasswordPage: React.FC = () => {
           <p className="text text_type_main-default text_color_inactive">
             Вспомнили пароль?
           </p>
-          <Link to="/login">
+          <Link to="/login" className={styles.link}>
             <p className="text text_type_main-default">Войти</p>
           </Link>
         </div>

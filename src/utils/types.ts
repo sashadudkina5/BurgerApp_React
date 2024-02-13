@@ -15,7 +15,6 @@ export interface IIngredientCard {
   _id?: string;
   image?: string | undefined;
   uniqID?: string | undefined;
-  index?: number;
   calories?: number;
   proteins?: number;
   fat?: number;
@@ -27,7 +26,6 @@ export interface IIngredientCard {
 export interface IIngredientCardConstructor {
   ingredientObj?: IIngredientCard;
   uniqID?: string | undefined;
-  index?: number;
 }
 
 
@@ -73,7 +71,7 @@ export type TOrder = {
   ingredients: string[];
   _id: string;
   status: string;
-  number: number;
+  number: number | string;
   createdAt: string;
   updatedAt: string;
   name: string

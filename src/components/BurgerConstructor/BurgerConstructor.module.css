@@ -39,3 +39,25 @@
     margin-bottom: 20px;
 }
 
+.targetitem {
+    min-height: 50px;
+    padding: 10px;
+    margin-bottom: 20px;
+    position: static;
+}
+
+.targetitem.hovered {
+    position: relative;
+}
+
+.targetitem.hovered::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    pointer-events: none; 
+    border-radius: 10%;
+  }

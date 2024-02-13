@@ -6,7 +6,7 @@ import {
 import { setCookie } from "../../utils/api";
 import { BASE_URL } from "../../utils/ApiConfig";
 import { checkResponse } from "../../utils/api";
-import {AppDispatch, AppThunk} from "../../utils/types"
+import { AppDispatch, AppThunk } from "../../utils/types";
 
 interface IregistrationData {
   password: string;
@@ -15,7 +15,8 @@ interface IregistrationData {
 }
 
 export const registerThunk =
-  (registrationData: IregistrationData): AppThunk => async (dispatch: AppDispatch) => {
+  (registrationData: IregistrationData): AppThunk =>
+  async (dispatch: AppDispatch) => {
     try {
       dispatch(getRegistrationRequest());
 
@@ -33,15 +34,11 @@ export const registerThunk =
       });
 
       const data = await checkResponse(response);
-      
+
       dispatch(getRegistrationSuccess(data.user));
       setCookie("accessToken", data.accessToken);
       setCookie("refreshToken", data.refreshToken);
     } catch (error) {
-      dispatch(
-        getRegistrationFailed(
-          "An error occurred while processing your request."
-        )
-      );
+      dispatch(getRegistrationFailed(error));
     }
   };

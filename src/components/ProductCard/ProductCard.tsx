@@ -10,7 +10,7 @@ import React from "react";
 import ProductItem from "../ProductItem/ProductItem";
 import { Link, useLocation } from "react-router-dom";
 import {IIngredientCard, IIngredientCardConstructor} from "../../utils/types";
-import { useAppSelector, useAppDispatch } from "../../hooks/dispatch-selectos"
+import { useAppSelector, useAppDispatch } from "../../hooks/dispatch-selectos";
 
 
 interface IIngredients {
@@ -72,6 +72,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, IIngredients>(
                 key={ingredient._id}
                 className={productCardStyles.productItem}
                 onClick={() => openIngredientDetailModal(ingredient)}
+                id={ingredient._id}
               >
                 <Counter
                   count={ingredientsCounters[ingredient._id!] || 0}

@@ -20,6 +20,7 @@ const SortingIngredients: React.FC<ISortingIngredientsProps> = ({
   index,
   item,
 }) => {
+
   const dispatch = useAppDispatch()
   const onDelete = (ingredientId: string) => {
     dispatch(deleteIngredient(ingredientId));
@@ -27,7 +28,7 @@ const SortingIngredients: React.FC<ISortingIngredientsProps> = ({
 
   const ref = useRef<HTMLDivElement>(null);
   const [{ handlerId }, drop] = useDrop({
-    accept: ItemTypes.BOX,
+    accept: ItemTypes.SORTED,
     collect(monitor) {
       return {
         handlerId: monitor.getHandlerId(),
@@ -68,8 +69,10 @@ const SortingIngredients: React.FC<ISortingIngredientsProps> = ({
       item.index = hoverIndex;
     },
   });
+
+  
   const [{ isDragging }, drag] = useDrag({
-    type: ItemTypes.BOX,
+    type: ItemTypes.SORTED,
     item: () => ({
       index,
     }),
@@ -77,7 +80,11 @@ const SortingIngredients: React.FC<ISortingIngredientsProps> = ({
       isDragging: monitor.isDragging(),
     }),
   });
+
   drag(drop(ref));
+
+
+
   return (
     <div ref={ref} data-handler-id={handlerId}>
       <div className={sortingIngredientsStyles.item} key={item.uniqID}>

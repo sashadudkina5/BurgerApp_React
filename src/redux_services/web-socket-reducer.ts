@@ -23,7 +23,7 @@ type TWSState = {
   error: string;
 };
 
-const initialState: TWSState = {
+export const initialState: TWSState = {
   wsConnected: false,
   error: "",
   wsConnectingLoading: false,
@@ -48,7 +48,6 @@ export const wsReducer = createReducer(initialState, (builder) => {
     .addCase(disconnected, (state) => {
       state.wsConnected = false;
       state.wsConnectingLoading = false;
-      console.log("done")
     })
     .addCase(connectError, (state, action) => {
       state.wsConnected = false;
@@ -57,6 +56,7 @@ export const wsReducer = createReducer(initialState, (builder) => {
     })
     .addCase(getMessage, (state, action) => {
       const { success, orders, total, totalToday } = action.payload;
+      state.error = "";
 
       state.getData = {
         success,
@@ -69,3 +69,5 @@ export const wsReducer = createReducer(initialState, (builder) => {
       state.wsConnectingLoading = false;
     });
 });
+
+export default wsReducer

@@ -1,6 +1,6 @@
 import ingredientDetailStyles from "./IngredientDetail.module.css";
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { getListOfIngredientsArray } from "../../redux_services/selectors";
 import { reopenIngredientDetails } from "../IngredientDetail/actions";
 import {IIngredients, IIngredientCard} from "../../utils/types";
@@ -14,13 +14,17 @@ function IngredientDetail({ selectedIngredient }: IIngredientDetailProps) {
   const dispatch = useAppDispatch();
   const routeParams = useParams();
   const data: IIngredients = useAppSelector(getListOfIngredientsArray);
+  const location = useLocation();
 
   React.useEffect(() => {
-    if (routeParams && data) {
-      const filteredArray = data.filter((obj) => obj._id === routeParams.id);
-      dispatch(reopenIngredientDetails(filteredArray[0]));
+    if (location.pathname.startsWith('/ingredients/') && routeParams.id && data) {
+      const filteredArray = data.filter(obj => obj._id === routeParams.id);
+      if (filteredArray.length > 0) {
+        dispatch(reopenIngredientDetails(filteredArray[0]));
+      }
     }
-  }, [dispatch, routeParams, data]);
+  }, [location, routeParams.id, data, dispatch]);
+
 
   if (!selectedIngredient) {
     return null;

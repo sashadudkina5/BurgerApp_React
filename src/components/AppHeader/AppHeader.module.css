@@ -31,6 +31,6 @@
     display: block;
 }
 
-.activeLink {
-    color: white !important;
+.link_active, .link_active .linkText {
+    color: white;
 }

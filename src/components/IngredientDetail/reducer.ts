@@ -15,12 +15,12 @@ import { IIngredientCard} from "../../utils/types";
     isIngredientDetailModalOpen: boolean;
   }
 
-const initialState: TIngredietnDetailsState = {
+export const initialState: TIngredietnDetailsState = {
     ingredientDetails: null,
     isIngredientDetailModalOpen: false
   };
   
-  export const ingredientDetailsReducer = (state = initialState, action: TIngredientDetailsActions):TIngredietnDetailsState => {
+export const ingredientDetailsReducer = (state = initialState, action: TIngredientDetailsActions):TIngredietnDetailsState => {
     switch (action.type) {
   
       case SHOW_INGREDIENT_DETAILS: {
@@ -49,3 +49,4 @@ const initialState: TIngredietnDetailsState = {
     }
   };
   
+  export default ingredientDetailsReducer;

@@ -35,7 +35,7 @@ function DoneOrderDetails({ matchingOrder }: DoneOrderDetailsProps) {
   React.useEffect(() => {
     if (!matchingOrder && !WSLoading) {
       const filteredArray = readyOrders.filter(
-        (obj) => obj._id === routeParams.id
+        (obj) => obj.number === routeParams.id
       );
 
       if (filteredArray.length > 0) {

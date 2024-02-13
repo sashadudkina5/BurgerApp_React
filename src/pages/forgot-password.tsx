@@ -7,7 +7,10 @@ import {
 import { Link } from "react-router-dom";
 import { forgotPasswordThunk } from "../redux_services/thunk-functions/forgot-password";
 import { Navigate } from "react-router";
-import { getLoggedInStatus } from "../redux_services/selectors";
+import {
+  getLoggedInStatus,
+  getForgotPasswordError,
+} from "../redux_services/selectors";
 import { useNavigate } from "react-router-dom";
 import { TSubmitHandler } from "../utils/types";
 import { useAppSelector, useAppDispatch } from "../hooks/dispatch-selectos";
@@ -15,6 +18,7 @@ import { useAppSelector, useAppDispatch } from "../hooks/dispatch-selectos";
 function ForgotPasswordPage() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const error = useAppSelector(getForgotPasswordError);
 
   const [value, setValue] = React.useState("");
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -54,11 +58,11 @@ function ForgotPasswordPage() {
         </h1>
         <form onSubmit={handleFormSubmit}>
           <Input
-            type={"text"}
+            type={"email"}
             placeholder={"Укажите e-mail"}
             onChange={(e) => setValue(e.target.value)}
             value={value}
-            name={"name"}
+            name={"email"}
             error={false}
             ref={inputRef}
             onIconClick={onIconClick}
@@ -67,7 +71,18 @@ function ForgotPasswordPage() {
             extraClass="mb-6"
           />
 
-          <Button htmlType="submit" type="primary" size="large">
+          {error && value && (
+            <p className="text text_type_main-default mb-8">
+              Проблемы с сетью. Повторите попытку позже
+            </p>
+          )}
+
+          <Button
+            htmlType="submit"
+            type="primary"
+            size="large"
+            disabled={!value}
+          >
             Восстановить
           </Button>
         </form>
@@ -76,7 +91,7 @@ function ForgotPasswordPage() {
           <p className="text text_type_main-default text_color_inactive">
             Вспомнили пароль?
           </p>
-          <Link to="/login">
+          <Link to="/login" className={styles.link}>
             <p className="text text_type_main-default">Войти</p>
           </Link>
         </div>

@@ -33,11 +33,10 @@ export const loginThunk = (loginData: ILoginData): AppThunk => async (dispatch: 
     const data = await checkResponse(response);
 
     dispatch(getLoginSuccess(data.user));
-    setCookie("accessToken", data.accessToken);
+    setCookie("accessToken", data.accessToken); //sets with Bearer
     setCookie("refreshToken", data.refreshToken);
-  } catch (error) {
-    dispatch(
-      getLoginFailed("An error occurred while processing your request.")
-    );
+  } catch (error: any) {
+    
+    dispatch(getLoginFailed(error));
   }
 };
