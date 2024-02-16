@@ -46,7 +46,7 @@ function LoginPage() {
   };
 
   if (isLoggedIn) {
-    return <Navigate to="/react-project-BurgerApp/" replace />;
+    return <Navigate to="/" replace />;
   }
 
   return (
@@ -106,7 +106,7 @@ function LoginPage() {
           </Button>
         </form>
 
-        {isLoggedIn && navigate("/react-project-BurgerApp/")}
+        {isLoggedIn && navigate("/")}
 
         <div className={`mt-20 ${styles.wrapper}`}>
           <p className="text text_type_main-default text_color_inactive">

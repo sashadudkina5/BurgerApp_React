@@ -38,7 +38,7 @@ export const ResetPasswordPage: React.FC = () => {
 
   const isLoggedIn = useAppSelector(getLoggedInStatus);
   if (isLoggedIn) {
-    return <Navigate to="/react-project-BurgerApp/" replace />;
+    return <Navigate to="/" replace />;
   }
 
   const handleFormSubmit: TSubmitHandler = async (e) => {
@@ -46,7 +46,7 @@ export const ResetPasswordPage: React.FC = () => {
 
     try {
       await dispatch(resetPasswordThunk(values));
-      navigate("/react-project-BurgerApp/");
+      navigate("/");
     } catch (error) {
       console.error(error);
     }

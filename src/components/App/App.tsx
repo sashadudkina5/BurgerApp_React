@@ -61,7 +61,7 @@ function App() {
 
   return (
     <div className={appStyles.App}>
-      <Router>
+      
       <DndProvider backend={HTML5Backend}>
         <AppHeader />
         <Routes location={state?.backgroundLocation || location}>
@@ -138,9 +138,10 @@ function App() {
               }
             />
           </Routes>
+          
         )}
       </DndProvider>
-      </Router>
+      
     </div>
   );
 }

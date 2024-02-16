@@ -57,7 +57,7 @@ function RegisterPage() {
 
   const isLoggedIn = useAppSelector(getLoggedInStatus);
   if (isLoggedIn) {
-    return <Navigate to="/react-project-BurgerApp/" replace />;
+    return <Navigate to="/" replace />;
   }
 
   const handleFormSubmit: TSubmitHandler = (e) => {
@@ -149,7 +149,7 @@ function RegisterPage() {
             Зарегистрироваться
           </Button>
 
-          {isRegistered && navigate("/react-project-BurgerApp/")}
+          {isRegistered && navigate("/")}
         </form>
 
         <div className={`mt-20 ${styles.wrapper}`}>
