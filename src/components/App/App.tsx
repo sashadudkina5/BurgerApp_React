@@ -64,7 +64,6 @@ function App() {
       
       <DndProvider backend={HTML5Backend}>
         <AppHeader />
-        <Router>
         <Routes location={state?.backgroundLocation || location}>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
@@ -141,7 +140,6 @@ function App() {
           </Routes>
           
         )}
-        </Router>
       </DndProvider>
       
     </div>
