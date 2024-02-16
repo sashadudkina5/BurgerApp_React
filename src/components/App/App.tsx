@@ -9,7 +9,7 @@ import { getIngredientDetails } from "../../redux_services/selectors";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
 import { getSelectedOrder } from "../../redux_services/selectors";
-import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import LoginPage from "../../pages/login";
 import RegisterPage from "../../pages/register";
 import ResetPasswordPage from "../../pages/reset-password";
@@ -26,6 +26,8 @@ import OrderDetailPageOpened from "../../pages/feed-order-details-id";
 import { hideDoneOrderDetails } from "../DoneOrderDetails/actions";
 import UserOrdersPage from "../../pages/user-orders";
 import MainPage from "../../pages/main-page";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
+
 
 function App() {
   const location = useLocation();
@@ -59,6 +61,7 @@ function App() {
 
   return (
     <div className={appStyles.App}>
+      <Router>
       <DndProvider backend={HTML5Backend}>
         <AppHeader />
         <Routes location={state?.backgroundLocation || location}>
@@ -100,7 +103,7 @@ function App() {
               </ProtectedRouteElement>
             }
           />
-          <Route path="/react-project-BurgerApp/" element={<MainPage />} />
+          <Route path="/" element={<MainPage />} />
         </Routes>
 
         {state?.backgroundLocation && (
@@ -137,6 +140,7 @@ function App() {
           </Routes>
         )}
       </DndProvider>
+      </Router>
     </div>
   );
 }
