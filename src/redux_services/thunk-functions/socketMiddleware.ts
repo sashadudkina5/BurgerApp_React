@@ -49,7 +49,6 @@ export const socketMiddleware = (
       }
       if (socket) {
         socket.onopen = () => {
-          console.log("WebSocket connection successfully established.");
           connectionState = { isConnected: true, isConnecting: false, hasError: false };
           dispatch(connected());
         };
@@ -66,7 +65,6 @@ export const socketMiddleware = (
         };
 
         socket.onclose = (event) => {
-          console.log("WebSocket connection closed:", event);
           if (event.code !== 1000) {
             connectionState = { isConnected: false, isConnecting: false, hasError: true };
             dispatch(connectError(`Closed with code: ${event.code}`));
