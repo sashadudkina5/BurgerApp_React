@@ -23,7 +23,6 @@ function DoneOrderDetails({ matchingOrder }: DoneOrderDetailsProps) {
 
   const routeParams = useParams();
   const readyOrders = useAppSelector(getAllCreatedOrders);
-  console.log(readyOrders)
   const dispatch = useAppDispatch();
 
   const WSLoading = useAppSelector(isWSLoading);
@@ -39,7 +38,6 @@ function DoneOrderDetails({ matchingOrder }: DoneOrderDetailsProps) {
       const filteredArray = readyOrders.filter(
         (obj) => obj.number === orderNumber
       );
-      console.log(filteredArray)
 
       if (filteredArray.length > 0) {
         dispatch(reopenDoneOrderDetails(filteredArray[0]));
