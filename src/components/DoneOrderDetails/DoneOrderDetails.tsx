@@ -23,6 +23,7 @@ function DoneOrderDetails({ matchingOrder }: DoneOrderDetailsProps) {
 
   const routeParams = useParams();
   const readyOrders = useAppSelector(getAllCreatedOrders);
+  console.log(readyOrders)
   const dispatch = useAppDispatch();
 
   const WSLoading = useAppSelector(isWSLoading);
@@ -34,9 +35,11 @@ function DoneOrderDetails({ matchingOrder }: DoneOrderDetailsProps) {
 
   React.useEffect(() => {
     if (!matchingOrder && !WSLoading) {
+      const orderNumber = Number(routeParams.id); //as "id" in URL is a string
       const filteredArray = readyOrders.filter(
-        (obj) => obj.number === routeParams.id
+        (obj) => obj.number === orderNumber
       );
+      console.log(filteredArray)
 
       if (filteredArray.length > 0) {
         dispatch(reopenDoneOrderDetails(filteredArray[0]));
