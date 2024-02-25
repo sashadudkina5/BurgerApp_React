@@ -12,10 +12,17 @@
     flex-direction: column;
     row-gap: 8px;
     padding: 8px 6px;
+    align-items: center;
 }
 
 .image {
     width: 220px;
     display: block;
     margin: 0 auto;
+}
+
+.price_wrapper {
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
 }

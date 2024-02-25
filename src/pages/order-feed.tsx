@@ -46,7 +46,7 @@ const orderNumbersInProcess = lastTenOrdersInProcess.map(order => order.number);
   return (
     <section className={styles.feed_section}>
       <div className={styles.feed_section_wrapper_orders}>
-        <h1 className="text text_type_main-large mb-5">Лента заказов</h1>
+        <h1 className="text text_type_main-large mb-10">Лента заказов</h1>
         <ul className={styles.feed_section_list}>
         <OrderFeedItem />
         </ul>

@@ -111,8 +111,10 @@ function BurgerConstructor({ onClick }: IBurgerConstructorProps) {
 </div>
       <section className={burgerConstructorStyles.finalPrice}>
         <div className={burgerConstructorStyles.finalPriceWrapper}>
+          <div className={burgerConstructorStyles.currency_wrapper}>
           <p className="text text_type_main-large">{price}</p>
           <CurrencyIcon type="primary" />
+          </div>
           <Button
             extraClass="order_button"
             htmlType="button"

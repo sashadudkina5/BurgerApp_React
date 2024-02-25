@@ -84,12 +84,12 @@ const ProductCard = React.forwardRef<HTMLDivElement, IIngredients>(
                   alt={ingredient.name}
                   className={productCardStyles.image}
                 />
-                <span>
-                  <CurrencyIcon type="secondary" />
+                <div className={productCardStyles.price_wrapper}>
                   <span className="text text_type_main-medium">
                     {ingredient.price}
                   </span>
-                </span>
+                  <CurrencyIcon type="secondary" />
+                </div>
                 <p className="text text_type_main-default">{ingredient.name}</p>
               </div>
             </ProductItem>

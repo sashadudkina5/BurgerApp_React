@@ -42,25 +42,30 @@ function AppHeader() {
           </p>
         </NavLink>
       </div>
-      <NavLink to="/" end>
-        <Logo />
-      </NavLink>
 
-      <NavLink
-        to={"/profile"}
-        className={({ isActive }) =>
-          `${appHeaderStyles.link} ${
-            isActive ? appHeaderStyles.link_active : ""
-          }`
-        }
-      >
-        <ProfileIcon type="secondary" />
-        <p
-          className={`text text_type_main-default text_color_inactive ${appHeaderStyles.linkText}`}
+      <div className={appHeaderStyles.logoWrapper}>
+        <NavLink to="/" end>
+          <Logo />
+        </NavLink>
+      </div>
+
+      <div className={appHeaderStyles.rightNavBar}>
+        <NavLink
+          to={"/profile"}
+          className={({ isActive }) =>
+            `${appHeaderStyles.link} ${
+              isActive ? appHeaderStyles.link_active : ""
+            }`
+          }
         >
-          Личный кабинет
-        </p>
-      </NavLink>
+          <ProfileIcon type="secondary" />
+          <p
+            className={`text text_type_main-default text_color_inactive ${appHeaderStyles.linkText}`}
+          >
+            Личный кабинет
+          </p>
+        </NavLink>
+      </div>
     </header>
   );
 }

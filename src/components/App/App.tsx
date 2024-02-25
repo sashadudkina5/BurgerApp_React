@@ -27,6 +27,7 @@ import { hideDoneOrderDetails } from "../DoneOrderDetails/actions";
 import UserOrdersPage from "../../pages/user-orders";
 import MainPage from "../../pages/main-page";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import { NotFound404 } from "../../pages/not-found404"
 
 
 function App() {
@@ -70,6 +71,7 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/feed" element={<OrderFeed />} />
+          <Route path="*" element={<NotFound404/>}/>
           <Route
             path="/profile/orders"
             element={
