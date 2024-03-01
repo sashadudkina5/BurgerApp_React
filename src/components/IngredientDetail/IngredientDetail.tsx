@@ -10,12 +10,29 @@ interface IIngredientDetailProps {
   selectedIngredient: IIngredientCard | null;
 }
 
+/**
+ * Displays detailed information about a specific ingredient, including buns.
+ * Used within a modal and within a separate window page to show selected ingredient's calories, proteins, fats,
+ * and carbohydrates.
+ * It retrieves the selected ingredient either from the passed `selectedIngredient` prop
+ * or by matching the ingredient's ID from the URL parameters against the full list of ingredients
+ * fetched from the Redux store.
+ * 
+ * @component
+ * @param {IIngredientCard | null} props.selectedIngredient - The ingredient to display, if selected.
+ */
+
 function IngredientDetail({ selectedIngredient }: IIngredientDetailProps) {
   const dispatch = useAppDispatch();
   const routeParams = useParams();
+
+  /**
+   * Array of all available ingredients. Stored in redux 
+ */
   const data: IIngredients = useAppSelector(getListOfIngredientsArray);
   const location = useLocation();
 
+  // Checks URL parameter and fetches matching ingredient to redux store.
   React.useEffect(() => {
     if (location.pathname.startsWith('/ingredients/') && routeParams.id && data) {
       const filteredArray = data.filter(obj => obj._id === routeParams.id);

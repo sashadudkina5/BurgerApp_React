@@ -5,18 +5,43 @@ interface IViewProps {
   inViewBuns: boolean;
   inViewSauces: boolean;
   inViewMain: boolean;
-  onBunClick: () => void; 
-  onSauceClick: () => void; 
-  onMainClick: () => void; 
+  onBunClick: () => void;
+  onSauceClick: () => void;
+  onMainClick: () => void;
 }
 
+/**
+ * Provides navigation tabs in the burger ingredients section.
+ * This component uses the `Tab` component from the `@ya.praktikum/react-developer-burger-ui-components` library to display tabs for different categories of ingredients: buns, sauces, and mains.
+ * It tracks which tab is currently active based on the section of the page that is in view.
+ * 
+ * @component
+ * @param {IViewProps} props The properties passed to the Tabs component.
+ * @param {boolean} props.inViewBuns Indicates if the buns section is currently in view.
+ * @param {boolean} props.inViewSauces Indicates if the sauces section is currently in view.
+ * @param {boolean} props.inViewMain Indicates if the main ingredients section is currently in view.
+ * @param {Function} props.onBunClick The callback function to execute when the buns tab is clicked. Scrolls to the buns section.
+ * @param {Function} props.onSauceClick The callback function to execute when the sauces tab is clicked. Scrolls to the sauces section.
+ * @param {Function} props.onMainClick The callback function to execute when the main ingredients tab is clicked. Scrolls to the main ingredients section.
+ * 
+ * @example
+ *  <Tabs
+      inViewBuns={inViewBuns}
+      inViewSauces={inViewSauces}
+      inViewMain={inViewMain}
+      onBunClick={scrollToBuns}
+      onSauceClick={scrollToSauces}
+      onMainClick={scrollToMain}
+    />
+ * 
+ */
 const Tabs: React.FC<IViewProps> = ({
   inViewBuns,
   inViewSauces,
   inViewMain,
   onBunClick,
   onSauceClick,
-  onMainClick
+  onMainClick,
 }) => {
   const [current, setCurrent] = useState("bun");
 

@@ -5,12 +5,32 @@ import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { getLogOutStatus } from "../../redux_services/selectors";
 
+/**
+ * Provides navigation and logout functionality for user profiles. 
+ * Renders a list of navigation links allowing the user to go to their profile, view their order history, 
+ * and log out.
+ * 
+ * @component
+ * 
+ * @example
+ * return <UserProfileMenu />;
+ */
 function UserProfileMenu() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  /**
+   * response of logout request. stores in redux
+   */
   const logOutStatus = useAppSelector(getLogOutStatus);
 
+  /**
+   * 
+   * @param e - default click event
+   * logs out the user.
+   * deletes user's data from redux store.
+   * navigates the user to "login" path
+   */
   const handleLogout = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 

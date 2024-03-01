@@ -16,6 +16,18 @@ The application is deployed and can be accessed at [BurgerApp Live Site](https:/
 - **Cypress**
 - **WebSocket**
 
+## Future Plans
+
+In addition to the existing features, here are some future plans for enhancing the BurgerApp:
+
+- **Responsive Design for Mobile Screens**
+
+- **Enhanced Form Input Styles and Functionalities**
+
+- **Documentation Comments with JSDoc for functions, parameters and so on**
+
+
+
 ## Available Scripts
 
 In the project directory, you can run:

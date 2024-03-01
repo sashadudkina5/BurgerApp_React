@@ -5,6 +5,18 @@ import { ListIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink } from "react-router-dom";
 
+/**
+ * The header component of the application, includes navigation links.
+ * Utilizes the `NavLink` component from `react-router-dom` to navigate
+ * between the app's different pages such as the home page, order feed, and profile.
+ * 
+ * @component
+ * @example
+ * return (
+ *   <AppHeader />
+ * )
+ */
+
 function AppHeader() {
   return (
     <header className={appHeaderStyles.header}>

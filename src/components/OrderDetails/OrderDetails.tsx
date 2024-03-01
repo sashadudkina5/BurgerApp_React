@@ -6,8 +6,23 @@ import {
 } from "../../redux_services/selectors";
 import { useAppSelector } from "../../hooks/dispatch-selectos";
 
+/**
+ * Displays the order confirmation and order number.
+ * Handles the loading state by displaying a loading message while the order number is being fetched and provides an error message in case
+ * the order creation fails.
+ * 
+ * @component
+ */
 function OrderDetails() {
+
+  /**
+   * Order number. Fetched from server, stored in redux
+   */
   const orderNumber = useAppSelector(getOrderNumber);
+
+  /**
+   * True if the response is loading
+   */
   const isLoading = useAppSelector(isOrderRequestLoading);
 
   return (
