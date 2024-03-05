@@ -7,6 +7,13 @@ interface IEmailInfo {
   email: string;
 }
 
+/**
+ * A thunk action for initiating a password reset process. 
+ * It sends a POST request with the user's email.
+ * @param {IEmailInfo} emailData - Object containing the user's email address.
+ * @returns {ForgotPasswordThunk} A thunk function that executes the password 
+ * reset operation and dispatches actions based on the result.
+ */
 export const forgotPasswordThunk =
   (emailData: IEmailInfo): ForgotPasswordThunk => async (dispatch: AppDispatch) => {
     try {

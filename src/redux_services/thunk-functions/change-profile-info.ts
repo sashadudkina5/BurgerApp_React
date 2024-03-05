@@ -9,6 +9,18 @@ interface IСhangedData {
   name: string;
 }
 
+/**
+ * Thunk action for changing user profile information.
+ * It sends a PATCH request to the server with the changed data.
+ * If the request is successful, it updates the user's login and profile information in the Redux store.
+ * In case of an error, it dispatches an action to indicate the failure.
+ *
+ * @param {IСhangedData} changedData - The changed user data including email, password, and name.
+ * @returns {ChangeProfileThunk} A thunk function that dispatches actions based on the outcome of the fetch request.
+ * 
+ * @example
+ * dispatch(changeUserInfoThunk({ email: "newemail@example.com", password: "newpassword", name: "New Name" }));
+ */
 export const changeUserInfoThunk  =
   (changedData: IСhangedData):ChangeProfileThunk => async (dispatch: AppDispatch) => {
     try {

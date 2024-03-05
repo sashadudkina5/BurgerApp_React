@@ -15,13 +15,33 @@ import { useNavigate } from "react-router-dom";
 import { TSubmitHandler } from "../utils/types";
 import { useAppSelector, useAppDispatch } from "../hooks/dispatch-selectos";
 
+/**
+ * Page to initiate a password recovery process.
+ * Users are required to enter their email address to receive password reset instructions.
+ *
+ * This component checks if the user is already logged in and redirects to the homepage if true.
+ * It uses the `forgotPasswordThunk` function to fetch request to the server.
+ * Navigates to the `/reset-password` path after form submission
+ *
+ * @component
+ * @example
+ * return <ForgotPasswordPage />;
+ */
 function ForgotPasswordPage() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  /**
+   * Request response. stored in redux
+   */
   const error = useAppSelector(getForgotPasswordError);
 
   const [value, setValue] = React.useState("");
   const inputRef = React.useRef<HTMLInputElement>(null);
+
+    /**
+   * Helper function to focus the email input field when the icon is clicked.
+   */
   const onIconClick = () => {
     setTimeout(() => inputRef.current?.focus(), 0);
   };
@@ -34,11 +54,22 @@ function ForgotPasswordPage() {
     email: value,
   };
 
+  /**
+   * checks if the user is logged in.
+   * If true, redirects to the homepage 
+   */
   const isLoggedIn = useAppSelector(getLoggedInStatus);
   if (isLoggedIn) {
     return <Navigate to="/" replace />;
   }
 
+    /**
+   * Event handler for form submission.
+   * Dispatches the forgotPasswordThunk action with the email address.
+   *  * Navigates to the `/reset-password` path after form submission
+   *
+   * @param {React.FormEvent<HTMLFormElement>} e - The form event.
+   */
   const handleFormSubmit: TSubmitHandler = async (e) => {
     e.preventDefault();
 

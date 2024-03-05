@@ -19,17 +19,42 @@ import { cleanOrderID } from "../components/OrderDetails/actions";
 import { showIngredientDetails } from "../components/IngredientDetail/actions";
 import appStyles from "./styles/main-page.module.css";
 
+/**
+ * The primary layout for the burger building application.
+ * Contains BurgerIngredients and BurgerConstructor components.
+ * 
+ * @component
+ * @example
+ * return <MainPage />;
+ */
 function MainPage() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  // Local state to manage the visibility of the OrderDetails modal
   const [isOrderDetailsModalOpen, setIsOrderDetailsModalOpen] = useState(false);
+
+  /**
+   * All ingredients already added to constructor. Excluding buns
+   */
   const data: IAllIngredientsConstructor = useAppSelector(
     getConstructorIngredients
   );
+
+  /**
+   * Only buns added to constructor
+   */
   const bunData = useAppSelector(getBunData);
+
+  /**
+   * Checks if the user is logged in 
+   */
   const isAuth = useAppSelector(getLoggedInStatus);
 
+  /**
+   * Function to construct an array of ingredient IDs for the order
+   * @returns {{ingredients: string[]}} An object with a property `ingredients` that is an array of string IDs.
+   */
   const getIngredientIDs = () => {
     const innerIngredientIDs =
       data.map((item) => item.ingredientObj!._id) || [];
@@ -42,6 +67,11 @@ function MainPage() {
     };
   };
 
+  /**
+   * Function to handle the opening of the OrderDetails modal. 
+   * It dispatches an action to create an order if the user is authenticated and ingredients are selected. 
+   * Otherwise, it navigates to the login page or does nothing.
+   */
   const openOrderDetailsModal = () => {
     if (data && data.length > 0 && bunData !== null && isAuth) {
       setIsOrderDetailsModalOpen(true);
@@ -55,6 +85,10 @@ function MainPage() {
 
   const errorSendingNewOrder = useAppSelector(isSeindingOrderError);
 
+  /**
+   * Function to close the modal with order submission status.
+   * Cleans constructor area after order submission.
+   */
   const closeOrderDetailsModal = () => {
     if (!errorSendingNewOrder) {
         setIsOrderDetailsModalOpen(false);
@@ -67,10 +101,17 @@ function MainPage() {
     }
   };
 
+  /**
+   * Opens modal with ingredient details
+   * @param ingredient - the ingredient user clicked on
+   */
   const openIngredientDetailModal = (ingredient: IIngredientCard) => {
     dispatch(showIngredientDetails(ingredient));
   };
 
+  /**
+   * All ingredients in the app
+   */
   const ingredientsState = useAppSelector(getListOfIngredients);
   const { ingredientsData, isLoading, error } = ingredientsState;
 

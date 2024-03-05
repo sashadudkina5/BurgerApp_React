@@ -14,6 +14,13 @@ import { TSubmitHandler } from "../utils/types";
 import { useAppSelector, useAppDispatch } from "../hooks/dispatch-selectos";
 import UserProfileMenu from "../components/UserProfileMenu/UserProfileMenu";
 
+/**
+ * Displays the current user's profile data and allows editing each field with immediate feedback.
+ *
+ * @component
+ * @example
+ * return <ProfilePage />
+ */
 function ProfilePage() {
   const dispatch = useAppDispatch();
 
@@ -25,52 +32,51 @@ function ProfilePage() {
   const [showStatus, setShowStatus] = useState<boolean>(false);
   const [messageOpacity, setMessageOpacity] = useState(false);
 
-    //for changing password visibility
-    const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
+  //for changing password visibility
+  const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
 
-    const onIconClickPassword = () => {
-      setIsPasswordVisible(!isPasswordVisible);
-    };
-  
-    const inputRefPassword = React.useRef<HTMLInputElement>(null);
+  // Display status message on change
+  useEffect(() => {
+    let timer: any;
+    if (showStatus) {
+      setMessageOpacity(true);
+      timer = setTimeout(() => {
+        setMessageOpacity(false);
+      }, 3000);
+      const hideTimer = setTimeout(() => {
+        setShowStatus(false);
+      }, 3500);
 
+      return () => {
+        clearTimeout(timer);
+        clearTimeout(hideTimer);
+      };
+    }
+  }, [showStatus]);
 
-useEffect(() => {
-  let timer: any;
-  if (showStatus) {
-    setMessageOpacity(true);
-    timer = setTimeout(() => {
-      setMessageOpacity(false); 
-    }, 3000);
-    const hideTimer = setTimeout(() => {
-      setShowStatus(false);
-    }, 3500);
-
-    return () => {
-      clearTimeout(timer);
-      clearTimeout(hideTimer);
-    };
-  }
-}, [showStatus]);
-
-
+  // States for form inputs and editing status
   const [emailValue, setEmailValue] = React.useState<string>(userEmail);
+  const [isEmailEditing, setIsEmailEditing] = useState<boolean>(false);
+  const [nameValue, setNameValue] = React.useState<string>(userName);
+  const [isNameEditing, setIsNameEditing] = useState<boolean>(false);
+  const [passwordValue, setPasswordValue] = React.useState<string>("*****");
+  const [isPasswordEditing, setIsPasswordEditing] = useState<boolean>(false);
+
+  // Refs for input focus
   const inputEmailRef = React.useRef<HTMLInputElement>(null);
+  const inputNameRef = React.useRef<HTMLInputElement>(null);
+  const inputRefPassword = React.useRef<HTMLInputElement>(null);
+
+  // Handle input focus and toggle password visibility
   const onIconClickEmail = () => {
     setTimeout(() => inputEmailRef.current?.focus(), 0);
   };
-  const [isEmailEditing, setIsEmailEditing] = useState<boolean>(false);
-
-  const [nameValue, setNameValue] = React.useState<string>(userName);
-  const inputNameRef = React.useRef<HTMLInputElement>(null);
   const onIconClickName = () => {
     setTimeout(() => inputNameRef.current?.focus(), 0);
   };
-  const [isNameEditing, setIsNameEditing] = useState<boolean>(false);
-
-  const [passwordValue, setPasswordValue] = React.useState<string>("*****");
-
-  const [isPasswordEditing, setIsPasswordEditing] = useState<boolean>(false);
+  const onIconClickPassword = () => {
+    setIsPasswordVisible(!isPasswordVisible);
+  };
 
   interface IСhangedData {
     email: string;
@@ -84,6 +90,10 @@ useEffect(() => {
     name: nameValue,
   };
 
+  /**
+   * Function that submits changes in inputs
+   * @param e - default event
+   */
   const handleFormSubmit: TSubmitHandler = (e) => {
     e.preventDefault();
     setIsEmailEditing(false);
@@ -93,6 +103,9 @@ useEffect(() => {
     setShowStatus(true);
   };
 
+  /**
+   * Function that sets inputs to their previous values
+   */
   const handleCancel = () => {
     setEmailValue(userEmail);
     setNameValue(userName);
@@ -176,12 +189,15 @@ useEffect(() => {
             </Button>
           </div>
         )}
-{showStatus && (
-  <p className={`text text_type_main-default mb-8 ${styles.statusMessage} ${messageOpacity ? styles.visible : ''}`}>
-    {onChangeStatus}
-  </p>
-)}
-
+        {showStatus && (
+          <p
+            className={`text text_type_main-default mb-8 ${
+              styles.statusMessage
+            } ${messageOpacity ? styles.visible : ""}`}
+          >
+            {onChangeStatus}
+          </p>
+        )}
       </form>
     </div>
   );

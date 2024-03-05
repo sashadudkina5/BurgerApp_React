@@ -16,9 +16,26 @@ interface OrderDetailPageOpenedProps {
   path: string;
 }
 
+/**
+ * Page that shows order's details in a separate browser window.
+ * Upon component mount, it connects to a WebSocket URL to receive order details and fetches order details based on the order ID obtained from the URL parameters.
+ * Before unmounting, it disconnects from the WebSocket to clean up resources.
+ * 
+ * @component
+ * @param {Object} props - Component props.
+ * @param {string} props.path - The URL path, used to distinguish between different all orders and specific user's orders.
+ * 
+ * @example
+ * <Route path="/order/:id" element={<OrderDetailPageOpened path="/orders/:id" />} />
+ */
+
 function OrderDetailPageOpened({ path }: OrderDetailPageOpenedProps) {
   const dispatch = useAppDispatch();
 
+  /**
+   *  * Upon component mount, it connects to a WebSocket URL to receive order details and fetches order details based on the order ID obtained from the URL parameters.
+ * Before unmounting, it disconnects from the WebSocket to clean up resources.
+   */
   useEffect(() => {
     const connect = () => {
       dispatch(OrdersConnect(WS_URL));
@@ -32,6 +49,9 @@ function OrderDetailPageOpened({ path }: OrderDetailPageOpenedProps) {
 
   const { id } = useParams();
 
+  /**
+   * Order's details fetched from redux store
+   */
   const matchingOrder = useAppSelector(getSelectedOrder);
 
   useEffect(() => {

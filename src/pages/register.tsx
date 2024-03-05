@@ -18,10 +18,19 @@ import { TSubmitHandler } from "../utils/types";
 import { useForm } from "../hooks/useForm";
 import { useAppSelector, useAppDispatch } from "../hooks/dispatch-selectos";
 
+/**
+ * Allows new users to register by providing their name, email, and password.
+ * Upon successful registration, it navigates the user to the main page.
+ *
+ * @component
+ * @example
+ * return <RegisterPage />
+ */
 function RegisterPage() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+  //Upon successful registration, it navigates the user to the main page.
   const userEmail = useAppSelector(getUserEmail);
   let isRegistered: boolean = false;
   if (userEmail === "") {
@@ -30,36 +39,46 @@ function RegisterPage() {
     isRegistered = true;
   }
 
-    //for changing password visibility 
-    const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
+  // State for toggling password visibility
+  const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
 
-    const inputPasswordRef = React.useRef<HTMLInputElement>(null);
-    const onIconClickPassword = () => {
-      setIsPasswordVisible(!isPasswordVisible); 
-    };
+  // Refs for input focus
+  const inputPasswordRef = React.useRef<HTMLInputElement>(null);
+  const inputNameRef = React.useRef<HTMLInputElement>(null);
+  const inputEmailRef = React.useRef<HTMLInputElement>(null);
 
+  // Registration error and loading states
   const registerError = useAppSelector(getUserError);
   const registerLoading = useAppSelector(getLoginLoading);
 
-  const inputNameRef = React.useRef<HTMLInputElement>(null);
+  // Handle input focus and toggle password visibility
   const onIconClickName = () => {
     setTimeout(() => inputNameRef.current?.focus(), 0);
     alert("Icon Click Callback");
   };
-
-  const inputEmailRef = React.useRef<HTMLInputElement>(null);
+  const onIconClickPassword = () => {
+    setIsPasswordVisible(!isPasswordVisible);
+  };
   const onIconClickEmail = () => {
     setTimeout(() => inputEmailRef.current?.focus(), 0);
     alert("Icon Click Callback");
   };
 
+  // Form state management through custom hook
   const { values, handleChange } = useForm();
 
+  /**
+   * If already logged in, navigates to the `MainPage`
+   */
   const isLoggedIn = useAppSelector(getLoggedInStatus);
   if (isLoggedIn) {
     return <Navigate to="/" replace />;
   }
 
+  /**
+   * Submits registration data and stores name and email in redux store
+   * @param e - defualt event
+   */
   const handleFormSubmit: TSubmitHandler = (e) => {
     e.preventDefault();
     dispatch(registerThunk(values));
