@@ -6,12 +6,25 @@ import { useAppSelector, useAppDispatch } from "../hooks/dispatch-selectos";
 import { useEffect } from "react";
 import {getTotalOrders, getTotalTodatOrders, getAllCreatedOrders} from "../redux_services/selectors";
 
+
+/**
+ * OrderFeed component for displaying the live feed of all users' orders using WebSocket.
+ * It connects to the WebSocket server on mount and disconnects on unmount.
+ * 
+ * @component
+ * @example
+ * return <OrderFeed />
+ */
 function OrderFeed() {
   const dispatch = useAppDispatch();
   const totalTodayOrders: number = useAppSelector(getTotalTodatOrders)
   const totalOrders: number = useAppSelector(getTotalOrders)
   const allCreatedOrders = useAppSelector(getAllCreatedOrders)
 
+  /**
+   * Establishes WebSocket connection to receive live order updates.
+   * Dusconnects when the component is unmount.
+   */
   useEffect(() => {
     const connect = () => {
       dispatch(OrdersConnect(`${WS_URL}/orders/all`));
@@ -24,8 +37,9 @@ function OrderFeed() {
   }, [dispatch]);
 
 
-  // most recent 10 ready orders
-
+  /**
+   * Filters and sorts the last ten ready orders by their creation time.
+   */
   const filteredReadyOrders = allCreatedOrders
     .filter(order => order.status === "done")
     .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
@@ -33,8 +47,9 @@ function OrderFeed() {
   const lastTenReadyOrders = filteredReadyOrders.slice(0, 10);
 const readyOrderNumbers = lastTenReadyOrders.map(order => order.number);
 
-  // most recent 10 orders in process
-
+  /**
+   * Filters and sorts the last ten orders in process by their creation time.
+   */
   const filteredOrdersInProcess = allCreatedOrders
     .filter(order => order.status === "pending")
     .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
@@ -46,7 +61,7 @@ const orderNumbersInProcess = lastTenOrdersInProcess.map(order => order.number);
   return (
     <section className={styles.feed_section}>
       <div className={styles.feed_section_wrapper_orders}>
-        <h1 className="text text_type_main-large mb-5">Лента заказов</h1>
+        <h1 className="text text_type_main-large mb-10">Лента заказов</h1>
         <ul className={styles.feed_section_list}>
         <OrderFeedItem />
         </ul>

@@ -14,15 +14,30 @@ import { TSubmitHandler } from "../utils/types";
 import { useForm } from "../hooks/useForm";
 import { useAppSelector, useAppDispatch } from "../hooks/dispatch-selectos";
 
+/**
+ * Page to proceed password recovery process.
+ * Users are required to enter new password and code from email.
+ *
+ * This component checks if the user is already logged in and redirects to the homepage if true.
+ * It uses the `resetPasswordThunk` function to fetch user data to the server.
+ * Navigates to the homepage and loggs in the user after seccessful response
+ *
+ * @component
+ * @example
+ * return <ResetPasswordPage />;
+ */
 export const ResetPasswordPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const resetError = useAppSelector(getResetPasswordError);
 
-  //for changing password visibility
+  //For changing password visibility
   const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
 
+  /**
+   * Changes password visibility
+   */
   const onIconClickPassword = () => {
     setIsPasswordVisible(!isPasswordVisible);
   };
@@ -36,11 +51,22 @@ export const ResetPasswordPage: React.FC = () => {
 
   const { values, handleChange } = useForm();
 
+    /**
+   * checks if the user is logged in.
+   * If true, redirects to the homepage 
+   */
   const isLoggedIn = useAppSelector(getLoggedInStatus);
   if (isLoggedIn) {
     return <Navigate to="/" replace />;
   }
 
+      /**
+   * Event handler for form submission.
+   * Dispatches the resetPasswordThunk action with the new password and code from email.
+   * Navigates to the homepage after form submission
+   *
+   * @param {React.FormEvent<HTMLFormElement>} e - The form event.
+   */
   const handleFormSubmit: TSubmitHandler = async (e) => {
     e.preventDefault();
 

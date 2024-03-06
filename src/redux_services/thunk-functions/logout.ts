@@ -4,6 +4,15 @@ import { BASE_URL } from "../../utils/ApiConfig";
 import { checkResponse } from "../../utils/api";
 import {AppDispatch, AppThunk} from "../../utils/types"
 
+
+/**
+ * This function initiates a logout request to the server using the stored access and refresh tokens.
+ *  If the request is successful, it clears the access and refresh tokens
+ * stored as cookies and dispatches a logout success action.
+ * @example
+ * // Dispatch the logout thunk to initiate user logout
+ * dispatch(logoutThunk());
+ */
 export const logoutThunk = (): AppThunk => async (dispatch: AppDispatch) => {
 
   const refreshConfig = {

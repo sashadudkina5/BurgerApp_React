@@ -1,6 +1,7 @@
 .order_info_wrapper {
   display: flex;
   justify-content: space-between;
+    column-gap: 5px;
 }
 
 .user_orders_section_item {

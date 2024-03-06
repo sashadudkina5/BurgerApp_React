@@ -4,7 +4,14 @@ import { BASE_URL } from "../../utils/ApiConfig";
 import {IregistrationData} from "../../utils/types";
 import {AppDispatch, GetUserInfoThunk} from "../../utils/types"
 
-
+/**
+ * Thunk function to fetch user information (email and name) based on the stored access token.
+ * On a successful response, user email and name are extracted and dispatched to redux store.
+ * 
+ * @example
+ * // Dispatch function to get user information and update the state in Redux
+ * dispatch(getUserInfoThunk());
+ */
 export const getUserInfoThunk = (): GetUserInfoThunk => async (
   dispatch: AppDispatch
 ) => {

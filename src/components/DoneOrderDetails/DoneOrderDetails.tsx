@@ -12,29 +12,55 @@ import { reopenDoneOrderDetails } from "./actions";
 import moment from "moment";
 import "moment/locale/ru";
 import DoneOrderDetailsStyles from "./DoneOrderDetails.module.css";
-import {statusTexts} from "../../utils/order-statuses"
+import { statusTexts } from "../../utils/order-statuses";
 
 interface DoneOrderDetailsProps {
   matchingOrder: TOrder | null;
 }
 
+/**
+ * Displays detailed information about a specific order.
+ * It utilizes React Router's useParams to extract the order ID from the URL and fetches the order
+ * details based on this ID. The component shows the order number, name, status, list of ingredients,
+ * and the total price of the order. It supports re-opening order details after a page refresh.
+ * The component is also used as a single page content, in case of pasting the URL in new browser window.
+ *
+ * @component
+ * @param {DoneOrderDetailsProps} props - Props containing the matched order details.
+ * @param {TOrder | null} props.matchingOrder - The order object to display details for, or null if no order is matched. The order thaty was clicked on or the one requested in a separate browser window.
+ * @example
+ * return (
+ * <DoneOrderDetails matchingOrder={selectedOrder} />
+ * )
+ *
+ */
 function DoneOrderDetails({ matchingOrder }: DoneOrderDetailsProps) {
-
-
+  // React Router hook for accessing URL parameter ID
   const routeParams = useParams();
+
+  /**
+   * An array of last 50 orders fetched by websocket
+   */
   const readyOrders = useAppSelector(getAllCreatedOrders);
   const dispatch = useAppDispatch();
-
+  /**
+   * Checks if WebSocket is in the loading state
+   */
   const WSLoading = useAppSelector(isWSLoading);
+
+  /**
+   * Array of all the ingredients available in the app
+   */
   const allIngredients = useAppSelector(getListOfIngredientsArray);
 
-
-
-  //provides the modal displayed when page refreshing
-
-  React.useEffect(() => {
+  // Effect to handle modal display for order details upon page refresh
+  useEffect(() => {
     if (!matchingOrder && !WSLoading) {
-      const orderNumber = Number(routeParams.id); //as "id" in URL is a string
+      // Converts "id" from URL string to number. Essential because URL paramenter is a string
+      const orderNumber = Number(routeParams.id);
+      /**
+       * Object of the order, that matches its number with URL id parametr
+       */
       const filteredArray = readyOrders.filter(
         (obj) => obj.number === orderNumber
       );
@@ -46,8 +72,9 @@ function DoneOrderDetails({ matchingOrder }: DoneOrderDetailsProps) {
     }
   }, [dispatch, routeParams, readyOrders, WSLoading, matchingOrder]);
 
-  // finds and returns ingredients from the selected order
-
+  /**
+   * Function to find ingredients from the order in the list of available ingredients by matching their IDs. Returns an array of ingredients.
+   */
   function getMatchingIngredients(
     matchingOrder: TOrder | null,
     allIngredients: IIngredients | null
@@ -58,18 +85,30 @@ function DoneOrderDetails({ matchingOrder }: DoneOrderDetailsProps) {
       ) || []
     );
   }
+
+  /**
+   * Array ingredients present in the order.
+   */
   const matchingIngredients = getMatchingIngredients(
     matchingOrder,
     allIngredients
   );
 
-  // finds and returns array of ordered ingredients' count and all the info
-
+  /**
+   * Returns an array of ordered ingredients' count and their details
+   */
   const [orderedIngredients, setOrderedIngredients] = useState<IIngredients>(
     []
   );
 
   useEffect(() => {
+    /**
+     * Computes the count of each ingredient in the given order.
+     * Utilizes the order's ingredient IDs to match against the full ingredient list.
+     *
+     * @param {TOrder | null} matchingOrder - The currently selected order to analyze.
+     * @param {IIngredients | null} matchingIngredients - The list of all ingredients to match the order's ingredient IDs.
+     */
     function getCountOfIngredients(
       matchingOrder: TOrder | null,
       matchingIngredients: IIngredients | null
@@ -78,7 +117,6 @@ function DoneOrderDetails({ matchingOrder }: DoneOrderDetailsProps) {
         return [];
       }
       const orderIngredientsIDs = matchingOrder.ingredients;
-
       const ingredientCounts = orderIngredientsIDs.reduce((counts, id) => {
         counts[id] = (counts[id] || 0) + 1;
         return counts;
@@ -102,8 +140,9 @@ function DoneOrderDetails({ matchingOrder }: DoneOrderDetailsProps) {
     getCountOfIngredients(matchingOrder, matchingIngredients);
   }, [matchingOrder]);
 
-  // counts total price of the order
-
+  /**
+   * Function counts total price of the order
+   */
   function calculateTotalPrice(orderedIngredients: IIngredients | null) {
     let totalPrice = 0;
     if (orderedIngredients) {
@@ -114,11 +153,14 @@ function DoneOrderDetails({ matchingOrder }: DoneOrderDetailsProps) {
     return totalPrice;
   }
 
-  // Get the total price
+  /**
+   * The total order price
+   */
   const totalOrderPrice = calculateTotalPrice(orderedIngredients);
 
-  // order statuses
- 
+  /**
+   * The selected order's status
+   */
   const statusText = matchingOrder && statusTexts[matchingOrder.status];
 
   if (WSLoading || !matchingOrder) {
@@ -136,11 +178,24 @@ function DoneOrderDetails({ matchingOrder }: DoneOrderDetailsProps) {
       >
         #{matchingOrder!.number}
       </p>
-      <h1 className="text text_type_main-medium mb-3" style={{ textAlign: "left" }}>{matchingOrder!.name}</h1>
-      <p className="text text_type_main-small mb-3" style={{ textAlign: "left" }}>
+      <h1
+        className="text text_type_main-medium mb-3"
+        style={{ textAlign: "left" }}
+      >
+        {matchingOrder!.name}
+      </h1>
+      <p
+        className="text text_type_main-small mb-3"
+        style={{ textAlign: "left" }}
+      >
         {statusText && <span>{statusText}</span>}
       </p>
-      <p className="text text_type_main-medium mb-6" style={{ textAlign: "left" }}>Состав: </p>
+      <p
+        className="text text_type_main-medium mb-6"
+        style={{ textAlign: "left" }}
+      >
+        Состав:{" "}
+      </p>
       <ul className={`mb-10 ${DoneOrderDetailsStyles.ingredients_list}`}>
         {orderedIngredients.map((ingredient) => (
           <li

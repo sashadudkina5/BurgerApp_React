@@ -17,9 +17,24 @@ import { TSubmitHandler } from "../utils/types";
 import { useForm } from "../hooks/useForm";
 import { useAppSelector, useAppDispatch } from "../hooks/dispatch-selectos";
 
+/**
+ * Login page of the application.
+ * Allows users to log in by submitting their email and password.
+ * 
+ * If the user is already logged in, they will be redirected to the homepage.
+ * Also provides links to the registration page and password recovery page.
+ *
+ * @component
+ * @example
+ * return <LoginPage />;
+ */
 function LoginPage() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  /**
+   * Checks if the user logged in. If true redirects to the homepage
+   */
   const isLoggedIn = useAppSelector(getLoggedInStatus);
   const loginError = useAppSelector(getUserError);
   const loginLoading = useAppSelector(getLoginLoading);
@@ -29,7 +44,9 @@ function LoginPage() {
     setTimeout(() => inputEmailRef.current?.focus(), 0);
   };
 
-  //for changing password visibility 
+  /**
+   * State to toggle password visibility
+   */
   const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
 
   const inputPasswordRef = React.useRef<HTMLInputElement>(null);
@@ -37,9 +54,15 @@ function LoginPage() {
     setIsPasswordVisible(!isPasswordVisible); 
   };
   
-
+  // Custom hook to manage form inputs
   const { values, handleChange } = useForm();
 
+  /**
+   * Handles form submission by dispatching loginThunk with form values.
+   * Prevents the default form submission behavior.
+   * @param {React.FormEvent<HTMLFormElement>} e - The event object.
+   * Redirects to the homepage after successful submission
+   */
   const handleFormSubmit: TSubmitHandler = (e) => {
     e.preventDefault();
     dispatch(loginThunk(values));

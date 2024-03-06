@@ -4,7 +4,13 @@ import {connect as OrdersConnect} from "../web-socket-actions";
 import {WS_URL} from "../../utils/ApiConfig"
 
 
-
+/**
+ * Initiates a WebSocket connection to retrieve the current user's orders using an access token.
+ * 
+ * @example
+ * // Dispatch function to initiate WebSocket connection for fetching user orders
+ * dispatch(getUserOrders());
+ */
 export const getUserOrders = () => async (dispatch: AppDispatch) => {
     try {
       const accessToken = getCookie('accessToken');

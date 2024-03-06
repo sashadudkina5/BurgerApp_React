@@ -16,12 +16,29 @@ interface ISortingIngredientsProps {
   index: number;
 }
 
+/**
+ * Used within the BurgerConstructor component.
+ * This component allows users to reorder or remove ingredients within the burger constructor by dragging.
+ * Utilizes the `useDrag` and `useDrop` hooks.
+ * It is rendered for each ingredient in the constructor through a `renderCard`.
+ * 
+ * @component
+ * @param {ISortingIngredientsProps} props The props for the SortingIngredients component.
+ * @param {IIngredientCardConstructor} props.item The ingredient item object.
+ * @param {number} props.index The index of the ingredient item within the constructor list, used for reordering logic.
+ */
 const SortingIngredients: React.FC<ISortingIngredientsProps> = ({
   index,
   item,
 }) => {
 
   const dispatch = useAppDispatch()
+
+  /**
+   * 
+   * @param ingredientId - ingredient item, exluding buns. Matched by uniqID.
+   * Deletes ingredient from the constructor
+   */
   const onDelete = (ingredientId: string) => {
     dispatch(deleteIngredient(ingredientId));
   };

@@ -5,6 +5,18 @@ import { ListIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink } from "react-router-dom";
 
+/**
+ * The header component of the application, includes navigation links.
+ * Utilizes the `NavLink` component from `react-router-dom` to navigate
+ * between the app's different pages such as the home page, order feed, and profile.
+ * 
+ * @component
+ * @example
+ * return (
+ *   <AppHeader />
+ * )
+ */
+
 function AppHeader() {
   return (
     <header className={appHeaderStyles.header}>
@@ -42,25 +54,30 @@ function AppHeader() {
           </p>
         </NavLink>
       </div>
-      <NavLink to="/" end>
-        <Logo />
-      </NavLink>
 
-      <NavLink
-        to={"/profile"}
-        className={({ isActive }) =>
-          `${appHeaderStyles.link} ${
-            isActive ? appHeaderStyles.link_active : ""
-          }`
-        }
-      >
-        <ProfileIcon type="secondary" />
-        <p
-          className={`text text_type_main-default text_color_inactive ${appHeaderStyles.linkText}`}
+      <div className={appHeaderStyles.logoWrapper}>
+        <NavLink to="/" end>
+          <Logo />
+        </NavLink>
+      </div>
+
+      <div className={appHeaderStyles.rightNavBar}>
+        <NavLink
+          to={"/profile"}
+          className={({ isActive }) =>
+            `${appHeaderStyles.link} ${
+              isActive ? appHeaderStyles.link_active : ""
+            }`
+          }
         >
-          Личный кабинет
-        </p>
-      </NavLink>
+          <ProfileIcon type="secondary" />
+          <p
+            className={`text text_type_main-default text_color_inactive ${appHeaderStyles.linkText}`}
+          >
+            Личный кабинет
+          </p>
+        </NavLink>
+      </div>
     </header>
   );
 }

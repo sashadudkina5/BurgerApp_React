@@ -18,24 +18,56 @@ interface IIngredients {
   "data-testid": string;
   typeOfIngredients: Array<IIngredientCard>;
 }
-
+/**
+ * Displays all the available ingredients and their name, image, count as list items in BurgerIngredients.
+ * Clicking on a card opens a modal with ingredient details.
+ * Contains ProductItem component, which is responsible for drag and drop functionality.
+ * 
+ * @component
+ * @param typeOfIngredients - an array of ingredient objects. Essential for displaying different blocks of ingredients depending on the value of "type" key in the ingredient object
+ * @param onClick - function for opnening modal with ingredient details
+ * @param ref - defines to wich tab to refer the ingredient. Essential for navigating with Tabs.
+ * 
+ * @param `data-testid` - defines the drag and drop target
+ * @example 
+ *  <ProductCard
+      typeOfIngredients={sauceIngredients}
+      onClick={openIngredientDetailModal}
+      data-testid={`box`}
+      ref={saucesRef}
+     />
+ */
 const ProductCard = React.forwardRef<HTMLDivElement, IIngredients>(
   (props, ref) => {
     let location = useLocation();
 
     const dispatch = useAppDispatch()
 
+    /**
+     * Opens the modal with ingredient details.
+     * @param ingredient - clicked on ingredient. 
+     */
     const openIngredientDetailModal = (ingredient: IIngredientCard) => {
       dispatch(showIngredientDetails(ingredient));
     };
 
+    /**
+     * Ingredients already added to the constructor. Excluding buns
+     */
     const data = useAppSelector(getConstructorIngredients);
+
+     /**
+     * Buns already added to the constructor. Excluding other ingredients
+     */
     const bunData = useAppSelector(getBunData);
 
     const [ingredientsCounters, setIngredientsCounters] = React.useState<{
       [key: string]: number;
     }>({});
 
+    /**
+     * Counters if item added to the constructor. Buns count as x2
+     */
     React.useEffect(() => {
       const counters: { [key: string]: number } = {};
 
@@ -84,12 +116,12 @@ const ProductCard = React.forwardRef<HTMLDivElement, IIngredients>(
                   alt={ingredient.name}
                   className={productCardStyles.image}
                 />
-                <span>
-                  <CurrencyIcon type="secondary" />
+                <div className={productCardStyles.price_wrapper}>
                   <span className="text text_type_main-medium">
                     {ingredient.price}
                   </span>
-                </span>
+                  <CurrencyIcon type="secondary" />
+                </div>
                 <p className="text text_type_main-default">{ingredient.name}</p>
               </div>
             </ProductItem>

@@ -1,13 +1,13 @@
 .header {
     margin: 0 auto;
     margin-top: 40px;
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: 50px;
+    padding-right: 50px;
     padding-bottom: 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    max-width: 1200px;
+    max-width: 1300px;
 }
 
 .link {
@@ -25,6 +25,21 @@
 .navBar {
     column-gap: 8px;
     display: flex;
+    display: flex;
+    flex: 1;
+    justify-content: flex-start; 
+}
+
+.logoWrapper {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+}
+
+.rightNavBar {
+    display: flex;
+    justify-content: flex-end;
+    flex: 1;
 }
 
 .icon {

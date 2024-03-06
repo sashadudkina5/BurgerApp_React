@@ -4,7 +4,7 @@ import {
   getAllCreatedOrders,
   getListOfIngredients,
   isWSLoading,
-  getWSError
+  getWSError,
 } from "../../redux_services/selectors";
 import { useAppSelector, useAppDispatch } from "../../hooks/dispatch-selectos";
 import moment from "moment";
@@ -14,46 +14,62 @@ import React, { MouseEvent } from "react";
 import { showDoneOrderDetails } from "../DoneOrderDetails/actions";
 import { Link, useLocation } from "react-router-dom";
 
-function OrderFeedItem ()  {
+/**
+ * Reusable component that renders each order in the list. Orders are fetched from WebSocket.
+ * Users can click on an order to view detailed information in a modal.
+ * Handles loading states and displays appropriate messages for loading and connection errors.
+ *
+ * @component
+ */
+function OrderFeedItem() {
   let location = useLocation();
   const dispatch = useAppDispatch();
+
+  /**
+   * Last 50 orders recieved from WebSocket. All statuses. Stored in redux
+   */
   const allCreatedOrders = useAppSelector(getAllCreatedOrders);
+
+  /**
+   * Array of all ingredientes available. Stores in redux
+   */
   const allIngredients = useAppSelector(getListOfIngredients);
+
+  /**
+   * True if WebSocket connection is loading. Stored in redux
+   */
   const WSLoading = useAppSelector(isWSLoading);
+
+  /**
+   * Error in WebSocket response. Stored in redux
+   */
   const connectionError = useAppSelector(getWSError);
 
-       //when still loading
+  if (WSLoading) {
+    return <p className="text text_type_main-default">Loading...</p>;
+  }
 
-       if (WSLoading) {
-        return (
-          <p className="text text_type_main-default">
-            Loading...
-          </p>
-        );
-      }
-    
-           //connection errors
-    
-           if (connectionError !== "") {
-            return (
-              <p className="text text_type_main-default">
-                Ошибка подключения. Повторите попытку позже
-              </p>
-            );
-          }
-
-  //if there are no orders
-
-  if (!allCreatedOrders || allCreatedOrders.length === 0) {
+  // Displays a message when there are connection errors
+  if (connectionError !== "") {
     return (
       <p className="text text_type_main-default">
-        Заказов пока нет
+        Ошибка подключения. Повторите попытку позже
       </p>
     );
   }
 
-  //Opens the modal with order info 
+  // Displays a message when there are no orders.
+  if (!allCreatedOrders || allCreatedOrders.length === 0) {
+    return <p className="text text_type_main-default">Заказов пока нет</p>;
+  }
 
+  /**
+   * Function fetches clicked order into redux store.
+   * The modal with order details is opened.
+   *
+   * @param event
+   * @param selectedOrder - an order clicked by user
+   */
   const handleClick = (
     event: MouseEvent<HTMLLIElement>,
     selectedOrder: TOrder
@@ -61,15 +77,18 @@ function OrderFeedItem ()  {
     dispatch(showDoneOrderDetails(selectedOrder));
   };
 
-
-  //Counts total price of the order
-
+  /**
+   * Array of [name of ingredient, its price] elements.
+   */
   const ingredientPricesMap = allIngredients.ingredientsData.data
     .filter((ingredient) => ingredient.price !== undefined)
     .map(
       (ingredient) => [ingredient._id, ingredient.price] as [string, number]
     );
 
+  /**
+   * Array of order object and its total price
+   */
   const ordersWithTotalPrice = allCreatedOrders.map((order) => {
     const totalPrice = order.ingredients.reduce((sum, ingredientId) => {
       const ingredientPrice = ingredientPricesMap.find(
@@ -90,8 +109,9 @@ function OrderFeedItem ()  {
     };
   });
 
-  //shows ingredients images
-
+  /**
+   * Array of images of all ingredients available
+   */
   const imageMap = allIngredients.ingredientsData.data.reduce(
     (map, ingredient) => {
       map[ingredient._id as string] = ingredient.image;
@@ -100,6 +120,9 @@ function OrderFeedItem ()  {
     {} as Record<string, string | undefined>
   );
 
+  /**
+   * Array of order object and its ingredients images
+   */
   const ordersWithImages = allCreatedOrders.map((order) => {
     const images = order.ingredients.map(
       (ingredientId: string) => imageMap[ingredientId]
@@ -110,7 +133,6 @@ function OrderFeedItem ()  {
       images,
     };
   });
-
 
   return (
     <>
@@ -149,12 +171,12 @@ function OrderFeedItem ()  {
                   .find((item) => item.order === order)
                   ?.images.map((imageUrl, index) => (
                     <div
-                    className={styles.imageWrapper}
-                    key={index}
-                    style={{
-                      zIndex: ordersWithImages.length + index,
-                    }}
-                  >
+                      className={styles.imageWrapper}
+                      key={index}
+                      style={{
+                        zIndex: ordersWithImages.length + index,
+                      }}
+                    >
                       {imageUrl && (
                         <img
                           className={styles.ingredient_image}
@@ -175,6 +197,6 @@ function OrderFeedItem ()  {
       ))}
     </>
   );
-};
+}
 
 export default OrderFeedItem;

@@ -48,5 +48,6 @@
 .total_price_wrapper {
         display: flex;
         margin-left: auto;
+        column-gap: 8px;
 }
 

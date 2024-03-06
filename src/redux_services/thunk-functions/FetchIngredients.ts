@@ -2,6 +2,14 @@ import { getIngredientsSuccess, getIngredientsFailed, getIngredientsRequest } fr
 import { getIngredients } from "../../utils/burger-api";
 import {AppDispatch, AppThunk} from "../../utils/types";
 
+
+/**
+ * It dispatches a request action before making the API call. Upon successful data retrieval,
+ * it dispatches a success action with the fetched ingredients data. In case of an error,
+ * it dispatches a failure action and logs the error.
+ * @example
+ * dispatch(fetchIngredients());
+ */
 export const fetchIngredients = (): AppThunk => async (dispatch: AppDispatch) => {
   dispatch(getIngredientsRequest())
   try {
