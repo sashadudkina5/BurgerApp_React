@@ -8,6 +8,19 @@ import { checkResponse } from "../../utils/api";
 import {AppDispatch, AppThunk} from "../../utils/types";
 import { getCookie } from "../../utils/api";
 
+/**
+ * This function dispatches an action of order creation. It attempts to
+ * create an order by making a POST request to the order creation endpoint, including a list of ingredient IDs
+ * in the request body. If an access token exists, it is included in the request headers for authentication.
+ * 
+ * On successful order creation, the function dispatches an action with the created order's number.
+ *
+ * @param {{ ingredients: (string | undefined)[]; }} ingredientIDs - Object containing an array of ingredient IDs for the order.
+ * 
+ * @example
+ * // Dispatch the createOrderThunk with an array of ingredient IDs to initiate the order creation process
+ * dispatch(createOrderThunk({ ingredients: ['ingredientId1', 'ingredientId2'] }));
+ */
 export const createOrderThunk = (ingredientIDs: { ingredients: (string | undefined)[]; }): AppThunk => async (dispatch: AppDispatch) => {
   try {
     dispatch(createOrderRequest());

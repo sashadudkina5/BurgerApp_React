@@ -16,7 +16,6 @@ interface IСhangedData {
  * In case of an error, it dispatches an action to indicate the failure.
  *
  * @param {IСhangedData} changedData - The changed user data including email, password, and name.
- * @returns {ChangeProfileThunk} A thunk function that dispatches actions based on the outcome of the fetch request.
  * 
  * @example
  * dispatch(changeUserInfoThunk({ email: "newemail@example.com", password: "newpassword", name: "New Name" }));

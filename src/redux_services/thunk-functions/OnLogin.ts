@@ -13,6 +13,17 @@ interface ILoginData {
   email: string;
 }
 
+/**
+ * This function takes user login data (email and password), dispatches a login request action, and attempts to log the user in
+ * by making a POST request to the login endpoint with the provided credentials. If the login is successful, it processes the response
+ * to dispatch a login success action with the user data, and stores the access and refreshToken in cookies.
+ *
+ * @param {ILoginData} loginData - Object containing the user's email and password.
+ * 
+ * @example
+ * // Dispatch the login thunk with user's login data to initiate the login process
+ * dispatch(loginThunk({ email: 'user@example.com', password: 'password123' }));
+ */
 export const loginThunk = (loginData: ILoginData): AppThunk => async (dispatch: AppDispatch) => {
   try {
     dispatch(getLoginRequest());
