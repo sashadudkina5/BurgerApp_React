@@ -24,8 +24,16 @@ In addition to the existing features, here are some future plans for enhancing t
 
 - **Enhanced Form Input Styles and Functionalities**
 
-- **Documentation Comments with JSDoc for functions, parameters and so on**
+## Documentation
 
+The project is documented with JSDoc. 
+This includes:
+
+- Documentation for all React components, providing insights into the props and states used.
+- Documentation for all thunk functions to understand the asynchronous operations and redux state management.
+- Descriptions for supplementary functions.
+
+This effort aims to make the codebase more accessible and to facilitate easier updates and feature additions.
 
 
 ## Available Scripts
