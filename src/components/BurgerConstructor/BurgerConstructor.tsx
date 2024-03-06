@@ -120,7 +120,7 @@ function BurgerConstructor({ onClick }: IBurgerConstructorProps) {
   const renderContent = () => {
     // Conditional rendering based on selected bun and ingredients. Essential to display alerts
     if (!bunData && !data.length) {
-      return <p className="text text_type_main-medium mb-10 mt-10">Перетащите сюда ингредиенты</p>;
+      return <p className={`text text_type_main-medium mb-10 mt-10 ${burgerConstructorStyles.alert}`}>Перетащите сюда ингредиенты</p>;
     } else {
       return (
         <>
@@ -151,8 +151,6 @@ function BurgerConstructor({ onClick }: IBurgerConstructorProps) {
               />
             </div>
           )}
-          {bunData && !data.length && <p>Выберите начинку</p>}
-          {data.length !== 0 && !bunData && <p>Выберите булку</p>}
         </>
       );
     }
@@ -166,8 +164,15 @@ function BurgerConstructor({ onClick }: IBurgerConstructorProps) {
           isOver ? burgerConstructorStyles.hovered : ""
         }`}
       >
+        <div className={burgerConstructorStyles.content_wrapper}>
         {renderContent()}
+        </div>
       </div>
+      <div className={burgerConstructorStyles.alerts_wrapper}>
+      {bunData && !data.length && <p className="text text_type_main-medium">Теперь перетащите начинку или соус</p>}
+          {bunData && data.length!==0 && <p className="text text_type_main-medium">Теперь перетащите дополнительные ингредиенты или оформите заказ</p>}
+          {data.length !== 0 && !bunData && <p className="text text_type_main-medium">Теперь перетащите сюда булку</p>}
+          </div>
       <section className={burgerConstructorStyles.finalPrice}>
         <div className={burgerConstructorStyles.finalPriceWrapper}>
           <div className={burgerConstructorStyles.currency_wrapper}>
