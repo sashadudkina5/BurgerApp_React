@@ -4,7 +4,7 @@ This project is a dynamic web application built with Create React App. It's a bu
 
 ## Deployed Site
 
-The application is deployed and can be accessed at [BurgerApp Live Site](https://sashadudkina5.github.io/react-project-BurgerApp/).
+The application is deployed and can be accessed at [BurgerApp Live Site](https://sashadudkina5.github.io/BurgerApp_React/).
 
 ## Technologies Used
 
